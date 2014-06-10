@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<script src="http://code.jquery.com/jquery-latest.js"></script>
+		<link rel="stylesheet" href="http://code.jquery.com/qunit/qunit-1.12.0.css" type="text/css" media="screen" />
+		<script type="text/javascript" src="http://code.jquery.com/qunit/qunit-1.12.0.js"></script>
+		<script type="text/javascript" src="../build/eshop.js"></script>	
+		
+		<script>
+			window.onload = function( ) {							
+				test( "storage", function( ) {
+					var now = new Date().getTime();													
+					ONE_PAGE_SHOP.modules.storage.save("now", {"now": now});				
+					equal( ONE_PAGE_SHOP.modules.storage.get("now").now, now);																
+				});								
+			};// onload
+		</script>
+	</head>
+	<body>
+		<h1 id="qunit-header">Storage module</h1>
+		<h2 id="qunit-banner"></h2>
+		<div id="qunit-testrunner-toolbar"></div>
+		<h2 id="qunit-userAgent"></h2>
+		<ol id="qunit-tests"></ol>
+		<div id="qunit-fixture">
+			test markup, will be hidden
+		</div>
+	</body>
+</html>
