@@ -1,5 +1,5 @@
-# One page e-shop
-A free and open-source javascript e-shop that easily integrates with your current website.
+# EshopJS
+A free and open-source javascript e-shop that easily integrates with your current websites.
 
 Status: in progress
 
@@ -7,7 +7,7 @@ Status: in progress
 - [Rastashop](#)
 
 ##How to use
-All IDs, Classes and atributes you can change in [settings](#).
+All IDs, Classes and atributes you can change in [settings](https://github.com/Kibo/eshopJS/blob/master/project/src/settings.js).
 
 It uses the following *default* IDs:
 - **cart**				: A wrapper for schopping cart. It may be on another website too.
