@@ -1,40 +1,37 @@
 /**
  * Template engine module
- * 
- * @author Krasimir Tsonev
- * @see https://github.com/krasimir/absurd/blob/master/lib/processors/html/helpers/TemplateEngine.js
- * @see http://krasimirtsonev.com/blog/article/Javascript-template-engine-in-just-20-line
- * 
- * @param {String} html - template
- * @param {Object} options - data
- * @return {Object}
  */
-ONE_PAGE_SHOP.modules.templateEngine = function( html, options ) {
-	var re = /<%(.+?)%>/g, 
-	reExp = /(^( )?(var|if|for|else|switch|case|break|{|}|;))(.*)?/g, 
-	code = 'with(obj) { var r=[];\n', 
-	cursor = 0, 
-	result;
-	
-	var add = function( line, js ) {
-		js ? ( code += line.match( reExp ) ? line + '\n' : 'r.push(' + line + ');\n' ) : ( code += line != '' ? 'r.push("' + line.replace( /"/g, '\\"' ) + '");\n' : '' );
-		return add;
-	};
-
-	while( match = re.exec( html ) ) {
-		add(html.slice(cursor, match.index))( match[ 1 ], true );
-		cursor = match.index + match[ 0 ].length;
-	}
-
-	add( html.substr( cursor, html.length - cursor ) );
-	code = ( code + 'return r.join(""); }' ).replace( /[\r\t\n]/g, '' );
-	
-	try {
-		result = new Function( 'obj', code ).apply( options, [ options ] );
-	} catch(err) {
-		console.error( "'" + err.message + "'", " in \n\nCode:\n", code, "\n" );
-	}
-	
-	return result;
-};
+ONE_PAGE_SHOP.modules.templateEngine = (function(){
+		
+	return{
+				
+		/**
+		 * Compile a template
+		 * @param {String} tpl
+		 * @return {Function}
+		 * 	 
+		 * @example
+		 * var data = {name:"tomas"};
+		 * var tpl = '<h1><%=name%></h1>';
+		 * var template = ONE_PAGE_SHOP.modules.templateEngine.compile( tpl );
+		 * var html = template( data );
+		 * 
+		 * @see http://ejohn.org/blog/javascript-micro-templating/
+		 */
+		compile:function( tpl ){							
+			return new Function("data",
+				"var p=[];" +              
+				"with( data ){ p.push('" +             
+				 tpl
+		  			.replace(/[\r\t\n]/g, " ")
+		  			.split("<%").join("\t")
+		  			.replace(/((^|%>)[^\t]*)'/g, "$1\r")
+		  			.replace(/\t=(.*?)%>/g, "',$1,'")
+		  			.split("\t").join("');")
+		  			.split("%>").join("p.push('")
+		  			.split("\r").join("\\'")
+	      			+ "');} return p.join('');");
+		}		
+	};	
+})();
 

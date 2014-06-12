@@ -28,8 +28,9 @@ ONE_PAGE_SHOP.modules.storage = (function(){
  		 * @param {String} key
  		 * @return {Object}
 		 */
-		get:function( key ){
-			return JSON.parse(localStorage.getItem(key));
+		get:function( key ){			
+			var itm = localStorage.getItem(key);						
+			return itm ? JSON.parse(itm) : {};			
 		},
 		
 		/**

@@ -6,19 +6,90 @@
 		<title>One page eshop</title>
 		<meta name="description" content="One page eshop">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<link rel="stylesheet" href="css/eshop.css">
-
+		<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">		
 	</head>
 	<body>
+		<div class="container">
+			<header>				
+				<img src="images/logo.png" alt="Rasta" align="left">
+				<h1>Rasta eshop</h1>				
+			</header>
+			<hr>
 
-		<p>
-			Hello world! This is HTML5 Boilerplate.
-		</p>
+		<section class="product">
+
+			<h3 class="product-title">Rasta T-shirt</h3>
+			
+			<b>Size:</b>
+			<select class="product-variations">
+				<option value="0">Size S</option>
+				<option value="2">Size L</option>
+				<option value="4">Size XXL</option>
+			</select>
+			
+			<br>
+			
+			<b>Color:</b>
+			<select class="product-variations">
+				<option value="1">Red</option>
+				<option value="3">Green</option>
+				<option value="5">Yellow</option>
+			</select>
+
+			<p>
+				<b>Price</b>: $<span class="product-price" data-base="12"></span>
+			</p>
+
+			<a class="add-to-cart btn btn-success" href="#cart">Add to cart</a>
+
+		</section>
+		
+		<hr>
+
+		<section class="product">
+
+			<h3 class="product-title">Rasta Cap</h3>
+			
+			<b>Details:</b>	
+			<select class="product-variations">
+				<option value="0">Green</option>
+				<option value="1">Yellow-Red-Green</option>
+			</select>
+
+			<p>
+				<b>Price</b>: $<span class="product-price" data-base="3"></span>
+			</p>
+
+			<a class="add-to-cart btn btn-success" href="#cart">Add to cart</a>
+
+		</section>
+		
+		<hr>
+		
+		<section class="product">
+
+			<h3 class="product-title">Rasta bracelet</h3>
+						
+			<p>
+				<b>Price</b>: $<span class="product-price" data-base="3"></span>
+			</p>
+
+			<a class="add-to-cart btn btn-success" href="#cart">Add to cart</a>
+
+		</section>
+		
+		
+		
+		<hr>
+
+		<h3>Shopping cart</h3>
+		<div id="cart"></div>
+		
+		</div> <!-- container -->
 
 		<script src="js/eshop.js"></script>
 		<script>
-			console.log(eshop.settings)
-			console.log(eshop.templates)			
-		</script>
+			ONE_PAGE_SHOP.modules.cart.draw();			
+		</script>		
 	</body>
 </html>

@@ -19,9 +19,6 @@ It uses the following *default* CSS classes:
 - **product-price**		: A base price of product.
 - **add-to-cart**		: A link to add product to the cart.
 
-It uses the following *default* data attributes:
-- **data-price** 		: A price of a product. **data-price** in product variation indicates an increase of base price of product.
-
 ###Example eshop
 ```
 <section class="product">  
@@ -29,12 +26,14 @@ It uses the following *default* data attributes:
    <h1 class="product-title">Rasta T-shirt</h1>  
 
    <select class="product-variations">
-   		<option data-price="0">Size S</option>
-   		<option data-price="2">Size L</option>	
-   		<option data-price="4">Size XXL</option>
+   		<option value="0">Size S</option>
+   		<option value="2">Size L</option>	
+   		<option value="4">Size XXL</option>
    </select>   
    
-   <p class="product-price" data-price="12">Price: $12</p>
+   <p>
+	 <b>Price</b>: $<span class="product-price" data-base="12"></span>
+   </p>
    
    <a class="add-to-cart" href="#cart">Add to cart</a>
       
@@ -45,11 +44,13 @@ It uses the following *default* data attributes:
    <h1 class="product-title">Rasta Cap</h1>  
 
    <select class="product-variations">
-   		<option data-price="0">Green</option>
-   		<option data-price="1">Yellow-Red-Green</option>	   		
+   		<option value="2">Green</option>
+   		<option value="1">Yellow-Red-Green</option>	   		
    </select>   
    
-   <p class="product-price" data-price="3">Price: $3</p>
+   <p>
+	 <b>Price</b>: $<span class="product-price" data-base="3"></span>
+   </p>
    
    <a class="add-to-cart" href="#cart">Add to cart</a>
       

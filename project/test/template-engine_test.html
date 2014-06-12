@@ -9,20 +9,25 @@
 		
 		<script>
 			window.onload = function( ) {							
-				test( "storage", function( ) {
-					var now = new Date().getTime();													
-					ONE_PAGE_SHOP.modules.storage.save("now", {"now": now});				
-					equal( ONE_PAGE_SHOP.modules.storage.get("now").now, now);																
-				});	
-				
-				test( "empty storage", function( ) {						
-					deepEqual( ONE_PAGE_SHOP.modules.storage.get( new Date().getTime()+"" ), {});																
-				});														
+				test( "create template", function( ) {
+					
+					var data = { name:"Tomas", address:{ city:"Znojmo" }, children:["Kuba", "Maruška"]};
+					var source = '<h1><%=name%></h1><p><%=address.city%></p>' +
+					 '<ul>' +
+					 	'<% for(var idx = 0; idx < children.length; idx++) { %>' + 
+					 		'<li><%=children[idx]%></li>' + 
+					 	'<%}%>' + 
+					 '</ul>';
+															
+					var result = "<h1>Tomas</h1><p>Znojmo</p><ul><li>Kuba</li><li>Maruška</li></ul>";	
+					var template = ONE_PAGE_SHOP.modules.templateEngine.compile( source );																										
+					equal( template(data), result);																
+				});								
 			};// onload
 		</script>
 	</head>
 	<body>
-		<h1 id="qunit-header">Storage module</h1>
+		<h1 id="qunit-header">Template engine module</h1>
 		<h2 id="qunit-banner"></h2>
 		<div id="qunit-testrunner-toolbar"></div>
 		<h2 id="qunit-userAgent"></h2>
