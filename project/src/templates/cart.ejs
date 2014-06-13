@@ -12,7 +12,7 @@
 		
 		<% if( products.length === 0){%>
 			<tr>
-				<td colspan="4">There are not products yet.</td>
+				<td colspan="5">There are not products yet.</td>
 			</tr>
 		<% } %>
 				
@@ -22,7 +22,7 @@
 				<td><%= products[idx].variations %></td>
 				<td><input type="number" value="<%= products[idx].count %>" min="0" max="100" step="1"></td>
 				<td>$<%= products[idx].count * products[idx].price %></td>
-				<td><a href="#" class="btn btn-danger btn-xs">Remove</a></td>				
+				<td><a href="#" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-trash"></span> Remove</a></td>				
 			</tr>			
 		<% } %>				
 	</tbody>	

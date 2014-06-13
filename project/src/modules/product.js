@@ -1,10 +1,10 @@
 /**
  * Products module
  */
-ONE_PAGE_SHOP.modules.product = (function( window, document ){
-	var settings = ONE_PAGE_SHOP.settings;
-	var utils = ONE_PAGE_SHOP.utils;
-	var cart = ONE_PAGE_SHOP.modules.cart;
+ESHOP_JS.modules.product = (function( window, document ){
+	var settings = ESHOP_JS.settings;
+	var utils = ESHOP_JS.utils;
+	var cart = ESHOP_JS.modules.cart;
 			
 	function addToCartHandler(e){
 		var productWrapper = e.target.parentNode;

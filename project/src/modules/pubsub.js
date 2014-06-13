@@ -1,7 +1,7 @@
 /**
  * Pub/ sub module
  */
-ONE_PAGE_SHOP.modules.pubsub = (function(){	
+ESHOP_JS.modules.pubsub = (function(){	
 	var topics = {};
 	var subUid = -1;	
 	

@@ -1,4 +1,4 @@
-window.ONE_PAGE_SHOP.settings = {
+ESHOP_JS.settings = {
 	
 	/**
 	 * DOM wrapper for product
@@ -47,5 +47,5 @@ window.ONE_PAGE_SHOP.settings = {
 	 * @constant
      * @type {string}
 	 */
-	CART_STORAGE_KEY:"ONE_PAGE_SHOP",	
+	CART_STORAGE_KEY:"ESHOP_JS",	
 };

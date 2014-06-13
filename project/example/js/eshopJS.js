@@ -1,19 +1,19 @@
-/* E-shop v0.0.1 - 2014-06-12 */
+/* E-shop v0.2.0 - 2014-06-13 */
 // ### Source: project/src/namespace.js
-var ONE_PAGE_SHOP = ONE_PAGE_SHOP || {};
+var ESHOP_JS = ESHOP_JS || {};
 
 /**
  * Create namespace
  * @param {String} ns_string
  * @example
- * ONE_PAGE_SHOP.namespace('modules.module1');
+ * ESHOP_JS.namespace('modules.module1');
  */
-ONE_PAGE_SHOP.namespace = function( ns_string ) {
+ESHOP_JS.namespace = function( ns_string ) {
 	var parts = ns_string.split( '.' ), 
-	parent = ONE_PAGE_SHOP; 
+	parent = ESHOP_JS; 
 
 	// strip redundant leading global
-	if( parts[ 0 ] === "ONE_PAGE_SHOP" ) {
+	if( parts[ 0 ] === "ESHOP_JS" ) {
 		parts = parts.slice( 1 );
 	}
 	for( var i = 0; i < parts.length; i += 1 ) {
@@ -28,11 +28,11 @@ ONE_PAGE_SHOP.namespace = function( ns_string ) {
 };
 
 /* ## NAMESPACES ############## */
-ONE_PAGE_SHOP.namespace('modules');
+ESHOP_JS.namespace('modules');
 
 
 // ### Source: project/src/utils.js
-window.ONE_PAGE_SHOP.utils = (function( window, document){
+ESHOP_JS.utils = (function( window, document){
 		
 	return {
 		
@@ -51,7 +51,7 @@ window.ONE_PAGE_SHOP.utils = (function( window, document){
 	
 
 // ### Source: project/src/settings.js
-window.ONE_PAGE_SHOP.settings = {
+ESHOP_JS.settings = {
 	
 	/**
 	 * DOM wrapper for product
@@ -100,12 +100,12 @@ window.ONE_PAGE_SHOP.settings = {
 	 * @constant
      * @type {string}
 	 */
-	CART_STORAGE_KEY:"ONE_PAGE_SHOP",	
+	CART_STORAGE_KEY:"ESHOP_JS",	
 };
 
 // ### Source: project/src/templates/templates.js
-window.ONE_PAGE_SHOP.templates = {
-  "cart": "<table class=\"table table-striped table-bordered\"><thead><tr><th>Product</th><th>Details</th><th>Count</th><th>Price</th><th>&nbsp;</th></tr></thead><tbody><% if( products.length === 0){%><tr><td colspan=\"4\">There are not products yet.</td></tr><% } %><% for (var idx = 0, len = products.length; idx < len; idx ++) { %><tr><td><%= products[idx].title %></td><td><%= products[idx].variations %></td><td><input type=\"number\" value=\"<%= products[idx].count %>\" min=\"0\" max=\"100\" step=\"1\"></td><td>$<%= products[idx].count * products[idx].price %></td><td><a href=\"#\" class=\"btn btn-danger btn-xs\">Remove</a></td></tr><% } %></tbody></table>",
+window.ESHOP_JS.templates = {
+  "cart": "<table class=\"table table-striped table-bordered\"><thead><tr><th>Product</th><th>Details</th><th>Count</th><th>Price</th><th>&nbsp;</th></tr></thead><tbody><% if( products.length === 0){%><tr><td colspan=\"5\">There are not products yet.</td></tr><% } %><% for (var idx = 0, len = products.length; idx < len; idx ++) { %><tr><td><%= products[idx].title %></td><td><%= products[idx].variations %></td><td><input type=\"number\" value=\"<%= products[idx].count %>\" min=\"0\" max=\"100\" step=\"1\"></td><td>$<%= products[idx].count * products[idx].price %></td><td><a href=\"#\" class=\"btn btn-danger btn-xs\"><span class=\"glyphicon glyphicon-trash\"></span> Remove</a></td></tr><% } %></tbody></table>",
   "form": "<form><%= title %></form>"
 }
 
@@ -113,7 +113,7 @@ window.ONE_PAGE_SHOP.templates = {
 /**
  * Pub/ sub module
  */
-ONE_PAGE_SHOP.modules.pubsub = (function(){	
+ESHOP_JS.modules.pubsub = (function(){	
 	var topics = {};
 	var subUid = -1;	
 	
@@ -185,7 +185,7 @@ ONE_PAGE_SHOP.modules.pubsub = (function(){
 /**
  * Storage module
  */
-ONE_PAGE_SHOP.modules.storage = (function(){
+ESHOP_JS.modules.storage = (function(){
 		
 	/*
 	 * Is local storage
@@ -232,7 +232,7 @@ ONE_PAGE_SHOP.modules.storage = (function(){
 /**
  * Template engine module
  */
-ONE_PAGE_SHOP.modules.templateEngine = (function(){
+ESHOP_JS.modules.templateEngine = (function(){
 		
 	return{
 				
@@ -244,7 +244,7 @@ ONE_PAGE_SHOP.modules.templateEngine = (function(){
 		 * @example
 		 * var data = {name:"tomas"};
 		 * var tpl = '<h1><%=name%></h1>';
-		 * var template = ONE_PAGE_SHOP.modules.templateEngine.compile( tpl );
+		 * var template = ESHOP_JS.modules.templateEngine.compile( tpl );
 		 * var html = template( data );
 		 * 
 		 * @see http://ejohn.org/blog/javascript-micro-templating/
@@ -272,11 +272,12 @@ ONE_PAGE_SHOP.modules.templateEngine = (function(){
 /**
  * Shopping cart module
  */
-ONE_PAGE_SHOP.modules.cart = (function( window, document ){
+ESHOP_JS.modules.cart = (function( window, document ){
 	
-	var settings = ONE_PAGE_SHOP.settings;
-	var storage = ONE_PAGE_SHOP.modules.storage;
-	var cartTemplate = ONE_PAGE_SHOP.modules.templateEngine.compile( ONE_PAGE_SHOP.templates.cart );	
+	var pubsub = ESHOP_JS.modules.pubsub;
+	var settings = ESHOP_JS.settings;
+	var storage = ESHOP_JS.modules.storage;
+	var cartTemplate = ESHOP_JS.modules.templateEngine.compile( ESHOP_JS.templates.cart );	
 			
 	/* Validate product
 	 * @param {Object} product
@@ -345,12 +346,20 @@ ONE_PAGE_SHOP.modules.cart = (function( window, document ){
 				products.push( product );	
 			}
 																			
-			storage.save(settings.CART_STORAGE_KEY, {products:products});	
+			storage.save(settings.CART_STORAGE_KEY, {products:products}); 
 			
-			this.draw();		
+			pubsub.publish("addtocart", product);						
 		},
 		
 		remove:function(id){},
+		
+		/**
+		 * Get count of items in shopping cart
+		 * @return {Mumber}
+		 */
+		count:function(){
+			return storage.get( settings.CART_STORAGE_KEY ).products.length;	
+		},
 		
 		/**
 		 * Draw the shopping cart
@@ -371,10 +380,10 @@ ONE_PAGE_SHOP.modules.cart = (function( window, document ){
 /**
  * Products module
  */
-ONE_PAGE_SHOP.modules.product = (function( window, document ){
-	var settings = ONE_PAGE_SHOP.settings;
-	var utils = ONE_PAGE_SHOP.utils;
-	var cart = ONE_PAGE_SHOP.modules.cart;
+ESHOP_JS.modules.product = (function( window, document ){
+	var settings = ESHOP_JS.settings;
+	var utils = ESHOP_JS.utils;
+	var cart = ESHOP_JS.modules.cart;
 			
 	function addToCartHandler(e){
 		var productWrapper = e.target.parentNode;
@@ -428,6 +437,10 @@ ONE_PAGE_SHOP.modules.product = (function( window, document ){
 		links[idx].addEventListener( utils.isTouchDevice( ) ? "touchstart" : "mousedown", addToCartHandler, false );		
 	}
 	
+	// show price
+	//TODO
+	
 	// set change price handler
+	//TODO
 					
 })( window, document );

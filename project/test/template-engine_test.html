@@ -5,7 +5,7 @@
 		<script src="http://code.jquery.com/jquery-latest.js"></script>
 		<link rel="stylesheet" href="http://code.jquery.com/qunit/qunit-1.12.0.css" type="text/css" media="screen" />
 		<script type="text/javascript" src="http://code.jquery.com/qunit/qunit-1.12.0.js"></script>
-		<script type="text/javascript" src="../build/eshop.js"></script>	
+		<script type="text/javascript" src="../build/eshopJS.js"></script>	
 		
 		<script>
 			window.onload = function( ) {							
@@ -20,7 +20,7 @@
 					 '</ul>';
 															
 					var result = "<h1>Tomas</h1><p>Znojmo</p><ul><li>Kuba</li><li>Maruška</li></ul>";	
-					var template = ONE_PAGE_SHOP.modules.templateEngine.compile( source );																										
+					var template = ESHOP_JS.modules.templateEngine.compile( source );																										
 					equal( template(data), result);																
 				});								
 			};// onload

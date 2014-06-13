@@ -1,7 +1,7 @@
 /**
  * Storage module
  */
-ONE_PAGE_SHOP.modules.storage = (function(){
+ESHOP_JS.modules.storage = (function(){
 		
 	/*
 	 * Is local storage

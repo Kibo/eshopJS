@@ -1,17 +1,17 @@
-var ONE_PAGE_SHOP = ONE_PAGE_SHOP || {};
+var ESHOP_JS = ESHOP_JS || {};
 
 /**
  * Create namespace
  * @param {String} ns_string
  * @example
- * ONE_PAGE_SHOP.namespace('modules.module1');
+ * ESHOP_JS.namespace('modules.module1');
  */
-ONE_PAGE_SHOP.namespace = function( ns_string ) {
+ESHOP_JS.namespace = function( ns_string ) {
 	var parts = ns_string.split( '.' ), 
-	parent = ONE_PAGE_SHOP; 
+	parent = ESHOP_JS; 
 
 	// strip redundant leading global
-	if( parts[ 0 ] === "ONE_PAGE_SHOP" ) {
+	if( parts[ 0 ] === "ESHOP_JS" ) {
 		parts = parts.slice( 1 );
 	}
 	for( var i = 0; i < parts.length; i += 1 ) {
@@ -26,4 +26,4 @@ ONE_PAGE_SHOP.namespace = function( ns_string ) {
 };
 
 /* ## NAMESPACES ############## */
-ONE_PAGE_SHOP.namespace('modules');
+ESHOP_JS.namespace('modules');

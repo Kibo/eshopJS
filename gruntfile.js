@@ -64,7 +64,7 @@ module.exports = function( grunt ) {
     		output: 'project/src/templates/templates.js',
     		ext: 'ejs',
     		removebreak: true,
-    		name: "ONE_PAGE_SHOP.templates"  	    		  	   
+    		name: "ESHOP_JS.templates"  	    		  	   
   		},
   		
   		clean: {

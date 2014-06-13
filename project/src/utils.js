@@ -1,4 +1,4 @@
-window.ONE_PAGE_SHOP.utils = (function( window, document){
+ESHOP_JS.utils = (function( window, document){
 		
 	return {
 		

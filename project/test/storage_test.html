@@ -5,18 +5,18 @@
 		<script src="http://code.jquery.com/jquery-latest.js"></script>
 		<link rel="stylesheet" href="http://code.jquery.com/qunit/qunit-1.12.0.css" type="text/css" media="screen" />
 		<script type="text/javascript" src="http://code.jquery.com/qunit/qunit-1.12.0.js"></script>
-		<script type="text/javascript" src="../build/eshop.js"></script>	
+		<script type="text/javascript" src="../build/eshopJS.js"></script>	
 		
 		<script>
 			window.onload = function( ) {							
 				test( "storage", function( ) {
 					var now = new Date().getTime();													
-					ONE_PAGE_SHOP.modules.storage.save("now", {"now": now});				
-					equal( ONE_PAGE_SHOP.modules.storage.get("now").now, now);																
+					ESHOP_JS.modules.storage.save("now", {"now": now});				
+					equal( ESHOP_JS.modules.storage.get("now").now, now);																
 				});	
 				
 				test( "empty storage", function( ) {						
-					deepEqual( ONE_PAGE_SHOP.modules.storage.get( new Date().getTime()+"" ), {});																
+					deepEqual( ESHOP_JS.modules.storage.get( new Date().getTime()+"" ), {});																
 				});														
 			};// onload
 		</script>

@@ -1,11 +1,12 @@
 /**
  * Shopping cart module
  */
-ONE_PAGE_SHOP.modules.cart = (function( window, document ){
+ESHOP_JS.modules.cart = (function( window, document ){
 	
-	var settings = ONE_PAGE_SHOP.settings;
-	var storage = ONE_PAGE_SHOP.modules.storage;
-	var cartTemplate = ONE_PAGE_SHOP.modules.templateEngine.compile( ONE_PAGE_SHOP.templates.cart );	
+	var pubsub = ESHOP_JS.modules.pubsub;
+	var settings = ESHOP_JS.settings;
+	var storage = ESHOP_JS.modules.storage;
+	var cartTemplate = ESHOP_JS.modules.templateEngine.compile( ESHOP_JS.templates.cart );	
 			
 	/* Validate product
 	 * @param {Object} product
@@ -74,12 +75,20 @@ ONE_PAGE_SHOP.modules.cart = (function( window, document ){
 				products.push( product );	
 			}
 																			
-			storage.save(settings.CART_STORAGE_KEY, {products:products});	
+			storage.save(settings.CART_STORAGE_KEY, {products:products}); 
 			
-			this.draw();		
+			pubsub.publish("addtocart", product);						
 		},
 		
 		remove:function(id){},
+		
+		/**
+		 * Get count of items in shopping cart
+		 * @return {Mumber}
+		 */
+		count:function(){
+			return storage.get( settings.CART_STORAGE_KEY ).products.length;	
+		},
 		
 		/**
 		 * Draw the shopping cart

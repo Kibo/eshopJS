@@ -3,6 +3,10 @@ A free and open-source Javascript e-shop that easily integrates with your curren
 
 Status: in progress
 
+- no dependencies
+- easily integrates ([settings](https://github.com/Kibo/eshopJS/blob/master/project/src/settings.js), [templates](https://github.com/Kibo/eshopJS/tree/master/project/src/templates))
+
+
 ##Example
 - [Rastashop](http://kibo.github.io/eshopJS/)
 

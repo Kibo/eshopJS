@@ -5,24 +5,24 @@
 		<script src="http://code.jquery.com/jquery-latest.js"></script>
 		<link rel="stylesheet" href="http://code.jquery.com/qunit/qunit-1.12.0.css" type="text/css" media="screen" />
 		<script type="text/javascript" src="http://code.jquery.com/qunit/qunit-1.12.0.js"></script>
-		<script type="text/javascript" src="../build/eshop.js"></script>	
+		<script type="text/javascript" src="../build/eshopJS.js"></script>	
 		
 		<script>
 			window.onload = function( ) {				
 																								
 				test( "subscribe", function( ) {					
 					var fnc = function(e){ e.now++;}; 								
-					equal( ONE_PAGE_SHOP.modules.pubsub.subscribe("now", fnc), "0");																
+					equal( ESHOP_JS.modules.pubsub.subscribe("now", fnc), "0");																
 				});	
 				
 				test( "publish", function( ) {	
 					var msg = {"now": 1};
-					ONE_PAGE_SHOP.modules.pubsub.publish("now", msg);									
+					ESHOP_JS.modules.pubsub.publish("now", msg);									
 					equal( msg.now, 2);																
 				});
 				
 				test( "unsubscribe", function( ) {										
-					equal( ONE_PAGE_SHOP.modules.pubsub.unsubscribe("0"), "0");																
+					equal( ESHOP_JS.modules.pubsub.unsubscribe("0"), "0");																
 				});
 				
 											

@@ -1,7 +1,7 @@
 /**
  * Template engine module
  */
-ONE_PAGE_SHOP.modules.templateEngine = (function(){
+ESHOP_JS.modules.templateEngine = (function(){
 		
 	return{
 				
@@ -13,7 +13,7 @@ ONE_PAGE_SHOP.modules.templateEngine = (function(){
 		 * @example
 		 * var data = {name:"tomas"};
 		 * var tpl = '<h1><%=name%></h1>';
-		 * var template = ONE_PAGE_SHOP.modules.templateEngine.compile( tpl );
+		 * var template = ESHOP_JS.modules.templateEngine.compile( tpl );
 		 * var html = template( data );
 		 * 
 		 * @see http://ejohn.org/blog/javascript-micro-templating/
