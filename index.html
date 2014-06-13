@@ -6,90 +6,124 @@
 		<title>One page eshop</title>
 		<meta name="description" content="One page eshop">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">		
+		<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
 	</head>
 	<body>
-		<div class="container">
-			<header>				
+		<div class="container">			
+			<header>
 				<img src="images/logo.png" alt="Rasta" align="left">
-				<h1>Rasta eshop</h1>				
+				<a href="#cart" class="btn btn-info pull-right"><span class="glyphicon glyphicon-shopping-cart"></span> Shopping cart</a>
+				<h1>Rasta eshop</h1>			
 			</header>
 			<hr>
 
-		<section class="product">
+			<section class="product">
 
-			<h3 class="product-title">Rasta T-shirt</h3>
+				<div class="media">
+					<a class="pull-left" href="#"> <img src="images/tshirt.jpg" class="media-object" alt="t-shirt"> </a>
+					<div class="media-body">
+						<h3 class="product-title">Rasta T-shirt</h3>
+						<p>
+							Duis augue quam, viverra id nibh ut, sodales ultricies erat. Nulla consectetur ultrices volutpat. Sed elementum mi ornare, convallis augue non, sodales neque. Praesent nibh metus, egestas nec tellus sit amet, lobortis rutrum purus. Curabitur tincidunt consequat velit.
+						</p>
+
+						<b>Size:</b>
+						<br>
+						<select class="product-variations">
+							<option value="0">Size S</option>
+							<option value="2">Size L</option>
+							<option value="4">Size XXL</option>
+						</select>
+
+						<br>
+
+						<b>Color:</b>
+						<br>
+						<select class="product-variations">
+							<option value="1">Red</option>
+							<option value="3">Green</option>
+							<option value="5">Yellow</option>
+						</select>
+
+						<p>
+							<b>Price</b>: $<span class="product-price" data-base="12"></span>
+						</p>
+
+						<a class="add-to-cart btn btn-success" href="#cart">Add to cart</a>
+
+					</div> <!-- media body -->
+				</div> <!-- media -->
+
+			</section>
+
+			<hr>
+
+			<section class="product">
+				
+				
+				<div class="media">
+					<a class="pull-left" href="#"> <img src="images/cap.jpg" class="media-object" alt="cap"> </a>
+					<div class="media-body">
+				
+
+				<h3 class="product-title">Rasta Cap</h3>
+				<p>
+					Duis augue quam, viverra id nibh ut, sodales ultricies erat. Nulla consectetur ultrices volutpat. Sed elementum mi ornare, convallis augue non, sodales neque. Praesent nibh metus, egestas nec tellus sit amet, lobortis rutrum purus. Curabitur tincidunt consequat velit.
+				</p>
+
+				<b>Details:</b>
+				<br>
+				<select class="product-variations">
+					<option value="0">Green</option>
+					<option value="1">Yellow-Red-Green</option>
+				</select>
+
+				<p>
+					<b>Price</b>: $<span class="product-price" data-base="3"></span>
+				</p>
+
+				<a class="add-to-cart btn btn-success" href="#cart">Add to cart</a>
+				
+				</div> <!-- media body -->
+				</div> <!-- media -->
+
+			</section>
+
+			<hr>
+
+			<section class="product">
+				
+				<div class="media">
+					<a class="pull-left" href="#"> <img src="images/bracelet.jpg" class="media-object" alt="bracelet"> </a>
+					<div class="media-body">
+
+				<h3 class="product-title">Rasta Bracelet</h3>
+				<p>
+					Duis augue quam, viverra id nibh ut, sodales ultricies erat. Nulla consectetur ultrices volutpat. Sed elementum mi ornare, convallis augue non, sodales neque. Praesent nibh metus, egestas nec tellus sit amet, lobortis rutrum purus. Curabitur tincidunt consequat velit.
+				</p>
+
+				<p>
+					<b>Price</b>: $<span class="product-price" data-base="3"></span>
+				</p>
+
+				<a class="add-to-cart btn btn-success" href="#cart">Add to cart</a>
+				
+				</div> <!-- media body -->
+				</div> <!-- media -->
+
+			</section>
 			
-			<b>Size:</b>
-			<select class="product-variations">
-				<option value="0">Size S</option>
-				<option value="2">Size L</option>
-				<option value="4">Size XXL</option>
-			</select>
+			<hr>
 			
-			<br>
-			
-			<b>Color:</b>
-			<select class="product-variations">
-				<option value="1">Red</option>
-				<option value="3">Green</option>
-				<option value="5">Yellow</option>
-			</select>
+			<h3>Shopping cart</h3>
+			<div id="cart"></div>
+					
+		</div>
+		<!-- container -->
 
-			<p>
-				<b>Price</b>: $<span class="product-price" data-base="12"></span>
-			</p>
-
-			<a class="add-to-cart btn btn-success" href="#cart">Add to cart</a>
-
-		</section>
-		
-		<hr>
-
-		<section class="product">
-
-			<h3 class="product-title">Rasta Cap</h3>
-			
-			<b>Details:</b>	
-			<select class="product-variations">
-				<option value="0">Green</option>
-				<option value="1">Yellow-Red-Green</option>
-			</select>
-
-			<p>
-				<b>Price</b>: $<span class="product-price" data-base="3"></span>
-			</p>
-
-			<a class="add-to-cart btn btn-success" href="#cart">Add to cart</a>
-
-		</section>
-		
-		<hr>
-		
-		<section class="product">
-
-			<h3 class="product-title">Rasta bracelet</h3>
-						
-			<p>
-				<b>Price</b>: $<span class="product-price" data-base="3"></span>
-			</p>
-
-			<a class="add-to-cart btn btn-success" href="#cart">Add to cart</a>
-
-		</section>
-		
-		
-		
-		<hr>
-
-		<h3>Shopping cart</h3>
-		<div id="cart"></div>
-		
-		</div> <!-- container -->
-
-		<script src="js/eshop.js"></script>
+		<script src="js/eshopJS.js"></script>
 		<script>
-			ONE_PAGE_SHOP.modules.cart.draw();			
-		</script>		
+			ESHOP_JS.modules.cart.draw( );
+		</script>
 	</body>
 </html>
