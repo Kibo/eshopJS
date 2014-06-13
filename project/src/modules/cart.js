@@ -3,7 +3,9 @@
  */
 ESHOP_JS.modules.cart = (function( window, document ){
 	
-	var pubsub = ESHOP_JS.modules.pubsub;
+	var EMPTY_STORAGE = {products:[]};
+	
+	var pubsub = ESHOP_JS.modules.pubsub;	
 	var settings = ESHOP_JS.settings;
 	var storage = ESHOP_JS.modules.storage;
 	var cartTemplate = ESHOP_JS.modules.templateEngine.compile( ESHOP_JS.templates.cart );	
@@ -14,17 +16,18 @@ ESHOP_JS.modules.cart = (function( window, document ){
 	 */
 	function validate( product ){
 		var result = true;		
+		var errors = [];
 		// TODO						
 		
 		return {
 			isValid: result,
 			obj: product,
-			errors:[]			
+			errors:errors			
 		};
 	};
 	
 	/**
-	 * If contains a product
+	 * Contains an array of products a product?
 	 * @param {Array} products
 	 * @param {Object} product
 	 * @return {Object}
@@ -47,14 +50,15 @@ ESHOP_JS.modules.cart = (function( window, document ){
 		
 	// init storage
 	if(!storage.get( settings.CART_STORAGE_KEY ).products){
-		storage.save(settings.CART_STORAGE_KEY, {products:[]} );		
+		storage.save(settings.CART_STORAGE_KEY, EMPTY_STORAGE );		
 	}
-		
+				
 	return{
 		
 		/**
 		 * Add product to the shoping cart 
  		 * @param {Object} product
+ 		 * @fires CART_CHANGE_EVENT_NAME
 		 */
 		add:function( product ){							
 			var validateResult = validate( product ); 	
@@ -76,11 +80,38 @@ ESHOP_JS.modules.cart = (function( window, document ){
 			}
 																			
 			storage.save(settings.CART_STORAGE_KEY, {products:products}); 
-			
-			pubsub.publish("addtocart", product);						
+						
+			pubsub.publish( settings.CART_CHANGE_EVENT_NAME );						
 		},
 		
-		remove:function(id){},
+		/**
+		 * Remove product form cart
+		 * @param {Object}
+		 * @fires CART_CHANGE_EVENT_NAME
+		 */
+		remove:function( product ){
+			
+			var products = storage.get( settings.CART_STORAGE_KEY ).products;
+						
+			var cartResponse = contains(products, product);
+			if(cartResponse.index !== 'null'){
+				products.splice(cartResponse.index, 1);
+			}
+			
+			storage.save(settings.CART_STORAGE_KEY, {products:products});
+			
+			pubsub.publish( settings.CART_CHANGE_EVENT_NAME );
+		},
+		
+		/**
+		 * Empties the cart
+		 * @fires CART_CHANGE_EVENT_NAME
+		 */
+		reset:function(){
+			storage.save(settings.CART_STORAGE_KEY, EMPTY_STORAGE );
+			
+			pubsub.publish( settings.CART_CHANGE_EVENT_NAME );
+		},
 		
 		/**
 		 * Get count of items in shopping cart

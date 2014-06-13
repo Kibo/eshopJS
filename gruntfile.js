@@ -6,14 +6,13 @@ module.exports = function( grunt ) {
 		srcFiles: ['project/src/namespace.js',
 				   'project/src/utils.js',  
 				   'project/src/settings.js', 
-				   'project/src/templates/templates.js', 
 				   'project/src/modules/pubsub.js',
+				   'project/src/templates/templates.js',				   
 				   'project/src/modules/storage.js',
 				   'project/src/modules/template-engine.js',
 				   'project/src/modules/cart.js',				   
 				   'project/src/modules/product.js',
-				   ],
-		
+				   ],		
 		concat : {
 						
 			options: {        	

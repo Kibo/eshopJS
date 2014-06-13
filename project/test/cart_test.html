@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<script src="http://code.jquery.com/jquery-latest.js"></script>
+		<link rel="stylesheet" href="http://code.jquery.com/qunit/qunit-1.12.0.css" type="text/css" media="screen" />
+		<script type="text/javascript" src="http://code.jquery.com/qunit/qunit-1.12.0.js"></script>
+		<script type="text/javascript" src="../build/eshopJS.js"></script>	
+		
+		<script>
+			window.onload = function( ) {	
+				
+				var cart = ESHOP_JS.modules.cart;
+				var settings = ESHOP_JS.settings;
+				var storage = ESHOP_JS.modules.storage;
+				
+				module( "module A", {
+					setup: function( ) {
+						cart.reset();
+					},
+
+					teardown: function( ) {}
+				} );			
+																								
+				test( "reset_add", function( ) {													
+					equal( storage.get( settings.CART_STORAGE_KEY ).products.length, 0);
+					
+					var p1 = {title:"abc", variations:"cde", price:10};
+					var p2 = {title:"efg", variations:"hij", price:20};
+					cart.add(p1);
+					cart.add(p2);
+					
+					equal( storage.get( settings.CART_STORAGE_KEY ).products.length, 2);
+					
+					cart.reset();
+					equal( storage.get( settings.CART_STORAGE_KEY ).products.length, 0);																																									
+				});
+				
+				test( "remove", function( ) {													
+					equal( storage.get( settings.CART_STORAGE_KEY ).products.length, 0);
+					
+					var p1 = {title:"abc", variations:"cde", price:10};
+					var p2 = {title:"efg", variations:"hij", price:20};
+					
+					cart.add(p1);
+					cart.add(p2);
+					
+					equal( storage.get( settings.CART_STORAGE_KEY ).products.length, 2);
+					
+					cart.remove(p1);
+					equal( storage.get( settings.CART_STORAGE_KEY ).products.length, 1);
+					deepEqual( storage.get( settings.CART_STORAGE_KEY ).products[0], p2);																																									
+				});
+				
+				test( "count", function( ) {													
+					equal( storage.get( settings.CART_STORAGE_KEY ).products.length, 0);
+					equal( cart.count(), 0);
+					
+					var p1 = {title:"abc", variations:"cde", price:10};
+					var p2 = {title:"efg", variations:"hij", price:20};
+					
+					cart.add(p1);
+					cart.add(p2);
+					
+					equal( storage.get( settings.CART_STORAGE_KEY ).products.length, 2);
+					equal( cart.count(), 2);
+					
+					cart.remove(p1);
+					equal( storage.get( settings.CART_STORAGE_KEY ).products.length, 1);
+					equal( cart.count(), 1);																																								
+				});
+																														
+			};// onload
+		</script>
+	</head>
+	<body>
+		<h1 id="qunit-header">Cart module</h1>
+		<h2 id="qunit-banner"></h2>
+		<div id="qunit-testrunner-toolbar"></div>
+		<h2 id="qunit-userAgent"></h2>
+		<ol id="qunit-tests"></ol>
+		<div id="qunit-fixture">
+			test markup, will be hidden
+		</div>
+	</body>
+</html>

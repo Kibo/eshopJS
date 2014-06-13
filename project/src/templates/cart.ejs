@@ -22,7 +22,7 @@
 				<td><%= products[idx].variations %></td>
 				<td><input type="number" value="<%= products[idx].count %>" min="0" max="100" step="1"></td>
 				<td>$<%= products[idx].count * products[idx].price %></td>
-				<td><a href="#" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-trash"></span> Remove</a></td>				
+				<td><a href="#cart" class="btn btn-danger btn-xs" title="Remove"><span class="glyphicon glyphicon-trash"></span></a></td>				
 			</tr>			
 		<% } %>				
 	</tbody>	

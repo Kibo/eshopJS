@@ -4,20 +4,20 @@
 ESHOP_JS.modules.storage = (function(){
 		
 	/*
-	 * Is local storage
+	 * Is session storage
 	 */
-	function isLocalStorage(){
+	function isSessionStorage(){
 		try {
-   			return 'localStorage' in window && window.localStorage !== null;
+   			return 'sessionStorage' in window && window.sessionStorage !== null;
   		} catch (e) {
     		return false;
   		}
 	};
 	
-	if(!isLocalStorage){
+	if(!isSessionStorage()){
 		throw {
 			name:"UnsupportedAPI",
-			message:"Your browser does not support LocalStorage"
+			message:"Your browser probably does not support SessionStorage"
 		};
 	}
 		 	
@@ -29,7 +29,7 @@ ESHOP_JS.modules.storage = (function(){
  		 * @return {Object}
 		 */
 		get:function( key ){			
-			var itm = localStorage.getItem(key);						
+			var itm = sessionStorage.getItem(key);						
 			return itm ? JSON.parse(itm) : {};			
 		},
 		
@@ -39,7 +39,7 @@ ESHOP_JS.modules.storage = (function(){
  		 * @param {Object} obj
 		 */		
 		save:function( key, obj ){
-			localStorage.setItem(key, JSON.stringify(obj));
+			sessionStorage.setItem(key, JSON.stringify(obj));
 		},		
 	};
 })();

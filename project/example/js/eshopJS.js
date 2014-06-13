@@ -52,62 +52,70 @@ ESHOP_JS.utils = (function( window, document){
 
 // ### Source: project/src/settings.js
 ESHOP_JS.settings = {
-	
+
 	/**
 	 * DOM wrapper for product
 	 * @constant
-     * @type {string}
+	 * @type {string}
 	 */
-	PRODUCT_DOM_CLASS:"product",
-	
+	PRODUCT_DOM_CLASS: "product",
+
 	/**
 	 * DOM wrapper for product title
 	 * @constant
-     * @type {string}
+	 * @type {string}
 	 */
-	PRODUCT_TITLE_DOM_CLASS:"product-title",
-	
+	PRODUCT_TITLE_DOM_CLASS: "product-title",
+
 	/**
 	 * DOM wrapper for product price
 	 * @constant
-     * @type {string}
+	 * @type {string}
 	 */
-	PRODUCT_PRICE_DOM_CLASS:"product-price",
+	PRODUCT_PRICE_DOM_CLASS: "product-price",
+		
+	/**
+	 * DOM data atribute for base product price
+	 * @constant
+	 * @type {string}
+	 */
+	PRODUCT_BASE_PRICE_DOM_ATTRIBUTE: "base-price",
 	
 	/**
 	 * DOM wrapper for product variations
 	 * @constant
-     * @type {string}
+	 * @type {string}
 	 */
-	PRODUCT_VARIATIONS_DOM_CLASS:"product-variations",
-	
+	PRODUCT_VARIATIONS_DOM_CLASS: "product-variations",
+
 	/**
 	 * Class name for add link button
 	 * @constant
-     * @type {string}
+	 * @type {string}
 	 */
 	PRODUCT_LINK_DOM_CLASS: "add-to-cart",
-	
+
 	/**
 	 * DOM wrapper for cart
 	 * @constant
-     * @type {string}
+	 * @type {string}
 	 */
-	CART_DOM_ID:"cart",
-	
+	CART_DOM_ID: "cart",
+
 	/**
 	 * Key for cart in storage
 	 * @constant
-     * @type {string}
+	 * @type {string}
 	 */
-	CART_STORAGE_KEY:"ESHOP_JS",	
-};
-
-// ### Source: project/src/templates/templates.js
-window.ESHOP_JS.templates = {
-  "cart": "<table class=\"table table-striped table-bordered\"><thead><tr><th>Product</th><th>Details</th><th>Count</th><th>Price</th><th>&nbsp;</th></tr></thead><tbody><% if( products.length === 0){%><tr><td colspan=\"5\">There are not products yet.</td></tr><% } %><% for (var idx = 0, len = products.length; idx < len; idx ++) { %><tr><td><%= products[idx].title %></td><td><%= products[idx].variations %></td><td><input type=\"number\" value=\"<%= products[idx].count %>\" min=\"0\" max=\"100\" step=\"1\"></td><td>$<%= products[idx].count * products[idx].price %></td><td><a href=\"#\" class=\"btn btn-danger btn-xs\"><span class=\"glyphicon glyphicon-trash\"></span> Remove</a></td></tr><% } %></tbody></table>",
-  "form": "<form><%= title %></form>"
-}
+	CART_STORAGE_KEY: "ESHOP_JS",
+	
+	/**
+	 * Cart change event name
+	 * @constant
+	 * @type {string}
+	 */
+	CART_CHANGE_EVENT_NAME: "cartchange",	
+}; 
 
 // ### Source: project/src/modules/pubsub.js
 /**
@@ -181,6 +189,12 @@ ESHOP_JS.modules.pubsub = (function(){
 	};	
 })();
 
+// ### Source: project/src/templates/templates.js
+window.ESHOP_JS.templates = {
+  "cart": "<table class=\"table table-striped table-bordered\"><thead><tr><th>Product</th><th>Details</th><th>Count</th><th>Price</th><th>&nbsp;</th></tr></thead><tbody><% if( products.length === 0){%><tr><td colspan=\"5\">There are not products yet.</td></tr><% } %><% for (var idx = 0, len = products.length; idx < len; idx ++) { %><tr><td><%= products[idx].title %></td><td><%= products[idx].variations %></td><td><input type=\"number\" value=\"<%= products[idx].count %>\" min=\"0\" max=\"100\" step=\"1\"></td><td>$<%= products[idx].count * products[idx].price %></td><td><a href=\"#cart\" class=\"btn btn-danger btn-xs\" title=\"Remove\"><span class=\"glyphicon glyphicon-trash\"></span></a></td></tr><% } %></tbody></table>",
+  "form": "<form><%= title %></form>"
+}
+
 // ### Source: project/src/modules/storage.js
 /**
  * Storage module
@@ -188,20 +202,20 @@ ESHOP_JS.modules.pubsub = (function(){
 ESHOP_JS.modules.storage = (function(){
 		
 	/*
-	 * Is local storage
+	 * Is session storage
 	 */
-	function isLocalStorage(){
+	function isSessionStorage(){
 		try {
-   			return 'localStorage' in window && window.localStorage !== null;
+   			return 'sessionStorage' in window && window.sessionStorage !== null;
   		} catch (e) {
     		return false;
   		}
 	};
 	
-	if(!isLocalStorage){
+	if(!isSessionStorage()){
 		throw {
 			name:"UnsupportedAPI",
-			message:"Your browser does not support LocalStorage"
+			message:"Your browser probably does not support SessionStorage"
 		};
 	}
 		 	
@@ -213,7 +227,7 @@ ESHOP_JS.modules.storage = (function(){
  		 * @return {Object}
 		 */
 		get:function( key ){			
-			var itm = localStorage.getItem(key);						
+			var itm = sessionStorage.getItem(key);						
 			return itm ? JSON.parse(itm) : {};			
 		},
 		
@@ -223,7 +237,7 @@ ESHOP_JS.modules.storage = (function(){
  		 * @param {Object} obj
 		 */		
 		save:function( key, obj ){
-			localStorage.setItem(key, JSON.stringify(obj));
+			sessionStorage.setItem(key, JSON.stringify(obj));
 		},		
 	};
 })();
@@ -274,7 +288,9 @@ ESHOP_JS.modules.templateEngine = (function(){
  */
 ESHOP_JS.modules.cart = (function( window, document ){
 	
-	var pubsub = ESHOP_JS.modules.pubsub;
+	var EMPTY_STORAGE = {products:[]};
+	
+	var pubsub = ESHOP_JS.modules.pubsub;	
 	var settings = ESHOP_JS.settings;
 	var storage = ESHOP_JS.modules.storage;
 	var cartTemplate = ESHOP_JS.modules.templateEngine.compile( ESHOP_JS.templates.cart );	
@@ -285,17 +301,18 @@ ESHOP_JS.modules.cart = (function( window, document ){
 	 */
 	function validate( product ){
 		var result = true;		
+		var errors = [];
 		// TODO						
 		
 		return {
 			isValid: result,
 			obj: product,
-			errors:[]			
+			errors:errors			
 		};
 	};
 	
 	/**
-	 * If contains a product
+	 * Contains an array of products a product?
 	 * @param {Array} products
 	 * @param {Object} product
 	 * @return {Object}
@@ -318,14 +335,15 @@ ESHOP_JS.modules.cart = (function( window, document ){
 		
 	// init storage
 	if(!storage.get( settings.CART_STORAGE_KEY ).products){
-		storage.save(settings.CART_STORAGE_KEY, {products:[]} );		
+		storage.save(settings.CART_STORAGE_KEY, EMPTY_STORAGE );		
 	}
-		
+				
 	return{
 		
 		/**
 		 * Add product to the shoping cart 
  		 * @param {Object} product
+ 		 * @fires CART_CHANGE_EVENT_NAME
 		 */
 		add:function( product ){							
 			var validateResult = validate( product ); 	
@@ -347,11 +365,38 @@ ESHOP_JS.modules.cart = (function( window, document ){
 			}
 																			
 			storage.save(settings.CART_STORAGE_KEY, {products:products}); 
-			
-			pubsub.publish("addtocart", product);						
+						
+			pubsub.publish( settings.CART_CHANGE_EVENT_NAME );						
 		},
 		
-		remove:function(id){},
+		/**
+		 * Remove product form cart
+		 * @param {Object}
+		 * @fires CART_CHANGE_EVENT_NAME
+		 */
+		remove:function( product ){
+			
+			var products = storage.get( settings.CART_STORAGE_KEY ).products;
+						
+			var cartResponse = contains(products, product);
+			if(cartResponse.index !== 'null'){
+				products.splice(cartResponse.index, 1);
+			}
+			
+			storage.save(settings.CART_STORAGE_KEY, {products:products});
+			
+			pubsub.publish( settings.CART_CHANGE_EVENT_NAME );
+		},
+		
+		/**
+		 * Empties the cart
+		 * @fires CART_CHANGE_EVENT_NAME
+		 */
+		reset:function(){
+			storage.save(settings.CART_STORAGE_KEY, EMPTY_STORAGE );
+			
+			pubsub.publish( settings.CART_CHANGE_EVENT_NAME );
+		},
 		
 		/**
 		 * Get count of items in shopping cart
