@@ -6,7 +6,6 @@ Status: in progress
 - no dependencies
 - easily integrates ([settings](https://github.com/Kibo/eshopJS/blob/master/project/src/settings.js), [templates](https://github.com/Kibo/eshopJS/tree/master/project/src/templates))
 
-
 ##Example
 - [Rastashop](http://kibo.github.io/eshopJS/)
 
@@ -23,6 +22,9 @@ It uses the following *default* CSS classes:
 - **product-price**		: A base price of product.
 - **add-to-cart**		: A link to add product to the cart.
 
+It uses the following *default* data attribute:
+- **data-base-price** 	: Base price of product
+
 ###Example eshop
 ```
 <section class="product">  
@@ -36,7 +38,7 @@ It uses the following *default* CSS classes:
    </select>   
    
    <p>
-	 <b>Price</b>: $<span class="product-price" data-base="12"></span>
+	 <b>Price</b>: $<span class="product-price" data-base-price="12"></span>
    </p>
    
    <a class="add-to-cart" href="#cart">Add to cart</a>
@@ -53,14 +55,17 @@ It uses the following *default* CSS classes:
    </select>   
    
    <p>
-	 <b>Price</b>: $<span class="product-price" data-base="3"></span>
+	 <b>Price</b>: $<span class="product-price" data-base-price="3"></span>
    </p>
    
    <a class="add-to-cart" href="#cart">Add to cart</a>
       
 </section> 
 
-<!-- Wrapper for e-shop cart -->
+<!-- 
+	Wrapper for e-shop cart.
+	It may be on another page.
+ -->
 <div id="cart"></div>
 
 <script src="js/eshop.js"></script>
