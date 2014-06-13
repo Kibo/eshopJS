@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<script src="http://code.jquery.com/jquery-latest.js"></script>
+		<link rel="stylesheet" href="http://code.jquery.com/qunit/qunit-1.12.0.css" type="text/css" media="screen" />
+		<script type="text/javascript" src="http://code.jquery.com/qunit/qunit-1.12.0.js"></script>
+		<script type="text/javascript" src="../build/eshopJS.js"></script>	
+		
+		<script>
+			window.onload = function( ) {	
+				
+				var settings = ESHOP_JS.settings;
+				var product = ESHOP_JS.modules.product;
+																														
+				test( "getData", function( ) {	
+					var data = {"title":"Rasta T-shirt", "variations":"Size S, Yellow", "count":1, "price":28};
+																		
+					var DOMWrapper = document.querySelector(".product");
+					deepEqual( product.getData( DOMWrapper ), data );																			
+				});	
+								
+				test( "getData", function( ) {																						
+					var DOMWrapper = document.querySelector(".product");
+					equal( product.getPrice( DOMWrapper ), 28 );																			
+				});
+																				
+			};// onload
+		</script>
+	</head>
+	<body>
+		<h1 id="qunit-header">Product module</h1>
+		<h2 id="qunit-banner"></h2>
+		<div id="qunit-testrunner-toolbar"></div>
+		<h2 id="qunit-userAgent"></h2>
+		<ol id="qunit-tests"></ol>
+		<div id="qunit-fixture">
+										
+			<section class="product">
+							
+				<h3 class="product-title">Rasta T-shirt</h3>
+			
+				<b>Size:</b>
+				<br>
+				<select class="product-variations">
+					<option value="10">Size S</option>
+					<option value="20">Size L</option>
+					<option value="30">Size XXL</option>
+				</select>
+
+				<br>
+
+				<b>Color:</b>
+				<br>
+				<select class="product-variations">
+					<option value="1">Red</option>
+					<option value="2">Green</option>
+					<option value="3" selected="selected">Yellow</option>
+				</select>
+
+				<p data-base-price="15">
+					<b>Price</b>: $<span class="product-price"></span>
+				</p>
+
+				<a class="add-to-cart btn btn-success" href="#cart">Add to cart</a>
+			
+			</section>
+						
+		</div>
+	</body>
+</html>

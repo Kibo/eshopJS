@@ -26,7 +26,7 @@ ESHOP_JS.settings = {
 	 * @constant
 	 * @type {string}
 	 */
-	PRODUCT_BASE_PRICE_DOM_ATTRIBUTE: "base-price",
+	PRODUCT_BASE_PRICE_DOM_ATTRIBUTE: "data-base-price",
 	
 	/**
 	 * DOM wrapper for product variations

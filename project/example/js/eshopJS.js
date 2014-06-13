@@ -79,7 +79,7 @@ ESHOP_JS.settings = {
 	 * @constant
 	 * @type {string}
 	 */
-	PRODUCT_BASE_PRICE_DOM_ATTRIBUTE: "base-price",
+	PRODUCT_BASE_PRICE_DOM_ATTRIBUTE: "data-base-price",
 	
 	/**
 	 * DOM wrapper for product variations
@@ -426,66 +426,141 @@ ESHOP_JS.modules.cart = (function( window, document ){
  * Products module
  */
 ESHOP_JS.modules.product = (function( window, document ){
+	
 	var settings = ESHOP_JS.settings;
 	var utils = ESHOP_JS.utils;
 	var cart = ESHOP_JS.modules.cart;
-			
-	function addToCartHandler(e){
-		var productWrapper = e.target.parentNode;
-		
-		var title = productWrapper.querySelector("." + settings.PRODUCT_TITLE_DOM_CLASS).innerHTML;											
-		var variations = getSelectedVariations( productWrapper.querySelectorAll("." + settings.PRODUCT_VARIATIONS_DOM_CLASS) );
-				  											
-		cart.add({title:title, variations:variations.text.join(", "), count:1, price:getPrice( parseInt(productWrapper.querySelector("." + settings.PRODUCT_PRICE_DOM_CLASS).dataset.base ,10), variations.price )});							
-		
-		e.preventDefault();		
-	};
 	
 	/**
-	 * Get selected variations of product
-	 * @param{Array} selects - list of HTML selects
-	 * @return{Object}
+	 * Get selected variations from product
+	 * @param {Object} productDOMWrapper
+	 * @return {Object}
 	 */
-	function getSelectedVariations( selects ){		
-		var text = [];
-		var price = [];
-		for(var idx = 0, len = selects.length; idx < len; idx++ ){			
-			text.push(selects[idx].options[selects[idx].selectedIndex].text);
-			price.push( parseInt(selects[idx].options[selects[idx].selectedIndex].value, 10) );									
-		}	
+	function getVariations( productDOMWrapper ){
+		
+		var variations = productDOMWrapper.querySelectorAll("." + settings.PRODUCT_VARIATIONS_DOM_CLASS);
+		
+		var texts = [];
+		var prices = [];			
+		for(var idx = 0, len = variations.length; idx < len; idx++ ){
 			
-		return {text:text, price:price};
-	};
-		
-	/**
-	 * Get price of product 
-	 * @param {Number} basePrice
-	 * @param {Array} variations - selected variations prices
-	 * @return {Integer}
-	 */
-	function getPrice( basePrice, variations ){			
-		
-		if( variations.length === 0 ){
-			return basePrice;
+			switch (variations[idx].tagName) {
+			  case "SELECT":
+			    texts.push(variations[idx].options[variations[idx].selectedIndex].text);
+				prices.push( parseInt(variations[idx].options[variations[idx].selectedIndex].value, 10) );	
+			    break;
+			  
+			  default:
+			   	throw{
+			   		name:"UnsupportedVariationsElementException",
+			   		message:"Variation uses a unsupported tag: " + variations[idx].tagName
+			   	};
+			}			
+											
 		}
 				
-		var variationPrices = variations.reduce( function(a, b) {
-    		return a + b;
-		});
-		
-		return variationPrices + basePrice;
+		return {texts:texts, prices:prices};		
 	};
 	
-	// set add to cart handler
-	var links = document.querySelectorAll("." + settings.PRODUCT_LINK_DOM_CLASS);
-	for(var idx = 0, len = links.length; idx < len; idx++ ){				
-		links[idx].addEventListener( utils.isTouchDevice( ) ? "touchstart" : "mousedown", addToCartHandler, false );		
-	}
+	/**
+	 * Get text from selected variations
+	 * @param {Object} productDOMWrapper
+	 * @return {String}
+	 */
+	function getVariationsText( productDOMWrapper ){
+		return getVariations( productDOMWrapper ).texts.join(", ");
+	};
 	
-	// show price
-	//TODO
+	/**
+	 * Calculate price from selected variations
+	 * @param {Object} productDOMWrapper
+	 * @return {Number}
+	 */
+	function getVariationsPrice( productDOMWrapper ){
+		var prices = getVariations( productDOMWrapper ).prices;
+		
+		if( prices.length === 0 ){
+			return 0;
+		}
+		
+		return prices.reduce( function(a, b) {
+    		return a + b;
+		});
+	};
 	
-	// set change price handler
-	//TODO
+	/**
+	 * Set add to cart handler
+	 */		
+	function addToCartHandler( productDOMWrapper ){
+		var links = productDOMWrapper.querySelectorAll("." + settings.PRODUCT_LINK_DOM_CLASS);
+		for(var idx = 0, len = addToCartLinks.length; idx < len; idx++ ){
+			links[idx].addEventListener( utils.isTouchDevice( ) ? "touchstart" : "mousedown", function(e){
+				var productDOMWrapper = e.target.parentNode;				
+				ESHOP_JS.modules.cart.add( ESHOP_JS.modules.product.getData( productDOMWrapper ));
+				e.preventDefault();	
+			}, false );	
+		}	
+	};
+	
+	/**
+	 * Set change variations handler
+	 */	
+	function changeVariationHandler( productDOMWrapper ){
+		var variations = productDOMWrapper.querySelectorAll("." + settings.PRODUCT_VARIATIONS_DOM_CLASS);
+		
+		for(var idx = 0, len = variations.length; idx < len; idx++ ){
+			
+			if( variations[idx].tagName === "SELECT" ){
+				variations[idx].addEventListener("change", function(e){
+					var productDOMWrapper = e.target.parentNode;
+					var nodes = productDOMWrapper.query.SelectorAll("." + PRODUCT_PRICE_DOM_CLASS);
+					var newPrice = ESHOP_JS.modules.product.getPrice( productDOMWrapper );
+					for(var idx = 0, len = nodes.length; idx < len; idx++ ){
+						nodes[idx].innerHTML = newPrice; 	
+					}		
+								 				
+				}, false);
+			}			
+		}		
+	};
+			
+	return{
+		/**
+		 * Get data from DOM 
+ 		 * @param {Object} productDOMWrapper
+ 		 * @return {Object} product
+ 		 * 
+ 		 * @see ESHOP_JS.settings.PRODUCT_DOM_CLASS
+		 */
+		getData:function( productDOMWrapper ){											
+			return {
+				title:productDOMWrapper.querySelector("." + settings.PRODUCT_TITLE_DOM_CLASS).innerHTML, 
+				variations:getVariationsText( productDOMWrapper ), 
+				count:1, 
+				price:this.getPrice( productDOMWrapper )
+				};				
+		},
+		
+		/**
+		 * Set the necessary handlers
+		 * @param {Object} productDOMWrapper
+		 * 
+		 * @see ESHOP_JS.settings.PRODUCT_DOM_CLASS
+		 */
+		setHandlers:function( productDOMWrapper ){							
+			addToCartHandler( productDOMWrapper );
+			changeVariationHandler( productDOMWrapper );			
+		},
+		
+		/**
+		 * Calculate price of product
+		 * @param {Object} productDOMWrapper
+		 * @return{Number}
+		 */
+		getPrice:function( productDOMWrapper ){		
+			var basePrice = parseInt( productDOMWrapper.querySelector('[' + settings.PRODUCT_BASE_PRICE_DOM_ATTRIBUTE + ']').getAttribute(settings.PRODUCT_BASE_PRICE_DOM_ATTRIBUTE));			
+			return basePrice + getVariationsPrice( productDOMWrapper );
+		}			
+	};
 					
 })( window, document );
