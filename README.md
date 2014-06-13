@@ -64,6 +64,11 @@ It uses the following *default* CSS classes:
 <div id="cart"></div>
 
 <script src="js/eshop.js"></script>
+<script>
+window.onload = function(){
+	ESHOP_JS.init();				
+};			
+</script>
 ```
 ##It might interest you
 - [simpleCart](https://github.com/wojodesign/simplecart-js)

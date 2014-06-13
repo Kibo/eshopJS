@@ -61,5 +61,5 @@ ESHOP_JS.settings = {
 	 * @constant
 	 * @type {string}
 	 */
-	CART_CHANGE_EVENT_NAME: "cartchange",	
+	CART_CHANGE_EVENT_NAME: "cartchange"	
 }; 

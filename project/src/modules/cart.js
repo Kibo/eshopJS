@@ -52,9 +52,9 @@ ESHOP_JS.modules.cart = (function( window, document ){
 	if(!storage.get( settings.CART_STORAGE_KEY ).products){
 		storage.save(settings.CART_STORAGE_KEY, EMPTY_STORAGE );		
 	}
-				
+			
 	return{
-		
+								
 		/**
 		 * Add product to the shoping cart 
  		 * @param {Object} product
@@ -122,15 +122,26 @@ ESHOP_JS.modules.cart = (function( window, document ){
 		},
 		
 		/**
-		 * Draw the shopping cart
+		 * Redraw the shopping cart
 		 */
-		draw:function(){
+		refresh:function(){
 			var wrapper = document.getElementById( settings.CART_DOM_ID );
 			if(!wrapper){
 				return;
 			}			
 			
 			wrapper.innerHTML = cartTemplate( storage.get( settings.CART_STORAGE_KEY ));	
-		}		
+		},
+		
+		/**
+	 	* Module initialization
+	 	*/	
+		init:function(){
+			this.refresh();
+			
+			pubsub.subscribe(settings.CART_CHANGE_EVENT_NAME, function(e){
+				ESHOP_JS.modules.cart.refresh();	
+			});
+		}				
 	};	
 })( window, document);

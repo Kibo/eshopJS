@@ -9,23 +9,25 @@
 		
 		<script>
 			window.onload = function( ) {				
-																								
-				test( "subscribe", function( ) {					
-					var fnc = function(e){ e.now++;}; 								
-					equal( ESHOP_JS.modules.pubsub.subscribe("now", fnc), "0");																
-				});	
-				
-				test( "publish", function( ) {	
+																														
+				test( "subscribe_publish_unsubscribe", function( ) {	
+					// subscribe
+					var fnc = function(e){ e.now++;}; 
+					var ticket = ESHOP_JS.modules.pubsub.subscribe("now", fnc);
+					equal( typeof ticket === "string", true);
+					
+					// publish 1					
 					var msg = {"now": 1};
 					ESHOP_JS.modules.pubsub.publish("now", msg);									
-					equal( msg.now, 2);																
-				});
-				
-				test( "unsubscribe", function( ) {										
-					equal( ESHOP_JS.modules.pubsub.unsubscribe("0"), "0");																
-				});
-				
-											
+					equal( msg.now, 2);
+					
+					// unsubscribe
+					equal( ESHOP_JS.modules.pubsub.unsubscribe(ticket), ticket);
+					
+					// publish 2										
+					ESHOP_JS.modules.pubsub.publish("now", msg);									
+					equal( msg.now, 2);																																
+				});																			
 			};// onload
 		</script>
 	</head>

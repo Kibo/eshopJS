@@ -7,6 +7,18 @@ ESHOP_JS.modules.product = (function( window, document ){
 	var utils = ESHOP_JS.utils;
 	var cart = ESHOP_JS.modules.cart;
 	
+		
+	/**
+	* Calculate price of product
+	* @param {Object} productDOMWrapper
+	* @return{Number}
+	* @private
+	*/
+	function getPrice( productDOMWrapper ){		
+		var basePrice = parseInt( productDOMWrapper.querySelector('[' + settings.PRODUCT_BASE_PRICE_DOM_ATTRIBUTE + ']').getAttribute(settings.PRODUCT_BASE_PRICE_DOM_ATTRIBUTE));			
+		return basePrice + getVariationsPrice( productDOMWrapper );
+	};
+	
 	/**
 	 * Get selected variations from product
 	 * @param {Object} productDOMWrapper
@@ -69,7 +81,7 @@ ESHOP_JS.modules.product = (function( window, document ){
 	 */		
 	function addToCartHandler( productDOMWrapper ){
 		var links = productDOMWrapper.querySelectorAll("." + settings.PRODUCT_LINK_DOM_CLASS);
-		for(var idx = 0, len = addToCartLinks.length; idx < len; idx++ ){
+		for(var idx = 0, len = links.length; idx < len; idx++ ){
 			links[idx].addEventListener( utils.isTouchDevice( ) ? "touchstart" : "mousedown", function(e){
 				var productDOMWrapper = e.target.parentNode;				
 				ESHOP_JS.modules.cart.add( ESHOP_JS.modules.product.getData( productDOMWrapper ));
@@ -87,14 +99,8 @@ ESHOP_JS.modules.product = (function( window, document ){
 		for(var idx = 0, len = variations.length; idx < len; idx++ ){
 			
 			if( variations[idx].tagName === "SELECT" ){
-				variations[idx].addEventListener("change", function(e){
-					var productDOMWrapper = e.target.parentNode;
-					var nodes = productDOMWrapper.query.SelectorAll("." + PRODUCT_PRICE_DOM_CLASS);
-					var newPrice = ESHOP_JS.modules.product.getPrice( productDOMWrapper );
-					for(var idx = 0, len = nodes.length; idx < len; idx++ ){
-						nodes[idx].innerHTML = newPrice; 	
-					}		
-								 				
+				variations[idx].addEventListener("change", function(e){					
+					ESHOP_JS.modules.product.refreshPrice( e.target.parentNode );																									 
 				}, false);
 			}			
 		}		
@@ -113,7 +119,7 @@ ESHOP_JS.modules.product = (function( window, document ){
 				title:productDOMWrapper.querySelector("." + settings.PRODUCT_TITLE_DOM_CLASS).innerHTML, 
 				variations:getVariationsText( productDOMWrapper ), 
 				count:1, 
-				price:this.getPrice( productDOMWrapper )
+				price:getPrice( productDOMWrapper )
 				};				
 		},
 		
@@ -127,15 +133,28 @@ ESHOP_JS.modules.product = (function( window, document ){
 			addToCartHandler( productDOMWrapper );
 			changeVariationHandler( productDOMWrapper );			
 		},
+					
+		/**
+		 * Refresh a product price
+		 * for instance: after change variations of product
+		 */
+		refreshPrice:function( productDOMWrapper ){
+			var priceDOMWrappers = productDOMWrapper.querySelectorAll("." + settings.PRODUCT_PRICE_DOM_CLASS);
+			var price = getPrice( productDOMWrapper );
+			for(var idx = 0, len = priceDOMWrappers.length; idx < len; idx++){
+				priceDOMWrappers[idx].innerHTML = price;				
+			}					
+		},
 		
 		/**
-		 * Calculate price of product
-		 * @param {Object} productDOMWrapper
-		 * @return{Number}
-		 */
-		getPrice:function( productDOMWrapper ){		
-			var basePrice = parseInt( productDOMWrapper.querySelector('[' + settings.PRODUCT_BASE_PRICE_DOM_ATTRIBUTE + ']').getAttribute(settings.PRODUCT_BASE_PRICE_DOM_ATTRIBUTE));			
-			return basePrice + getVariationsPrice( productDOMWrapper );
+	 	* Module initialization
+	 	*/
+		init:function(){
+			var products = document.querySelectorAll("." + settings.PRODUCT_DOM_CLASS);		
+			for(var idx = 0, len = products.length; idx < len; idx++){
+				this.refreshPrice( products[idx] );										
+				this.setHandlers( products[idx] );						
+			}	
 		}			
 	};
 					
