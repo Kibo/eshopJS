@@ -81,12 +81,12 @@ It uses the following *default* data attribute:
 
 ##Implementation details
 - Shopping cart uses HTML5 SessionStorage
-- It uses HTML5 data atribute
+- It uses HTML5 *data* atributes
 - It uses WEP API *querySelector*/ *querySelectorAll*
 
 For all this feature you can find appropriate polyfill code.
 
-###TODO
+###What could be better
 - Every change of price of one product in shopping cart refresh all products. 
 
 ##It might interest you
