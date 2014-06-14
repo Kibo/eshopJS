@@ -41,7 +41,14 @@ ESHOP_JS.settings = {
 	 * @type {string}
 	 */
 	PRODUCT_LINK_DOM_CLASS: "add-to-cart",
-
+	
+	/**
+	 * Class name for remove from shopping cart link
+	 * @constant
+	 * @type {string}
+	 */
+	REMOVE_FROM_CART_DOM_CLASS: "btn-remove",
+	
 	/**
 	 * DOM wrapper for cart
 	 * @constant

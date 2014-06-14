@@ -3,8 +3,11 @@ A free and open-source Javascript e-shop that easily integrates with your curren
 
 Status: in progress
 
-- no dependencies
-- easily integrates ([settings](https://github.com/Kibo/eshopJS/blob/master/project/src/settings.js), [templates](https://github.com/Kibo/eshopJS/tree/master/project/src/templates))
+- Pure Javascript **without dependencies**.
+- Product price may depend on product details. (For example: The larger size can cost more money. )
+- Easily integrates. ([settings](https://github.com/Kibo/eshopJS/blob/master/project/src/settings.js), [templates](https://github.com/Kibo/eshopJS/tree/master/project/src/templates))
+- You can embed shopping cart on separate web page.
+- Tested code.
 
 ##Example
 - [Rastashop](http://kibo.github.io/eshopJS/)
@@ -70,10 +73,20 @@ It uses the following *default* data attribute:
 
 <script src="js/eshop.js"></script>
 <script>
-window.onload = function(){
-	ESHOP_JS.init();				
-};			
+	window.onload = function(){
+		ESHOP_JS.init();				
+	};			
 </script>
 ```
+
+##Implementation details
+- Shopping cart uses HTML5 SessionStorage
+- It uses HTML5 data atribute
+- It uses WEP API *querySelector*/ *querySelectorAll*
+For all this feature you can find appropriate polyfill code.
+
+##TODO
+- Every change of price of one product in shopping cart refresh all products. 
+
 ##It might interest you
 - [simpleCart](https://github.com/wojodesign/simplecart-js)

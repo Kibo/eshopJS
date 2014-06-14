@@ -5,6 +5,7 @@ ESHOP_JS.modules.cart = (function( window, document ){
 	
 	var EMPTY_STORAGE = {products:[]};
 	
+	var utils = ESHOP_JS.utils;
 	var pubsub = ESHOP_JS.modules.pubsub;	
 	var settings = ESHOP_JS.settings;
 	var storage = ESHOP_JS.modules.storage;
@@ -46,6 +47,44 @@ ESHOP_JS.modules.cart = (function( window, document ){
 		}	
 		
 		return response;
+	}
+	
+	/**
+	 * Set change counter handler
+	 * @param {Object} cartDOMWrapper - DOM
+	 * @private
+	 */
+	function setChangeCountHandler( cartDOMWrapper){			
+		var counters = cartDOMWrapper.querySelectorAll("input[type='number']");
+		for(var idx = 0, len = counters.length; idx < len; idx++ ){
+			counters[idx].addEventListener("change", function(e){
+				var counter = e.target;
+				var products = storage.get( settings.CART_STORAGE_KEY ).products;
+				products[ counter.dataset.idx ].count = counter.value;
+				storage.save(settings.CART_STORAGE_KEY, {products:products}); 
+				
+				ESHOP_JS.modules.pubsub.publish( settings.CART_CHANGE_EVENT_NAME );				
+			}, false);
+		}
+	}
+	
+	/**
+	 * Set remove product handler
+	 * @param {Object} cartDOMWrapper - DOM
+	 * @private
+	 */
+	function setRemoveProductHandler( cartDOMWrapper ){
+		var links = cartDOMWrapper.querySelectorAll("." + settings.REMOVE_FROM_CART_DOM_CLASS);
+		for(var idx = 0, len = links.length; idx < len; idx++ ){
+			links[idx].addEventListener( utils.isTouchDevice( ) ? "touchstart" : "mousedown", function(e){
+			
+				var products = storage.get( settings.CART_STORAGE_KEY ).products;
+				products.splice( e.target.dataset.idx, 1 );
+				storage.save(settings.CART_STORAGE_KEY, {products:products}); 
+				
+				ESHOP_JS.modules.pubsub.publish( settings.CART_CHANGE_EVENT_NAME );	
+			},false);	
+		}			
 	}
 		
 	// init storage
@@ -131,6 +170,9 @@ ESHOP_JS.modules.cart = (function( window, document ){
 			}			
 			
 			wrapper.innerHTML = cartTemplate( storage.get( settings.CART_STORAGE_KEY ));	
+			
+			setChangeCountHandler( wrapper );
+			setRemoveProductHandler( wrapper );
 		},
 		
 		/**
@@ -141,7 +183,7 @@ ESHOP_JS.modules.cart = (function( window, document ){
 			
 			pubsub.subscribe(settings.CART_CHANGE_EVENT_NAME, function(e){
 				ESHOP_JS.modules.cart.refresh();	
-			});
+			});					
 		}				
 	};	
 })( window, document);

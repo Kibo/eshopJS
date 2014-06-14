@@ -21,9 +21,9 @@
 			<tr>		
 				<td><%= products[idx].title %></td>
 				<td><%= products[idx].variations %></td>
-				<td><input type="number" value="<%= products[idx].count %>" min="0" max="100" step="1"></td>
+				<td><input type="number" value="<%= products[idx].count %>" min="1" max="100" step="1" data-idx="<%=idx%>"></td>
 				<td>$<%= products[idx].count * products[idx].price %></td>
-				<td><a href="#cart" class="btn btn-danger btn-xs" title="Remove"><span class="glyphicon glyphicon-trash"></span></a></td>				
+				<td><a href="#cart" class="btn btn-danger btn-xs btn-remove" title="Remove" data-idx="<%=idx%>"><span class="glyphicon glyphicon-trash"></span></a></td>				
 			</tr>			
 		<% } %>				
 	</tbody>	
