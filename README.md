@@ -10,7 +10,7 @@ Status: **in progress**
 - Tested code.
 
 ##Example
-- [Rastashop](http://kibo.github.io/eshopJS/) - in progress
+- [Rastashop](http://kibo.github.io/eshopJS/) (in progress)
 
 ##How to use
 All IDs, Classes and atributes you can change in [settings](https://github.com/Kibo/eshopJS/blob/master/project/src/settings.js).
@@ -78,7 +78,7 @@ It uses the following *default* data attribute:
 	};			
 </script>
 ```
-##Implementation details
+###Implementation details
 - Shopping cart uses HTML5 SessionStorage
 - It uses HTML5 *data* atributes
 - It uses WEP API *querySelector* and *querySelectorAll*
@@ -88,5 +88,5 @@ For all this feature you can find appropriate polyfill code.
 ###What could be better
 - Every change of price of one product in shopping cart refresh all products. 
 
-##It might interest you
+###It might interest you
 - [SimpleCart](https://github.com/wojodesign/simplecart-js)
