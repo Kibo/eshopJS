@@ -3,6 +3,7 @@
   "version": "0.2.0",
   "description": "A free and open-source Javascript eshop that easily integrates with your current website",
   "private": true,
+  "license": "MIT",
  
   "dependencies": {},
   
