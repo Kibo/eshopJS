@@ -86,7 +86,7 @@ It uses the following *default* data attribute:
 For all this feature you can find appropriate polyfill code.
 
 ###What could be better
-- Every change of price of one product in shopping cart refresh all products. 
+- Every change of price of one product in shopping cart refreshes whole shopping cart. 
 
 ###It might interest you
 - [SimpleCart](https://github.com/wojodesign/simplecart-js)
