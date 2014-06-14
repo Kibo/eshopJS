@@ -1,4 +1,4 @@
-/* E-shop v0.2.0 - 2014-06-13 */
+/* E-shop v0.2.0 - 2014-06-14 */
 // ### Source: project/src/namespace.js
 var ESHOP_JS = ESHOP_JS || {};
 
@@ -94,7 +94,14 @@ ESHOP_JS.settings = {
 	 * @type {string}
 	 */
 	PRODUCT_LINK_DOM_CLASS: "add-to-cart",
-
+	
+	/**
+	 * Class name for remove from shopping cart link
+	 * @constant
+	 * @type {string}
+	 */
+	REMOVE_FROM_CART_DOM_CLASS: "btn-remove",
+	
 	/**
 	 * DOM wrapper for cart
 	 * @constant
@@ -191,7 +198,7 @@ ESHOP_JS.modules.pubsub = (function(){
 
 // ### Source: project/src/templates/templates.js
 window.ESHOP_JS.templates = {
-  "cart": "<h3>Shopping cart</h3><table class=\"table table-striped table-bordered\"><thead><tr><th>Product</th><th>Details</th><th>Count</th><th>Price</th><th>&nbsp;</th></tr></thead><tbody><% if( products.length === 0){%><tr><td colspan=\"5\">There are not products yet.</td></tr><% } %><% for (var idx = 0, len = products.length; idx < len; idx ++) { %><tr><td><%= products[idx].title %></td><td><%= products[idx].variations %></td><td><input type=\"number\" value=\"<%= products[idx].count %>\" min=\"0\" max=\"100\" step=\"1\"></td><td>$<%= products[idx].count * products[idx].price %></td><td><a href=\"#cart\" class=\"btn btn-danger btn-xs\" title=\"Remove\"><span class=\"glyphicon glyphicon-trash\"></span></a></td></tr><% } %></tbody></table>",
+  "cart": "<h3>Shopping cart</h3><table class=\"table table-striped table-bordered\"><thead><tr><th>Product</th><th>Details</th><th>Count</th><th>Price</th><th>&nbsp;</th></tr></thead><tbody><% if( products.length === 0){%><tr><td colspan=\"5\">There are not products yet.</td></tr><% } %><% for (var idx = 0, len = products.length; idx < len; idx ++) { %><tr><td><%= products[idx].title %></td><td><%= products[idx].variations %></td><td><input type=\"number\" value=\"<%= products[idx].count %>\" min=\"1\" max=\"100\" step=\"1\" data-idx=\"<%=idx%>\"></td><td>$<%= products[idx].count * products[idx].price %></td><td><a href=\"#cart\" class=\"btn btn-danger btn-xs btn-remove\" title=\"Remove\" data-idx=\"<%=idx%>\"><span class=\"glyphicon glyphicon-trash\"></span></a></td></tr><% } %></tbody></table>",
   "form": "<form><%= title %></form>"
 }
 
@@ -290,6 +297,7 @@ ESHOP_JS.modules.cart = (function( window, document ){
 	
 	var EMPTY_STORAGE = {products:[]};
 	
+	var utils = ESHOP_JS.utils;
 	var pubsub = ESHOP_JS.modules.pubsub;	
 	var settings = ESHOP_JS.settings;
 	var storage = ESHOP_JS.modules.storage;
@@ -331,6 +339,44 @@ ESHOP_JS.modules.cart = (function( window, document ){
 		}	
 		
 		return response;
+	}
+	
+	/**
+	 * Set change counter handler
+	 * @param {Object} cartDOMWrapper - DOM
+	 * @private
+	 */
+	function setChangeCountHandler( cartDOMWrapper){			
+		var counters = cartDOMWrapper.querySelectorAll("input[type='number']");
+		for(var idx = 0, len = counters.length; idx < len; idx++ ){
+			counters[idx].addEventListener("change", function(e){
+				var counter = e.target;
+				var products = storage.get( settings.CART_STORAGE_KEY ).products;
+				products[ counter.dataset.idx ].count = counter.value;
+				storage.save(settings.CART_STORAGE_KEY, {products:products}); 
+				
+				ESHOP_JS.modules.pubsub.publish( settings.CART_CHANGE_EVENT_NAME );				
+			}, false);
+		}
+	}
+	
+	/**
+	 * Set remove product handler
+	 * @param {Object} cartDOMWrapper - DOM
+	 * @private
+	 */
+	function setRemoveProductHandler( cartDOMWrapper ){
+		var links = cartDOMWrapper.querySelectorAll("." + settings.REMOVE_FROM_CART_DOM_CLASS);
+		for(var idx = 0, len = links.length; idx < len; idx++ ){
+			links[idx].addEventListener( utils.isTouchDevice( ) ? "touchstart" : "mousedown", function(e){
+			
+				var products = storage.get( settings.CART_STORAGE_KEY ).products;
+				products.splice( e.target.dataset.idx, 1 );
+				storage.save(settings.CART_STORAGE_KEY, {products:products}); 
+				
+				ESHOP_JS.modules.pubsub.publish( settings.CART_CHANGE_EVENT_NAME );	
+			},false);	
+		}			
 	}
 		
 	// init storage
@@ -416,6 +462,9 @@ ESHOP_JS.modules.cart = (function( window, document ){
 			}			
 			
 			wrapper.innerHTML = cartTemplate( storage.get( settings.CART_STORAGE_KEY ));	
+			
+			setChangeCountHandler( wrapper );
+			setRemoveProductHandler( wrapper );
 		},
 		
 		/**
@@ -426,7 +475,7 @@ ESHOP_JS.modules.cart = (function( window, document ){
 			
 			pubsub.subscribe(settings.CART_CHANGE_EVENT_NAME, function(e){
 				ESHOP_JS.modules.cart.refresh();	
-			});
+			});					
 		}				
 	};	
 })( window, document);
