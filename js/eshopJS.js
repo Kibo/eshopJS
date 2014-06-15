@@ -1,4 +1,4 @@
-/* E-shop v0.2.0 - 2014-06-14 */
+/* E-shop v0.2.0 - 2014-06-15 */
 // ### Source: project/src/namespace.js
 var ESHOP_JS = ESHOP_JS || {};
 
@@ -52,6 +52,20 @@ ESHOP_JS.utils = (function( window, document){
 
 // ### Source: project/src/settings.js
 ESHOP_JS.settings = {
+	
+	/**
+	 * Continue shopping url
+	 * @constant
+	 * @type {string}
+	 */
+	CONTINUE_SHOPPING_URL:"#top",
+	
+	/**
+	 * Checkout url
+	 * @constant
+	 * @type {string}
+	 */
+	CHECKOUT_URL:"#checkout",
 
 	/**
 	 * DOM wrapper for product
@@ -93,7 +107,7 @@ ESHOP_JS.settings = {
 	 * @constant
 	 * @type {string}
 	 */
-	PRODUCT_LINK_DOM_CLASS: "add-to-cart",
+	PRODUCT_LINK_DOM_CLASS: "product-add-to-cart",
 	
 	/**
 	 * Class name for remove from shopping cart link
@@ -108,6 +122,20 @@ ESHOP_JS.settings = {
 	 * @type {string}
 	 */
 	CART_DOM_ID: "cart",
+	
+	/**
+	 * DOM wrapper for checkout
+	 * @constant
+	 * @type {string}
+	 */
+	CHECKOUT_DOM_ID: "checkout",
+	
+	/**
+	 * DOM wrapper for count of products in shopping cart
+	 * @constant
+	 * @type {string}
+	 */
+	COUNT_OF_PRODUCTS_DOM_CLASS: "cart-products-count",
 
 	/**
 	 * Key for cart in storage
@@ -198,8 +226,8 @@ ESHOP_JS.modules.pubsub = (function(){
 
 // ### Source: project/src/templates/templates.js
 window.ESHOP_JS.templates = {
-  "cart": "<h3>Shopping cart</h3><table class=\"table table-striped table-bordered\"><thead><tr><th>Product</th><th>Details</th><th>Count</th><th>Price</th><th>&nbsp;</th></tr></thead><tbody><% if( products.length === 0){%><tr><td colspan=\"5\">There are not products yet.</td></tr><% } %><% for (var idx = 0, len = products.length; idx < len; idx ++) { %><tr><td><%= products[idx].title %></td><td><%= products[idx].variations %></td><td><input type=\"number\" value=\"<%= products[idx].count %>\" min=\"1\" max=\"100\" step=\"1\" data-idx=\"<%=idx%>\"></td><td>$<%= products[idx].count * products[idx].price %></td><td><a href=\"#cart\" class=\"btn btn-danger btn-xs btn-remove\" title=\"Remove\" data-idx=\"<%=idx%>\"><span class=\"glyphicon glyphicon-trash\"></span></a></td></tr><% } %></tbody></table>",
-  "form": "<form><%= title %></form>"
+  "cart": "<h3>Shopping cart</h3><table class=\"table table-striped table-bordered\"><thead><tr><th>Product</th><th>Details</th><th>Count</th><th>Price</th><th>&nbsp;</th></tr></thead><tbody><% if( products.length === 0){%><tr><td colspan=\"5\">There are not products yet.</td></tr><% } %><% for (var idx = 0, len = products.length; idx < len; idx ++) { %><tr><td><%= products[idx].title %></td><td><%= products[idx].variations %></td><td><input type=\"number\" value=\"<%= products[idx].count %>\" min=\"1\" max=\"100\" step=\"1\" data-idx=\"<%=idx%>\"></td><td>$<%= products[idx].count * products[idx].price %></td><td><a href=\"#cart\" class=\"btn btn-danger btn-xs btn-remove\" title=\"Remove\" data-idx=\"<%=idx%>\"><span class=\"glyphicon glyphicon-trash\"></span> Remove</a></td></tr><% } %></tbody></table><p><a href=\"<%=settings.CHECKOUT_URL%>\" class=\"btn btn-success pull-right\">Checkout</a><a href=\"<%=settings.CONTINUE_SHOPPING_URL%>\" class=\"btn btn-info\">Continue</a></p>",
+  "checkout": "<form><%= title %></form>"
 }
 
 // ### Source: project/src/modules/storage.js
@@ -302,6 +330,7 @@ ESHOP_JS.modules.cart = (function( window, document ){
 	var settings = ESHOP_JS.settings;
 	var storage = ESHOP_JS.modules.storage;
 	var cartTemplate = ESHOP_JS.modules.templateEngine.compile( ESHOP_JS.templates.cart );	
+	
 			
 	/* Validate product
 	 * @param {Object} product
@@ -350,9 +379,9 @@ ESHOP_JS.modules.cart = (function( window, document ){
 		var counters = cartDOMWrapper.querySelectorAll("input[type='number']");
 		for(var idx = 0, len = counters.length; idx < len; idx++ ){
 			counters[idx].addEventListener("change", function(e){
-				var counter = e.target;
+				var counter = e.target;							
 				var products = storage.get( settings.CART_STORAGE_KEY ).products;
-				products[ counter.dataset.idx ].count = counter.value;
+				products[ counter.dataset.idx ].count = counter.value >= 1 ? counter.value : 1;
 				storage.save(settings.CART_STORAGE_KEY, {products:products}); 
 				
 				ESHOP_JS.modules.pubsub.publish( settings.CART_CHANGE_EVENT_NAME );				
@@ -378,7 +407,32 @@ ESHOP_JS.modules.cart = (function( window, document ){
 			},false);	
 		}			
 	}
-		
+	
+	/**
+	 * Refresh count of products
+	 * @param{Array} counters - DOM wrappers
+	 */
+	function refreshCounters( counters ){								
+		var count = getCountOfProducts();
+		for(var idx = 0, len = counters.length; idx < len; idx++ ){		
+			counters[idx].innerHTML = count;
+		}	
+	};
+	
+	/**
+	 * Get count of products in cart
+	 * @return {Number}
+	 */
+	function getCountOfProducts(){
+		var count = 0;
+		var products = storage.get( settings.CART_STORAGE_KEY ).products;
+		for(var idx = 0, len = products.length; idx < len; idx++ ){				
+			count += parseInt(products[idx].count, 10);
+		}
+		 
+		return count;
+	};
+			
 	// init storage
 	if(!storage.get( settings.CART_STORAGE_KEY ).products){
 		storage.save(settings.CART_STORAGE_KEY, EMPTY_STORAGE );		
@@ -445,26 +499,31 @@ ESHOP_JS.modules.cart = (function( window, document ){
 		},
 		
 		/**
-		 * Get count of items in shopping cart
+		 * Get count of products in shopping cart
 		 * @return {Mumber}
 		 */
 		count:function(){
-			return storage.get( settings.CART_STORAGE_KEY ).products.length;	
+			return getCountOfProducts();	
 		},
-		
+							
 		/**
 		 * Redraw the shopping cart
 		 */
 		refresh:function(){
+			
+			refreshCounters( document.querySelectorAll("." + settings.COUNT_OF_PRODUCTS_DOM_CLASS));
+			
 			var wrapper = document.getElementById( settings.CART_DOM_ID );
 			if(!wrapper){
 				return;
 			}			
 			
-			wrapper.innerHTML = cartTemplate( storage.get( settings.CART_STORAGE_KEY ));	
+			var cartObj = storage.get( settings.CART_STORAGE_KEY );
+			cartObj.settings = ESHOP_JS.settings;
+			wrapper.innerHTML = cartTemplate( cartObj );	
 			
 			setChangeCountHandler( wrapper );
-			setRemoveProductHandler( wrapper );
+			setRemoveProductHandler( wrapper );			
 		},
 		
 		/**
@@ -474,7 +533,7 @@ ESHOP_JS.modules.cart = (function( window, document ){
 			this.refresh();
 			
 			pubsub.subscribe(settings.CART_CHANGE_EVENT_NAME, function(e){
-				ESHOP_JS.modules.cart.refresh();	
+				ESHOP_JS.modules.cart.refresh();										
 			});					
 		}				
 	};	
