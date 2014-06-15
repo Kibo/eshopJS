@@ -37,13 +37,19 @@ It uses the following *default* data attribute:
       
    <h1 class="product-title">Rasta T-shirt</h1>  
 
-   <select class="product-variations">
+   <select class="product-variations">      		
+   		<!-- 
+   			The values are the increment to the base price of the product.  
+   		-->
    		<option value="0">Size S</option>
    		<option value="2">Size L</option>	
-   		<option value="4">Size XXL</option>
+   		<option value="4">Size XXL</option> 
    </select>   
    
    <p>
+   	   <!-- 
+   			The attribute 'data-base-price' indicates the base price of product. 
+   		-->
 	 <b>Price</b>: $<span class="product-price" data-base-price="12"></span>
    </p>
    
@@ -56,11 +62,17 @@ It uses the following *default* data attribute:
    <h1 class="product-title">Rasta Cap</h1>  
 
    <select class="product-variations">
+   		<!-- 
+   			The values are the increment to the base price of the product.  
+   		-->
    		<option value="2">Green</option>
    		<option value="1">Yellow-Red-Green</option>	   		
    </select>   
    
-   <p>
+   <p>   
+   	   <!-- 
+   			The attribute 'data-base-price' indicates the base price of product. 
+   		-->
 	 <b>Price</b>: $<span class="product-price" data-base-price="3"></span>
    </p>
    
