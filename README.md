@@ -5,9 +5,9 @@ Status: **in progress**
 
 - Pure Javascript **without dependencies**.
 - Product price may depend on product details. (For example: The larger size can cost more money. )
-- Easily integrates. ([settings](https://github.com/Kibo/eshopJS/blob/master/project/src/settings.js), [templates](https://github.com/Kibo/eshopJS/tree/master/project/src/templates))
+- Easily integrates: ([settings](https://github.com/Kibo/eshopJS/blob/master/project/src/settings.js), [templates](https://github.com/Kibo/eshopJS/tree/master/project/src/templates)).
 - You can embed shopping cart on separate web page.
-- Easily extensible code. ([modules](https://github.com/Kibo/eshopJS/tree/master/project/src/modules))
+- Easily extensible code divided into [modules](https://github.com/Kibo/eshopJS/tree/master/project/src/modules).
 - Tested code.
 
 ##Example
