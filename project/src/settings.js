@@ -1,4 +1,18 @@
 ESHOP_JS.settings = {
+	
+	/**
+	 * Continue shopping url
+	 * @constant
+	 * @type {string}
+	 */
+	CONTINUE_SHOPPING_URL:"#top",
+	
+	/**
+	 * Checkout url
+	 * @constant
+	 * @type {string}
+	 */
+	CHECKOUT_URL:"#checkout",
 
 	/**
 	 * DOM wrapper for product
@@ -40,7 +54,7 @@ ESHOP_JS.settings = {
 	 * @constant
 	 * @type {string}
 	 */
-	PRODUCT_LINK_DOM_CLASS: "add-to-cart",
+	PRODUCT_LINK_DOM_CLASS: "product-add-to-cart",
 	
 	/**
 	 * Class name for remove from shopping cart link
@@ -55,6 +69,20 @@ ESHOP_JS.settings = {
 	 * @type {string}
 	 */
 	CART_DOM_ID: "cart",
+	
+	/**
+	 * DOM wrapper for checkout
+	 * @constant
+	 * @type {string}
+	 */
+	CHECKOUT_DOM_ID: "checkout",
+	
+	/**
+	 * DOM wrapper for count of products in shopping cart
+	 * @constant
+	 * @type {string}
+	 */
+	COUNT_OF_PRODUCTS_DOM_CLASS: "cart-products-count",
 
 	/**
 	 * Key for cart in storage

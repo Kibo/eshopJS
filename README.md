@@ -7,6 +7,7 @@ Status: **in progress**
 - Product price may depend on product details. (For example: The larger size can cost more money. )
 - Easily integrates. ([settings](https://github.com/Kibo/eshopJS/blob/master/project/src/settings.js), [templates](https://github.com/Kibo/eshopJS/tree/master/project/src/templates))
 - You can embed shopping cart on separate web page.
+- Easily extensible code. ([modules](https://github.com/Kibo/eshopJS/tree/master/project/src/modules))
 - Tested code.
 
 ##Example
@@ -16,14 +17,16 @@ Status: **in progress**
 All IDs, Classes and atributes you can change in [settings](https://github.com/Kibo/eshopJS/blob/master/project/src/settings.js).
 
 It uses the following *default* IDs:
-- **cart**				: A wrapper for schopping cart. It may be on another website too.
+- **cart**					: A wrapper for schopping cart. It may be on another website too.
+- **checkout**				:  A wrapper for summary of purchases and delivery address form. It may be on another website too.
 
 It uses the following *default* CSS classes:
-- **product** 			: A product wrapper.
+- **product** 				: A product wrapper.
 - **product-title**		: A title of product.
-- **product-variations**: A variations of product.
+- **product-variations**	: A variations of product.
 - **product-price**		: A base price of product.
-- **add-to-cart**		: A link to add product to the cart.
+- **product-add-to-cart**: A link to add product to the cart.
+- **cart-products-count**: Count of products in shopping cart.
 
 It uses the following *default* data attribute:
 - **data-base-price** 	: Base price of product
@@ -44,7 +47,7 @@ It uses the following *default* data attribute:
 	 <b>Price</b>: $<span class="product-price" data-base-price="12"></span>
    </p>
    
-   <a class="add-to-cart" href="#cart">Add to cart</a>
+   <a class="product-add-to-cart" href="#cart">Add to cart</a>
       
 </section>  
 
@@ -61,15 +64,21 @@ It uses the following *default* data attribute:
 	 <b>Price</b>: $<span class="product-price" data-base-price="3"></span>
    </p>
    
-   <a class="add-to-cart" href="#cart">Add to cart</a>
+   <a class="product-add-to-cart" href="#cart">Add to cart</a>
       
 </section> 
 
 <!-- 
-	Wrapper for e-shop cart.
+	A wrapper for e-shop cart.
 	It may be on another page.
  -->
 <div id="cart"></div>
+
+<!-- 
+	A wrapper for summary of purchases and delivery address form .
+	It may be on another page.
+ -->
+<div id="checkout"></div>
 
 <script src="js/eshop.js"></script>
 <script>
@@ -84,9 +93,6 @@ It uses the following *default* data attribute:
 - It uses WEP API *querySelector* and *querySelectorAll*
 
 For all this feature you can find appropriate polyfill code.
-
-###What could be better
-- Every change of price of one product in shopping cart refreshes whole shopping cart. 
 
 ###It might interest you
 - [SimpleCart](https://github.com/wojodesign/simplecart-js)

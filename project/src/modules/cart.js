@@ -10,6 +10,7 @@ ESHOP_JS.modules.cart = (function( window, document ){
 	var settings = ESHOP_JS.settings;
 	var storage = ESHOP_JS.modules.storage;
 	var cartTemplate = ESHOP_JS.modules.templateEngine.compile( ESHOP_JS.templates.cart );	
+	
 			
 	/* Validate product
 	 * @param {Object} product
@@ -58,9 +59,9 @@ ESHOP_JS.modules.cart = (function( window, document ){
 		var counters = cartDOMWrapper.querySelectorAll("input[type='number']");
 		for(var idx = 0, len = counters.length; idx < len; idx++ ){
 			counters[idx].addEventListener("change", function(e){
-				var counter = e.target;
+				var counter = e.target;							
 				var products = storage.get( settings.CART_STORAGE_KEY ).products;
-				products[ counter.dataset.idx ].count = counter.value;
+				products[ counter.dataset.idx ].count = counter.value >= 1 ? counter.value : 1;
 				storage.save(settings.CART_STORAGE_KEY, {products:products}); 
 				
 				ESHOP_JS.modules.pubsub.publish( settings.CART_CHANGE_EVENT_NAME );				
@@ -86,7 +87,32 @@ ESHOP_JS.modules.cart = (function( window, document ){
 			},false);	
 		}			
 	}
-		
+	
+	/**
+	 * Refresh count of products
+	 * @param{Array} counters - DOM wrappers
+	 */
+	function refreshCounters( counters ){								
+		var count = getCountOfProducts();
+		for(var idx = 0, len = counters.length; idx < len; idx++ ){		
+			counters[idx].innerHTML = count;
+		}	
+	};
+	
+	/**
+	 * Get count of products in cart
+	 * @return {Number}
+	 */
+	function getCountOfProducts(){
+		var count = 0;
+		var products = storage.get( settings.CART_STORAGE_KEY ).products;
+		for(var idx = 0, len = products.length; idx < len; idx++ ){				
+			count += parseInt(products[idx].count, 10);
+		}
+		 
+		return count;
+	};
+			
 	// init storage
 	if(!storage.get( settings.CART_STORAGE_KEY ).products){
 		storage.save(settings.CART_STORAGE_KEY, EMPTY_STORAGE );		
@@ -153,26 +179,31 @@ ESHOP_JS.modules.cart = (function( window, document ){
 		},
 		
 		/**
-		 * Get count of items in shopping cart
+		 * Get count of products in shopping cart
 		 * @return {Mumber}
 		 */
 		count:function(){
-			return storage.get( settings.CART_STORAGE_KEY ).products.length;	
+			return getCountOfProducts();	
 		},
-		
+							
 		/**
 		 * Redraw the shopping cart
 		 */
 		refresh:function(){
+			
+			refreshCounters( document.querySelectorAll("." + settings.COUNT_OF_PRODUCTS_DOM_CLASS));
+			
 			var wrapper = document.getElementById( settings.CART_DOM_ID );
 			if(!wrapper){
 				return;
 			}			
 			
-			wrapper.innerHTML = cartTemplate( storage.get( settings.CART_STORAGE_KEY ));	
+			var cartObj = storage.get( settings.CART_STORAGE_KEY );
+			cartObj.settings = ESHOP_JS.settings;
+			wrapper.innerHTML = cartTemplate( cartObj );	
 			
 			setChangeCountHandler( wrapper );
-			setRemoveProductHandler( wrapper );
+			setRemoveProductHandler( wrapper );			
 		},
 		
 		/**
@@ -182,7 +213,7 @@ ESHOP_JS.modules.cart = (function( window, document ){
 			this.refresh();
 			
 			pubsub.subscribe(settings.CART_CHANGE_EVENT_NAME, function(e){
-				ESHOP_JS.modules.cart.refresh();	
+				ESHOP_JS.modules.cart.refresh();										
 			});					
 		}				
 	};	
