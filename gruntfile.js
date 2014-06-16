@@ -13,6 +13,7 @@ module.exports = function( grunt ) {
 				   'project/src/modules/cart.js',				   
 				   'project/src/modules/product.js',
 				   'project/src/modules/checkout.js',
+				   'project/src/modules/summary.js',
 				   'project/src/init.js'
 				   ],		
 		concat : {

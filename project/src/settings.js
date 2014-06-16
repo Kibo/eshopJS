@@ -1,17 +1,9 @@
 ESHOP_JS.settings = {
-		
-	/**
-	 * URL to order server
-	 * URL where to send the order
-	 * @constant
-	 * @type {string}
-	 */
-	URL_TO_ORDER_SERVER:"#",
-	
+			
 	/**
 	 * Type of postages
 	 */
-	TYPES_OF_POSTAGES:[
+	POSTAGES:[		
 		{name: "Personal collection", price: 0},
 		{name: "Czech Post", price: 80}
 	],
@@ -20,7 +12,7 @@ ESHOP_JS.settings = {
 	 * Payment methods
 	 */
 	PAYMENT_METHODS:[
-		{name:"Cash", price:0},
+		{name:"Payment on branch", price:0},		
 		{name:"Cash on delivery", price:40},
 		{name:"Payment in advance", price:0}			
 	],
@@ -89,6 +81,13 @@ ESHOP_JS.settings = {
 	CHECKOUT_DOM_ID: "checkout",
 	
 	/**
+	 * DOM wrapper for summary table
+	 * @constant
+	 * @type {string}
+	 */
+	SUMMARY_DOM_ID: "summary",
+	
+	/**
 	 * DOM wrapper for count of products in shopping cart
 	 * @constant
 	 * @type {string}
@@ -107,5 +106,12 @@ ESHOP_JS.settings = {
 	 * @constant
 	 * @type {string}
 	 */
-	CART_CHANGE_EVENT_NAME: "cartchange"	
+	CART_CHANGE_EVENT_NAME: "cartchange",
+	
+	/**
+	 * Checkout change event name
+	 * @constant
+	 * @type {string}
+	 */
+	CHECKOUT_CHANGE_EVENT_NAME: "checkoutchange"	
 }; 

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<title>EshopJS | Checkout</title>
+		<meta name="description" content="A free and open-source Javascript e-shop that easily integrates with your current websites.">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+	</head>
+	<body>
+		<div class="container">			
+			<header>
+				<img src="images/logo.png" alt="Rasta" align="left">
+				<a href="index.html#cart" class="btn btn-info pull-right"><span class="glyphicon glyphicon-shopping-cart"></span> Items: <span class="cart-products-count"></span></a>
+				<h1>Rasta eshop</h1>			
+			</header>
+			<hr>
+					
+			<form action="#" method="post" role="form">						
+				<div id="checkout"></div>																								
+				<p>
+					<input type="submit" class="btn btn-success pull-right" value="Submit">
+					<a href="index.html" class="btn btn-info">Continue</a>	
+				</p>
+			</form>
+					
+		</div>
+		<!-- container -->		
+
+		<script src="js/eshopJS.js"></script>
+		<script>
+			window.onload = function(){
+				ESHOP_JS.init();				
+			};			
+		</script>		
+	</body>
+</html>

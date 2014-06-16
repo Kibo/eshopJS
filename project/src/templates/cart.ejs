@@ -4,6 +4,7 @@
 		<tr>
 			<th>Product</th>
 			<th>Details</th>
+			<th>Price</th>
 			<th>Count</th>
 			<th>Sub-Total</th>
 			<th>&nbsp;</th>
@@ -13,7 +14,7 @@
 		
 		<% if( products.length === 0){%>
 			<tr>
-				<td colspan="5">There are not products yet.</td>
+				<td colspan="6">There are not products yet.</td>
 			</tr>
 		<% } %>
 				
@@ -21,7 +22,10 @@
 			<tr>		
 				<td><%= products[idx].title %></td>
 				<td><%= products[idx].variations %></td>
-				<td><input type="number" value="<%= products[idx].count %>" min="1" max="100" step="1" data-idx="<%=idx%>"></td>
+				<td>$<%= products[idx].price %></td>
+				<td>				
+					<input type="number" value="<%= products[idx].count %>" min="1" max="100" step="1" data-idx="<%=idx%>">					
+				</td>
 				<td>$<%= products[idx].count * products[idx].price %></td>
 				<td><a href="#cart" class="btn btn-danger btn-xs btn-remove" title="Remove" data-idx="<%=idx%>"><span class="glyphicon glyphicon-trash"></span> Remove</a></td>				
 			</tr>			
@@ -29,7 +33,7 @@
 		
 		<tfoot>			
 			<tr class="info">
-				<th colspan="3">Sub-Total</th>						
+				<th colspan="4">Sub-Total</th>						
 				<td colspan="2">$<%=ESHOP_JS.modules.cart.totalPrice()%></td>				
 			</tr>			
 		</tfoot>				

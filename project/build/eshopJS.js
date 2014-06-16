@@ -52,14 +52,23 @@ ESHOP_JS.utils = (function( window, document){
 
 // ### Source: project/src/settings.js
 ESHOP_JS.settings = {
-		
+			
 	/**
-	 * URL to order server
-	 * URL where to send the order
-	 * @constant
-	 * @type {string}
+	 * Type of postages
 	 */
-	URL_TO_ORDER_SERVER:"#",
+	POSTAGES:[		
+		{name: "Personal collection", price: 0},
+		{name: "Czech Post", price: 80}
+	],
+	
+	/**
+	 * Payment methods
+	 */
+	PAYMENT_METHODS:[
+		{name:"Payment on branch", price:0},		
+		{name:"Cash on delivery", price:40},
+		{name:"Payment in advance", price:0}			
+	],
 
 	/**
 	 * DOM wrapper for product
@@ -125,6 +134,13 @@ ESHOP_JS.settings = {
 	CHECKOUT_DOM_ID: "checkout",
 	
 	/**
+	 * DOM wrapper for summary table
+	 * @constant
+	 * @type {string}
+	 */
+	SUMMARY_DOM_ID: "summary",
+	
+	/**
 	 * DOM wrapper for count of products in shopping cart
 	 * @constant
 	 * @type {string}
@@ -143,7 +159,14 @@ ESHOP_JS.settings = {
 	 * @constant
 	 * @type {string}
 	 */
-	CART_CHANGE_EVENT_NAME: "cartchange"	
+	CART_CHANGE_EVENT_NAME: "cartchange",
+	
+	/**
+	 * Checkout change event name
+	 * @constant
+	 * @type {string}
+	 */
+	CHECKOUT_CHANGE_EVENT_NAME: "checkoutchange"	
 }; 
 
 // ### Source: project/src/modules/pubsub.js
@@ -220,8 +243,9 @@ ESHOP_JS.modules.pubsub = (function(){
 
 // ### Source: project/src/templates/templates.js
 window.ESHOP_JS.templates = {
-  "cart": "<h3>Shopping cart</h3><table class=\"table table-striped table-bordered\"><thead><tr><th>Product</th><th>Details</th><th>Count</th><th>Sub-Total</th><th>&nbsp;</th></tr></thead><tbody><% if( products.length === 0){%><tr><td colspan=\"5\">There are not products yet.</td></tr><% } %><% for (var idx = 0, len = products.length; idx < len; idx ++) { %><tr><td><%= products[idx].title %></td><td><%= products[idx].variations %></td><td><input type=\"number\" value=\"<%= products[idx].count %>\" min=\"1\" max=\"100\" step=\"1\" data-idx=\"<%=idx%>\"></td><td>$<%= products[idx].count * products[idx].price %></td><td><a href=\"#cart\" class=\"btn btn-danger btn-xs btn-remove\" title=\"Remove\" data-idx=\"<%=idx%>\"><span class=\"glyphicon glyphicon-trash\"></span> Remove</a></td></tr><% } %><tfoot><tr class=\"info\"><th colspan=\"3\">Sub-Total</th><td colspan=\"2\">$<%=ESHOP_JS.modules.cart.totalPrice()%></td></tr></tfoot></tbody></table>",
-  "checkout": "<form action=\"<%=settings.URL_TO_ORDER_SERVER%>\" method=\"post\" role=\"form\">  <fieldset>  <legend>Delivery address</legend>  <div class=\"form-group\">    <label for=\"Firstname\">Firstname</label>    <input name=\"firstname\" type=\"text\" class=\"form-control\" placeholder=\"Firstname\">  </div>    <div class=\"form-group\">    <label for=\"street\">Street</label>    <input name=\"street\" type=\"text\" class=\"form-control\" placeholder=\"Street\">  </div>      </fieldset></form>"
+  "cart": "<h3>Shopping cart</h3><table class=\"table table-striped table-bordered\"><thead><tr><th>Product</th><th>Details</th><th>Price</th><th>Count</th><th>Sub-Total</th><th>&nbsp;</th></tr></thead><tbody><% if( products.length === 0){%><tr><td colspan=\"6\">There are not products yet.</td></tr><% } %><% for (var idx = 0, len = products.length; idx < len; idx ++) { %><tr><td><%= products[idx].title %></td><td><%= products[idx].variations %></td><td>$<%= products[idx].price %></td><td><input type=\"number\" value=\"<%= products[idx].count %>\" min=\"1\" max=\"100\" step=\"1\" data-idx=\"<%=idx%>\"></td><td>$<%= products[idx].count * products[idx].price %></td><td><a href=\"#cart\" class=\"btn btn-danger btn-xs btn-remove\" title=\"Remove\" data-idx=\"<%=idx%>\"><span class=\"glyphicon glyphicon-trash\"></span> Remove</a></td></tr><% } %><tfoot><tr class=\"info\"><th colspan=\"4\">Sub-Total</th><td colspan=\"2\">$<%=ESHOP_JS.modules.cart.totalPrice()%></td></tr></tfoot></tbody></table>",
+  "checkout": "<!-- Wrapper for summary table --><div id=\"summary\"></div><fieldset>  <legend>Payment method</legend>        <% for(var idx = 0, len = settings.PAYMENT_METHODS.length; idx < len; idx++){%>  <div class=\"radio\">  <label>    <input type=\"radio\" name=\"payment\" value=\"<%=settings.PAYMENT_METHODS[idx].name%>\" data-price=\"<%=settings.PAYMENT_METHODS[idx].price%>\" <%=idx === 0 ? 'checked' : ''%> >    <%=settings.PAYMENT_METHODS[idx].name%>      </label></div><%}%></fieldset>    <fieldset>  <legend>Postages</legend>        <% for(var idx = 0, len = settings.POSTAGES.length; idx < len; idx++){%>  <div class=\"radio\">  <label>    <input type=\"radio\" name=\"postage\" value=\"<%=settings.POSTAGES[idx].name%>\" data-price=\"<%=settings.POSTAGES[idx].price%>\" <%=idx === 0 ? 'checked' : ''%>>    <%=settings.POSTAGES[idx].name%>      </label></div><%}%></fieldset><fieldset class=\"address\">  <legend>Delivery address</legend>    <div class=\"form-group\">    <label for=\"fullname\">Full Name</label>    <input name=\"fullname\" type=\"text\" class=\"form-control\" placeholder=\"Full Name\" required>  </div>    <div class=\"form-group\">    <label for=\"street\">Address Line</label>    <input name=\"street\" type=\"text\" class=\"form-control\" placeholder=\"Address Line\" required>  </div>    <div class=\"form-group\">    <label for=\"city\">City</label>    <input name=\"city\" type=\"text\" class=\"form-control\" placeholder=\"City\" required>  </div>    <div class=\"form-group\">    <label for=\"zip\">Zip / Postal Code</label>    <input name=\"zip\" type=\"text\" class=\"form-control\" placeholder=\"Zip / Postal Code\" required>  </div>    <div class=\"form-group\">    <label for=\"email\">E-mail</label>    <input name=\"email\" type=\"email\" class=\"form-control\" placeholder=\"E-mail\" required>  </div>    <div class=\"form-group\">    <label for=\"phone\">Phone number</label>    <input name=\"phone\" type=\"tel\" class=\"form-control\" placeholder=\"Phone number\" required>  </div> </fieldset>    ",
+  "summary": "<h3>Summary</h3><table class=\"table table-striped table-bordered\"> <thead><tr><th>Product</th><th>Details</th><th>Price</th><th>Count</th><th>Sub-Total</th></tr></thead><tbody><% if( products.length === 0){%><tr><td colspan=\"5\">There are not products yet.</td></tr><% } %><% for (var idx = 0, len = products.length; idx < len; idx ++) { %><tr><td><%= products[idx].title %></td><td><%= products[idx].variations %></td><td>$<%= products[idx].price %></td><td><%= products[idx].count %></td><td>$<%= products[idx].count * products[idx].price %></td></tr><% } %><tfoot><tr class=\"info\"><th colspan=\"4\">Sub-Total</th><td colspan=\"1\">$<%=ESHOP_JS.modules.cart.totalPrice()%></td></tr></tfoot></tbody> </table>"
 }
 
 // ### Source: project/src/modules/storage.js
@@ -730,34 +754,93 @@ ESHOP_JS.modules.checkout = (function( window, document ){
 	var pubsub = ESHOP_JS.modules.pubsub;	
 	var settings = ESHOP_JS.settings;
 	var storage = ESHOP_JS.modules.storage;
-	var checkoutTemplate = ESHOP_JS.modules.templateEngine.compile( ESHOP_JS.templates.checkout );	
+	var checkoutTemplate = ESHOP_JS.modules.templateEngine.compile( ESHOP_JS.templates.checkout );
 		
-	return {
+	/**
+	 * Set change handlers
+	 * @param {Object} wrapper - DOM wrapper
+	 */
+	function setChangeHandlers( wrapper ){
+		var radios = wrapper.querySelectorAll('input[type="radio"]');		
+		for(var idx = 0, len = radios.length; idx < len; idx++ ){
+			radios[idx].addEventListener("change", function(e){
+				pubsub.publish( settings.CHECKOUT_CHANGE_EVENT_NAME );
+				console.log("change");				
+			}, false);	
+		}		
+	};
+			
+	return {	
+		
 		/**
-		 * Refresh
+		 * Show checkout form
 		 */
-		refresh:function(){
-			var wrapper = document.getElementById( settings.CHECKOUT_DOM_ID );
+		show:function(){
+			var wrapper = document.getElementById( settings.CHECKOUT_DOM_ID ); 
+			
 			if(!wrapper){
 				return;
 			}			
-			
+		
 			var cartObj = storage.get( settings.CART_STORAGE_KEY );
 			cartObj.settings = ESHOP_JS.settings;
 			wrapper.innerHTML = checkoutTemplate( cartObj );			
-		},
+		},		
 		
 		/**
 	 	* Module initialization
 	 	*/	
+		init:function(){		
+			this.show();
+			setChangeHandlers( document.getElementById( settings.CHECKOUT_DOM_ID ) );								
+		}			
+	};	
+})( window, document );
+
+
+// ### Source: project/src/modules/summary.js
+/**
+ * Checkout module
+ */
+ESHOP_JS.modules.summary = (function( window, document ){
+	
+	var pubsub = ESHOP_JS.modules.pubsub;	
+	var settings = ESHOP_JS.settings;	
+	var storage = ESHOP_JS.modules.storage;
+	var summaryTemplate = ESHOP_JS.modules.templateEngine.compile( ESHOP_JS.templates.summary );
+		
+	return{
+		/**
+		 * Redraw the summary
+		 */
+		refresh:function(){
+			var wrapper = document.getElementById( settings.SUMMARY_DOM_ID ); 
+			
+			if(!wrapper){
+				return;
+			}			
+		
+			var cartObj = storage.get( settings.CART_STORAGE_KEY );
+			cartObj.settings = ESHOP_JS.settings;
+			wrapper.innerHTML = summaryTemplate( cartObj );
+		},
+		
+		/**
+	 	* Module initialization
+	 	*/
 		init:function(){
 			this.refresh();
 			
 			pubsub.subscribe(settings.CART_CHANGE_EVENT_NAME, function(e){
-				ESHOP_JS.modules.checkout.refresh();										
-			});					
-		}			
-	};	
+				ESHOP_JS.modules.summary.refresh();										
+			});	
+			
+			pubsub.subscribe(settings.CHECKOUT_CHANGE_EVENT_NAME, function(e){
+				ESHOP_JS.modules.summary.refresh();										
+			});							
+		}
+	};
+	
 })( window, document );
 
 
@@ -768,5 +851,6 @@ ESHOP_JS.modules.checkout = (function( window, document ){
 ESHOP_JS.init = function(){	
 	ESHOP_JS.modules.product.init();
 	ESHOP_JS.modules.cart.init();
-	ESHOP_JS.modules.checkout.init();		
+	ESHOP_JS.modules.checkout.init();
+	ESHOP_JS.modules.summary.init();
 };

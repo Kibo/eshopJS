@@ -1,18 +1,60 @@
-<form action="<%=settings.URL_TO_ORDER_SERVER%>" method="post" role="form">
-	
+<!-- Wrapper for summary table -->
+<div id="summary"></div>
+
+<fieldset>
+  <legend>Payment method</legend>    
+    <% for(var idx = 0, len = settings.PAYMENT_METHODS.length; idx < len; idx++){%>
+  	<div class="radio">
+  		<label>
+    		<input type="radio" name="payment" value="<%=settings.PAYMENT_METHODS[idx].name%>" data-price="<%=settings.PAYMENT_METHODS[idx].price%>" <%=idx === 0 ? 'checked' : ''%> >
+    		<%=settings.PAYMENT_METHODS[idx].name%>    	
+  		</label>
+	</div>
+	<%}%>
+</fieldset>
+  
   <fieldset>
+  <legend>Postages</legend>    
+    <% for(var idx = 0, len = settings.POSTAGES.length; idx < len; idx++){%>
+  	<div class="radio">
+  		<label>
+    		<input type="radio" name="postage" value="<%=settings.POSTAGES[idx].name%>" data-price="<%=settings.POSTAGES[idx].price%>" <%=idx === 0 ? 'checked' : ''%>>
+    		<%=settings.POSTAGES[idx].name%>    	
+  		</label>
+	</div>
+	<%}%>
+</fieldset>
+
+<fieldset class="address">
   	<legend>Delivery address</legend>	
-	
-  <div class="form-group">
-    <label for="Firstname">Firstname</label>
-    <input name="firstname" type="text" class="form-control" placeholder="Firstname">
-  </div>
-  
-  <div class="form-group">
-    <label for="street">Street</label>
-    <input name="street" type="text" class="form-control" placeholder="Street">
-  </div>
-  
-  
-  </fieldset>	
-</form>
+	  
+	  <div class="form-group">
+	    <label for="fullname">Full Name</label>
+	    <input name="fullname" type="text" class="form-control" placeholder="Full Name" required>
+	  </div>
+	  
+	  <div class="form-group">
+	    <label for="street">Address Line</label>
+	    <input name="street" type="text" class="form-control" placeholder="Address Line" required>
+	  </div>
+	  
+	  <div class="form-group">
+	    <label for="city">City</label>
+	    <input name="city" type="text" class="form-control" placeholder="City" required>
+	  </div>
+	  
+	  <div class="form-group">
+	    <label for="zip">Zip / Postal Code</label>
+	    <input name="zip" type="text" class="form-control" placeholder="Zip / Postal Code" required>
+	  </div>
+	  
+	  <div class="form-group">
+	    <label for="email">E-mail</label>
+	    <input name="email" type="email" class="form-control" placeholder="E-mail" required>
+	  </div>
+	  
+	  <div class="form-group">
+	    <label for="phone">Phone number</label>
+	    <input name="phone" type="tel" class="form-control" placeholder="Phone number" required>
+	  </div>
+ </fieldset>    

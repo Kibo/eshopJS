@@ -7,32 +7,45 @@ ESHOP_JS.modules.checkout = (function( window, document ){
 	var pubsub = ESHOP_JS.modules.pubsub;	
 	var settings = ESHOP_JS.settings;
 	var storage = ESHOP_JS.modules.storage;
-	var checkoutTemplate = ESHOP_JS.modules.templateEngine.compile( ESHOP_JS.templates.checkout );	
+	var checkoutTemplate = ESHOP_JS.modules.templateEngine.compile( ESHOP_JS.templates.checkout );
 		
-	return {
+	/**
+	 * Set change handlers
+	 * @param {Object} wrapper - DOM wrapper
+	 */
+	function setChangeHandlers( wrapper ){
+		var radios = wrapper.querySelectorAll('input[type="radio"]');		
+		for(var idx = 0, len = radios.length; idx < len; idx++ ){
+			radios[idx].addEventListener("change", function(e){
+				pubsub.publish( settings.CHECKOUT_CHANGE_EVENT_NAME );
+				console.log("change");				
+			}, false);	
+		}		
+	};
+			
+	return {	
+		
 		/**
-		 * Refresh
+		 * Show checkout form
 		 */
-		refresh:function(){
-			var wrapper = document.getElementById( settings.CHECKOUT_DOM_ID );
+		show:function(){
+			var wrapper = document.getElementById( settings.CHECKOUT_DOM_ID ); 
+			
 			if(!wrapper){
 				return;
 			}			
-			
+		
 			var cartObj = storage.get( settings.CART_STORAGE_KEY );
 			cartObj.settings = ESHOP_JS.settings;
 			wrapper.innerHTML = checkoutTemplate( cartObj );			
-		},
+		},		
 		
 		/**
 	 	* Module initialization
 	 	*/	
-		init:function(){
-			this.refresh();
-			
-			pubsub.subscribe(settings.CART_CHANGE_EVENT_NAME, function(e){
-				ESHOP_JS.modules.checkout.refresh();										
-			});					
+		init:function(){		
+			this.show();
+			setChangeHandlers( document.getElementById( settings.CHECKOUT_DOM_ID ) );								
 		}			
 	};	
 })( window, document );
