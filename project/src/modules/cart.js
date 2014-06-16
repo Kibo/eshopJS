@@ -112,6 +112,20 @@ ESHOP_JS.modules.cart = (function( window, document ){
 		 
 		return count;
 	};
+	
+	/**
+	 * Get total price
+	 * @return {Number}
+	 */
+	function getTotalPrice(){
+		var total = 0;
+		var products = storage.get( settings.CART_STORAGE_KEY ).products;
+		for(var idx = 0, len = products.length; idx < len; idx++ ){									
+			total += parseInt(products[idx].count, 10) * parseInt(products[idx].price, 10); 
+		}
+		 
+		return total;		
+	};
 			
 	// init storage
 	if(!storage.get( settings.CART_STORAGE_KEY ).products){
@@ -180,10 +194,18 @@ ESHOP_JS.modules.cart = (function( window, document ){
 		
 		/**
 		 * Get count of products in shopping cart
-		 * @return {Mumber}
+		 * @return {Number}
 		 */
 		count:function(){
 			return getCountOfProducts();	
+		},
+		
+		/**
+		 * Get total price products in shopping cart
+		 * @return {Number}
+		 */
+		totalPrice:function(){
+			return getTotalPrice();	
 		},
 							
 		/**

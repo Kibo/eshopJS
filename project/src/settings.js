@@ -1,18 +1,29 @@
 ESHOP_JS.settings = {
-	
+		
 	/**
-	 * Continue shopping url
+	 * URL to order server
+	 * URL where to send the order
 	 * @constant
 	 * @type {string}
 	 */
-	CONTINUE_SHOPPING_URL:"#top",
+	URL_TO_ORDER_SERVER:"#",
 	
 	/**
-	 * Checkout url
-	 * @constant
-	 * @type {string}
+	 * Type of postages
 	 */
-	CHECKOUT_URL:"#checkout",
+	TYPES_OF_POSTAGES:[
+		{name: "Personal collection", price: 0},
+		{name: "Czech Post", price: 80}
+	],
+	
+	/**
+	 * Payment methods
+	 */
+	PAYMENT_METHODS:[
+		{name:"Cash", price:0},
+		{name:"Cash on delivery", price:40},
+		{name:"Payment in advance", price:0}			
+	],
 
 	/**
 	 * DOM wrapper for product

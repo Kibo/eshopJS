@@ -5,7 +5,7 @@
 			<th>Product</th>
 			<th>Details</th>
 			<th>Count</th>
-			<th>Price</th>
+			<th>Sub-Total</th>
 			<th>&nbsp;</th>
 		</tr>
 	</thead>
@@ -25,10 +25,13 @@
 				<td>$<%= products[idx].count * products[idx].price %></td>
 				<td><a href="#cart" class="btn btn-danger btn-xs btn-remove" title="Remove" data-idx="<%=idx%>"><span class="glyphicon glyphicon-trash"></span> Remove</a></td>				
 			</tr>			
-		<% } %>				
+		<% } %>
+		
+		<tfoot>			
+			<tr class="info">
+				<th colspan="3">Sub-Total</th>						
+				<td colspan="2">$<%=ESHOP_JS.modules.cart.totalPrice()%></td>				
+			</tr>			
+		</tfoot>				
 	</tbody>	
 </table>
-<p>
-<a href="<%=settings.CHECKOUT_URL%>" class="btn btn-success pull-right">Checkout</a>
-<a href="<%=settings.CONTINUE_SHOPPING_URL%>" class="btn btn-info">Continue</a>
-</p>

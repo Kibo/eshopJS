@@ -1,4 +1,4 @@
-/* E-shop v0.2.0 - 2014-06-15 */
+/* E-shop v0.2.0 - 2014-06-16 */
 // ### Source: project/src/namespace.js
 var ESHOP_JS = ESHOP_JS || {};
 
@@ -52,20 +52,14 @@ ESHOP_JS.utils = (function( window, document){
 
 // ### Source: project/src/settings.js
 ESHOP_JS.settings = {
-	
+		
 	/**
-	 * Continue shopping url
+	 * URL to order server
+	 * URL where to send the order
 	 * @constant
 	 * @type {string}
 	 */
-	CONTINUE_SHOPPING_URL:"#top",
-	
-	/**
-	 * Checkout url
-	 * @constant
-	 * @type {string}
-	 */
-	CHECKOUT_URL:"#checkout",
+	URL_TO_ORDER_SERVER:"#",
 
 	/**
 	 * DOM wrapper for product
@@ -226,8 +220,8 @@ ESHOP_JS.modules.pubsub = (function(){
 
 // ### Source: project/src/templates/templates.js
 window.ESHOP_JS.templates = {
-  "cart": "<h3>Shopping cart</h3><table class=\"table table-striped table-bordered\"><thead><tr><th>Product</th><th>Details</th><th>Count</th><th>Price</th><th>&nbsp;</th></tr></thead><tbody><% if( products.length === 0){%><tr><td colspan=\"5\">There are not products yet.</td></tr><% } %><% for (var idx = 0, len = products.length; idx < len; idx ++) { %><tr><td><%= products[idx].title %></td><td><%= products[idx].variations %></td><td><input type=\"number\" value=\"<%= products[idx].count %>\" min=\"1\" max=\"100\" step=\"1\" data-idx=\"<%=idx%>\"></td><td>$<%= products[idx].count * products[idx].price %></td><td><a href=\"#cart\" class=\"btn btn-danger btn-xs btn-remove\" title=\"Remove\" data-idx=\"<%=idx%>\"><span class=\"glyphicon glyphicon-trash\"></span> Remove</a></td></tr><% } %></tbody></table><p><a href=\"<%=settings.CHECKOUT_URL%>\" class=\"btn btn-success pull-right\">Checkout</a><a href=\"<%=settings.CONTINUE_SHOPPING_URL%>\" class=\"btn btn-info\">Continue</a></p>",
-  "checkout": "<form><%= title %></form>"
+  "cart": "<h3>Shopping cart</h3><table class=\"table table-striped table-bordered\"><thead><tr><th>Product</th><th>Details</th><th>Count</th><th>Sub-Total</th><th>&nbsp;</th></tr></thead><tbody><% if( products.length === 0){%><tr><td colspan=\"5\">There are not products yet.</td></tr><% } %><% for (var idx = 0, len = products.length; idx < len; idx ++) { %><tr><td><%= products[idx].title %></td><td><%= products[idx].variations %></td><td><input type=\"number\" value=\"<%= products[idx].count %>\" min=\"1\" max=\"100\" step=\"1\" data-idx=\"<%=idx%>\"></td><td>$<%= products[idx].count * products[idx].price %></td><td><a href=\"#cart\" class=\"btn btn-danger btn-xs btn-remove\" title=\"Remove\" data-idx=\"<%=idx%>\"><span class=\"glyphicon glyphicon-trash\"></span> Remove</a></td></tr><% } %><tfoot><tr class=\"info\"><th colspan=\"3\">Sub-Total</th><td colspan=\"2\">$<%=ESHOP_JS.modules.cart.totalPrice()%></td></tr></tfoot></tbody></table>",
+  "checkout": "<form action=\"<%=settings.URL_TO_ORDER_SERVER%>\" method=\"post\" role=\"form\">  <fieldset>  <legend>Delivery address</legend>  <div class=\"form-group\">    <label for=\"Firstname\">Firstname</label>    <input name=\"firstname\" type=\"text\" class=\"form-control\" placeholder=\"Firstname\">  </div>    <div class=\"form-group\">    <label for=\"street\">Street</label>    <input name=\"street\" type=\"text\" class=\"form-control\" placeholder=\"Street\">  </div>      </fieldset></form>"
 }
 
 // ### Source: project/src/modules/storage.js
@@ -432,6 +426,20 @@ ESHOP_JS.modules.cart = (function( window, document ){
 		 
 		return count;
 	};
+	
+	/**
+	 * Get total price
+	 * @return {Number}
+	 */
+	function getTotalPrice(){
+		var total = 0;
+		var products = storage.get( settings.CART_STORAGE_KEY ).products;
+		for(var idx = 0, len = products.length; idx < len; idx++ ){									
+			total += parseInt(products[idx].count, 10) * parseInt(products[idx].price, 10); 
+		}
+		 
+		return total;		
+	};
 			
 	// init storage
 	if(!storage.get( settings.CART_STORAGE_KEY ).products){
@@ -500,10 +508,18 @@ ESHOP_JS.modules.cart = (function( window, document ){
 		
 		/**
 		 * Get count of products in shopping cart
-		 * @return {Mumber}
+		 * @return {Number}
 		 */
 		count:function(){
 			return getCountOfProducts();	
+		},
+		
+		/**
+		 * Get total price products in shopping cart
+		 * @return {Number}
+		 */
+		totalPrice:function(){
+			return getTotalPrice();	
 		},
 							
 		/**
@@ -704,11 +720,53 @@ ESHOP_JS.modules.product = (function( window, document ){
 })( window, document );
 
 
+// ### Source: project/src/modules/checkout.js
+/**
+ * Checkout module
+ */
+ESHOP_JS.modules.checkout = (function( window, document ){
+	
+	var utils = ESHOP_JS.utils;
+	var pubsub = ESHOP_JS.modules.pubsub;	
+	var settings = ESHOP_JS.settings;
+	var storage = ESHOP_JS.modules.storage;
+	var checkoutTemplate = ESHOP_JS.modules.templateEngine.compile( ESHOP_JS.templates.checkout );	
+		
+	return {
+		/**
+		 * Refresh
+		 */
+		refresh:function(){
+			var wrapper = document.getElementById( settings.CHECKOUT_DOM_ID );
+			if(!wrapper){
+				return;
+			}			
+			
+			var cartObj = storage.get( settings.CART_STORAGE_KEY );
+			cartObj.settings = ESHOP_JS.settings;
+			wrapper.innerHTML = checkoutTemplate( cartObj );			
+		},
+		
+		/**
+	 	* Module initialization
+	 	*/	
+		init:function(){
+			this.refresh();
+			
+			pubsub.subscribe(settings.CART_CHANGE_EVENT_NAME, function(e){
+				ESHOP_JS.modules.checkout.refresh();										
+			});					
+		}			
+	};	
+})( window, document );
+
+
 // ### Source: project/src/init.js
 /**
  * Eshop initialization
  */
 ESHOP_JS.init = function(){	
 	ESHOP_JS.modules.product.init();
-	ESHOP_JS.modules.cart.init();	
+	ESHOP_JS.modules.cart.init();
+	ESHOP_JS.modules.checkout.init();		
 };

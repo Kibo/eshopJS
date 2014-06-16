@@ -1,1 +1,18 @@
-<form><%= title %></form>
+<form action="<%=settings.URL_TO_ORDER_SERVER%>" method="post" role="form">
+	
+  <fieldset>
+  	<legend>Delivery address</legend>	
+	
+  <div class="form-group">
+    <label for="Firstname">Firstname</label>
+    <input name="firstname" type="text" class="form-control" placeholder="Firstname">
+  </div>
+  
+  <div class="form-group">
+    <label for="street">Street</label>
+    <input name="street" type="text" class="form-control" placeholder="Street">
+  </div>
+  
+  
+  </fieldset>	
+</form>
