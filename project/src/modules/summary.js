@@ -8,7 +8,7 @@ ESHOP_JS.modules.summary = (function( window, document ){
 	var storage = ESHOP_JS.modules.storage;
 	var summaryTemplate = ESHOP_JS.modules.templateEngine.compile( ESHOP_JS.templates.summary );
 
-	// TODO 23
+	// TODO 234
 		
 	return{
 		/**
