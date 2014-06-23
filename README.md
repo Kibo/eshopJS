@@ -10,6 +10,17 @@ Status: **in progress**
 - Easily extensible code divided into [modules](https://github.com/Kibo/eshopJS/tree/master/project/src/modules).
 - Tested code.
 
+##Now available locales
+ - en
+ - cs
+``` 
+<script>
+	window.onload = function(){
+		ESHOP_JS.init("cs");				
+	};			
+</script>
+```
+
 ##Example
 - [Rastashop](http://kibo.github.io/eshopJS/) (in progress)
 
