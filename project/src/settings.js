@@ -1,22 +1,5 @@
 ESHOP_JS.settings = {
-			
-	/**
-	 * Type of postages
-	 */
-	POSTAGES:[		
-		{name: "Personal collection", price: 0},
-		{name: "Czech Post", price: 80}
-	],
-	
-	/**
-	 * Payment methods
-	 */
-	PAYMENT_METHODS:[
-		{name:"Payment on branch", price:0},		
-		{name:"Cash on delivery", price:40},
-		{name:"Payment in advance", price:0}			
-	],
-
+					
 	/**
 	 * DOM wrapper for product
 	 * @constant

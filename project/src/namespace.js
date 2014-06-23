@@ -27,3 +27,4 @@ ESHOP_JS.namespace = function( ns_string ) {
 
 /* ## NAMESPACES ############## */
 ESHOP_JS.namespace('modules');
+ESHOP_JS.namespace('messages');

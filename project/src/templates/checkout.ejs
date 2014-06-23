@@ -2,59 +2,59 @@
 <div id="summary"></div>
 
 <fieldset class="payments">
-  <legend>Payment method</legend>    
-    <% for(var idx = 0, len = settings.PAYMENT_METHODS.length; idx < len; idx++){%>
+  <legend><%=ESHOP_JS.settings.messages.PAYMENT_HEADLINE%></legend>    
+    <% for(var idx = 0, len = settings.messages.PAYMENT_METHODS.length; idx < len; idx++){%>
   	<div class="radio">
   		<label>
-    		<input type="radio" name="payment" value="<%=settings.PAYMENT_METHODS[idx].name%>" data-price="<%=settings.PAYMENT_METHODS[idx].price%>" <%=idx === 0 ? 'checked' : ''%> >
-    		<%=settings.PAYMENT_METHODS[idx].name%>    	
+    		<input type="radio" name="payment" value="<%=settings.messages.PAYMENT_METHODS[idx].name%>" data-price="<%=settings.messages.PAYMENT_METHODS[idx].price%>" <%=idx === 0 ? 'checked' : ''%> >
+    		<%=settings.messages.PAYMENT_METHODS[idx].name%>    	
   		</label>
 	</div>
 	<%}%>
 </fieldset>
   
 <fieldset class="postages">
-  <legend>Postages</legend>    
-    <% for(var idx = 0, len = settings.POSTAGES.length; idx < len; idx++){%>
+  <legend><%=ESHOP_JS.settings.messages.POSTAGES_HEADLINE%></legend>    
+    <% for(var idx = 0, len = settings.messages.POSTAGES.length; idx < len; idx++){%>
   	<div class="radio">
   		<label>
-    		<input type="radio" name="postage" value="<%=settings.POSTAGES[idx].name%>" data-price="<%=settings.POSTAGES[idx].price%>" <%=idx === 0 ? 'checked' : ''%>>
-    		<%=settings.POSTAGES[idx].name%>    	
+    		<input type="radio" name="postage" value="<%=settings.messages.POSTAGES[idx].name%>" data-price="<%=settings.messages.POSTAGES[idx].price%>" <%=idx === 0 ? 'checked' : ''%>>
+    		<%=settings.messages.POSTAGES[idx].name%>    	
   		</label>
 	</div>
 	<%}%>
 </fieldset>
 
 <fieldset class="address">
-  	<legend>Delivery address</legend>	
+  	<legend><%=ESHOP_JS.settings.messages.DELIVERY_ADDRESS_HEADLINE%></legend>	
 	  
 	  <div class="form-group">
-	    <label for="fullname">Full Name</label>
-	    <input name="fullname" type="text" class="form-control" placeholder="Full Name" required>
+	    <label for="fullname"><%=ESHOP_JS.settings.messages.DELIVERY_ADDRESS_FULL_NAME%></label>
+	    <input name="fullname" type="text" class="form-control" placeholder="<%=ESHOP_JS.settings.messages.DELIVERY_ADDRESS_FULL_NAME%>" required>
 	  </div>
 	  
 	  <div class="form-group">
-	    <label for="street">Address Line</label>
-	    <input name="street" type="text" class="form-control" placeholder="Address Line" required>
+	    <label for="street"><%=ESHOP_JS.settings.messages.DELIVERY_ADDRESS_ADDRESS_LINE%></label>
+	    <input name="street" type="text" class="form-control" placeholder="<%=ESHOP_JS.settings.messages.DELIVERY_ADDRESS_ADDRESS_LINE%>" required>
 	  </div>
 	  
 	  <div class="form-group">
-	    <label for="city">City</label>
-	    <input name="city" type="text" class="form-control" placeholder="City" required>
+	    <label for="city"><%=ESHOP_JS.settings.messages.DELIVERY_ADDRESS_CITY%></label>
+	    <input name="city" type="text" class="form-control" placeholder="<%=ESHOP_JS.settings.messages.DELIVERY_ADDRESS_CITY%>" required>
 	  </div>
 	  
 	  <div class="form-group">
-	    <label for="zip">Zip / Postal Code</label>
-	    <input name="zip" type="text" class="form-control" placeholder="Zip / Postal Code" required>
+	    <label for="zip"><%=ESHOP_JS.settings.messages.DELIVERY_ADDRESS_ZIP%></label>
+	    <input name="zip" type="text" class="form-control" placeholder="<%=ESHOP_JS.settings.messages.DELIVERY_ADDRESS_ZIP%>" required>
 	  </div>
 	  
 	  <div class="form-group">
-	    <label for="email">E-mail</label>
-	    <input name="email" type="email" class="form-control" placeholder="E-mail" required>
+	    <label for="email"><%=ESHOP_JS.settings.messages.DELIVERY_ADDRESS_EMAIL%></label>
+	    <input name="email" type="email" class="form-control" placeholder="<%=ESHOP_JS.settings.messages.DELIVERY_ADDRESS_EMAIL%>" required>
 	  </div>
 	  
 	  <div class="form-group">
-	    <label for="phone">Phone number</label>
-	    <input name="phone" type="tel" class="form-control" placeholder="Phone number" required>
+	    <label for="phone"><%=ESHOP_JS.settings.messages.DELIVERY_ADDRESS_PHONE%></label>
+	    <input name="phone" type="tel" class="form-control" placeholder="<%=ESHOP_JS.settings.messages.DELIVERY_ADDRESS_PHONE%>" required>
 	  </div>
  </fieldset>    

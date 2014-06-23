@@ -1,12 +1,12 @@
-<h3>Summary</h3>
 <table class="table table-striped table-bordered">
- 	<thead>
+	<caption><%=ESHOP_JS.settings.messages.SUMMARY_HEADLINE%></caption>
+ 	<thead> 	 
 		<tr>
-			<th>Product</th>
-			<th>Details</th>
-			<th>Price</th>
-			<th>Count</th>
-			<th>Sub-Total</th>			
+			<th><%=ESHOP_JS.settings.messages.PRODUCT_TITLE_COLUMNT_NAME%></th>
+			<th><%=ESHOP_JS.settings.messages.PRODUCT_DETAILS_COLUMNT_NAME%></th>
+			<th><%=ESHOP_JS.settings.messages.PRODUCT_PRICE_COLUMNT_NAME%></th>
+			<th><%=ESHOP_JS.settings.messages.PRODUCT_COUNT_COLUMNT_NAME%></th>
+			<th><%=ESHOP_JS.settings.messages.PRODUCT_SUBTOTAL_COLUMNT_NAME%></th>		
 		</tr>
 	</thead>
 	
@@ -14,7 +14,7 @@
 		
 		<% if( products.length === 0){%>
 			<tr>
-				<td colspan="5">There are not products yet.</td>
+				<td colspan="5"><%=ESHOP_JS.settings.messages.PRODUCT_EMPTY_MESSAGE%></td>
 			</tr>
 		<% } %>
 				
@@ -22,24 +22,24 @@
 			<tr>		
 				<td><%= products[idx].title %></td>
 				<td><%= products[idx].variations %></td>
-				<td>$<%= products[idx].price %></td>
+				<td><%=ESHOP_JS.settings.messages.CURRENCY_BEFORE%><%= products[idx].price %><%=ESHOP_JS.settings.messages.CURRENCY_AFTER%></td>
 				<td><%= products[idx].count %></td>
-				<td>$<%= products[idx].count * products[idx].price %></td>							
+				<td><%=ESHOP_JS.settings.messages.CURRENCY_BEFORE%><%= products[idx].count * products[idx].price %><%=ESHOP_JS.settings.messages.CURRENCY_AFTER%></td>							
 			</tr>			
 		<% } %>
 		
 		<tfoot>			
 			<tr>
-				<th colspan="4">Sub-Total</th>						
-				<td colspan="1">$<%=ESHOP_JS.modules.cart.totalPrice()%></td>				
+				<th colspan="4"><%=ESHOP_JS.settings.messages.PRODUCT_SUBTOTAL_COLUMNT_NAME%></th>						
+				<td colspan="1"><%=ESHOP_JS.settings.messages.CURRENCY_BEFORE%><%=ESHOP_JS.modules.cart.totalPrice()%><%=ESHOP_JS.settings.messages.CURRENCY_AFTER%></td>				
 			</tr>			
 			<tr>
-				<th colspan="4">Postage</th>						
-				<td colspan="1">$<%=ESHOP_JS.modules.cart.totalPrice() ? totalPostagePrice : 0%></td>				
+				<th colspan="4"><%=ESHOP_JS.settings.messages.POSTAGE%></th>						
+				<td colspan="1"><%=ESHOP_JS.settings.messages.CURRENCY_BEFORE%><%=ESHOP_JS.modules.cart.totalPrice() ? totalPostagePrice : 0%><%=ESHOP_JS.settings.messages.CURRENCY_AFTER%></td>				
 			</tr>			
 			<tr class="info">
-				<th colspan="4">Total</th>						
-				<td colspan="1"><b>$<%=ESHOP_JS.modules.cart.totalPrice() ? totalPrice : 0%></b></td>				
+				<th colspan="4"><%=ESHOP_JS.settings.messages.TOTAL_PRICE%></th>						
+				<td colspan="1"><b><%=ESHOP_JS.settings.messages.CURRENCY_BEFORE%><%=ESHOP_JS.modules.cart.totalPrice() ? totalPrice : 0%><%=ESHOP_JS.settings.messages.CURRENCY_AFTER%></b></td>				
 			</tr>					
 		</tfoot>				
 	</tbody>	 	

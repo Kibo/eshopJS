@@ -29,6 +29,7 @@ ESHOP_JS.namespace = function( ns_string ) {
 
 /* ## NAMESPACES ############## */
 ESHOP_JS.namespace('modules');
+ESHOP_JS.namespace('messages');
 
 
 // ### Source: project/src/utils.js
@@ -50,9 +51,9 @@ ESHOP_JS.utils = (function( window, document){
 
 	
 
-// ### Source: project/src/settings.js
-ESHOP_JS.settings = {
-			
+// ### Source: project/src/messages/en.js
+ESHOP_JS.messages.en = {
+	
 	/**
 	 * Type of postages
 	 */
@@ -69,7 +70,342 @@ ESHOP_JS.settings = {
 		{name:"Cash on delivery", price:40},
 		{name:"Payment in advance", price:0}			
 	],
+	
+	/**
+	 * Symbols for the currency before the number
+	 * @constant
+	 * @type {string}
+	 */	
+	CURRENCY_BEFORE:"$",
+	
+	/**
+	 * Symbols for the currency after the number
+	 * @constant
+	 * @type {string}
+	 */
+	CURRENCY_AFTER:"",	
+	
+	/**
+	 * Cart headline
+	 * @constant
+	 * @type {string}
+	 */
+	CART_HEADLINE:"Shopping cart",
+		
+	/**
+	 * Cart remove button
+	 * @constant
+	 * @type {string}
+	 */
+	CART_REMOVE_BUTTON:"Remove",
+	
+	/**
+	 * Product title column name
+	 * @constant
+	 * @type {string}
+	 */
+	PRODUCT_TITLE_COLUMNT_NAME:"Product",
+	
+	/**
+	 * Product details column name
+	 * @constant
+	 * @type {string}
+	 */
+	PRODUCT_DETAILS_COLUMNT_NAME:"Details",
+	
+	/**
+	 * Product price column name
+	 * @constant
+	 * @type {string}
+	 */
+	PRODUCT_PRICE_COLUMNT_NAME:"Price",
+	
+	/**
+	 * Product count column name
+	 * @constant
+	 * @type {string}
+	 */
+	PRODUCT_COUNT_COLUMNT_NAME:"Count",
+	
+	/**
+	 * Product sub-total column name
+	 * @constant
+	 * @type {string}
+	 */
+	PRODUCT_SUBTOTAL_COLUMNT_NAME:"Sub-Total",
+	
+	/**
+	 * Product empty message
+	 * @constant
+	 * @type {string}
+	 */
+	PRODUCT_EMPTY_MESSAGE:"There are not products yet.",
+	
+	/**
+	 * Postage
+	 * @constant
+	 * @type {string}
+	 */
+	POSTAGE:"Postage",
+	
+	/**
+	 * Total price
+	 * @constant
+	 * @type {string}
+	 */
+	TOTAL_PRICE:"Total price",
+	
+	/**
+	 * Summary headline
+	 * @constant
+	 * @type {string}
+	 */
+	SUMMARY_HEADLINE:"Summary",	
+	
+	/**
+	 * Payment headline
+	 * @constant
+	 * @type {string}
+	 */
+	PAYMENT_HEADLINE:"Payment method",
+	
+	/**
+	 * Postages headline
+	 * @constant
+	 * @type {string}
+	 */
+	POSTAGES_HEADLINE:"Postages",
+	
+	/**
+	 * Delivery address
+	 * @constant
+	 * @type {string}
+	 */
+	DELIVERY_ADDRESS_HEADLINE: "Delivery address",
+	
+	/**
+	 * Delivery full name
+	 * @constant
+	 * @type {string}
+	 */
+	DELIVERY_ADDRESS_FULL_NAME: "Full Name",
+	
+	/**
+	 * Delivery full name
+	 * @constant
+	 * @type {string}
+	 */
+	DELIVERY_ADDRESS_ADDRESS_LINE: "Address Line",
+	
+	/**
+	 * Delivery full name
+	 * @constant
+	 * @type {string}
+	 */
+	DELIVERY_ADDRESS_CITY: "City",
+	
+	/**
+	 * Zip
+	 * @constant
+	 * @type {string}
+	 */
+	DELIVERY_ADDRESS_ZIP: "Zip / Postal Code",	
+	
+	/**
+	 * Email
+	 * @constant
+	 * @type {string}
+	 */
+	DELIVERY_ADDRESS_EMAIL: "E-mail",
+	
+	/**
+	 * Phone
+	 * @constant
+	 * @type {string}
+	 */
+	DELIVERY_ADDRESS_PHONE: "Phone number",		
+};
 
+
+// ### Source: project/src/messages/cs.js
+ESHOP_JS.messages.cs = {
+	
+	/**
+	 * Type of postages
+	 */
+	POSTAGES:[		
+		{name: "Osobní převzetí", price: 0},
+		{name: "Česká pošta", price: 80}
+	],
+	
+	/**
+	 * Payment methods
+	 */
+	PAYMENT_METHODS:[
+		{name:"Platba hotově", price:0},		
+		{name:"Dobírka", price:40},
+		{name:"Platba převodem", price:0}			
+	],
+	
+	/**
+	 * Symbols for the currency before the number
+	 * @constant
+	 * @type {string}
+	 */	
+	CURRENCY_BEFORE:"",
+	
+	/**
+	 * Symbols for the currency after the number
+	 * @constant
+	 * @type {string}
+	 */
+	CURRENCY_AFTER:"Kč",	
+	
+	/**
+	 * Cart headline
+	 * @constant
+	 * @type {string}
+	 */
+	CART_HEADLINE:"Nákupní košík",
+		
+	/**
+	 * Cart remove button
+	 * @constant
+	 * @type {string}
+	 */
+	CART_REMOVE_BUTTON:"Odstranit",
+	
+	/**
+	 * Product title column name
+	 * @constant
+	 * @type {string}
+	 */
+	PRODUCT_TITLE_COLUMNT_NAME:"Produkt",
+	
+	/**
+	 * Product details column name
+	 * @constant
+	 * @type {string}
+	 */
+	PRODUCT_DETAILS_COLUMNT_NAME:"Detail",
+	
+	/**
+	 * Product price column name
+	 * @constant
+	 * @type {string}
+	 */
+	PRODUCT_PRICE_COLUMNT_NAME:"Cena",
+	
+	/**
+	 * Product count column name
+	 * @constant
+	 * @type {string}
+	 */
+	PRODUCT_COUNT_COLUMNT_NAME:"Počet",
+	
+	/**
+	 * Product sub-total column name
+	 * @constant
+	 * @type {string}
+	 */
+	PRODUCT_SUBTOTAL_COLUMNT_NAME:"Mezi součet",
+	
+	/**
+	 * Product empty message
+	 * @constant
+	 * @type {string}
+	 */
+	PRODUCT_EMPTY_MESSAGE:"Zatím žádný produkt.",
+	
+	/**
+	 * Postage
+	 * @constant
+	 * @type {string}
+	 */
+	POSTAGE:"Poštovné",
+	
+	/**
+	 * Total price
+	 * @constant
+	 * @type {string}
+	 */
+	TOTAL_PRICE:"Celková cena",
+	
+	/**
+	 * Summary headline
+	 * @constant
+	 * @type {string}
+	 */
+	SUMMARY_HEADLINE:"Přehled",	
+	
+	/**
+	 * Payment headline
+	 * @constant
+	 * @type {string}
+	 */
+	PAYMENT_HEADLINE:"Platební metoda",
+	
+	/**
+	 * Postages headline
+	 * @constant
+	 * @type {string}
+	 */
+	POSTAGES_HEADLINE:"Poštovné",
+	
+	/**
+	 * Delivery address
+	 * @constant
+	 * @type {string}
+	 */
+	DELIVERY_ADDRESS_HEADLINE: "Doručovací adresa",
+	
+	/**
+	 * Delivery full name
+	 * @constant
+	 * @type {string}
+	 */
+	DELIVERY_ADDRESS_FULL_NAME: "Jméno a příjmení",
+	
+	/**
+	 * Delivery full name
+	 * @constant
+	 * @type {string}
+	 */
+	DELIVERY_ADDRESS_ADDRESS_LINE: "Adresa",
+	
+	/**
+	 * Delivery full name
+	 * @constant
+	 * @type {string}
+	 */
+	DELIVERY_ADDRESS_CITY: "Město",
+	
+	/**
+	 * Zip
+	 * @constant
+	 * @type {string}
+	 */
+	DELIVERY_ADDRESS_ZIP: "PSČ",	
+	
+	/**
+	 * Email
+	 * @constant
+	 * @type {string}
+	 */
+	DELIVERY_ADDRESS_EMAIL: "E-mail",
+	
+	/**
+	 * Phone
+	 * @constant
+	 * @type {string}
+	 */
+	DELIVERY_ADDRESS_PHONE: "Telefoní číslo",		
+};
+
+
+// ### Source: project/src/settings.js
+ESHOP_JS.settings = {
+					
 	/**
 	 * DOM wrapper for product
 	 * @constant
@@ -243,9 +579,9 @@ ESHOP_JS.modules.pubsub = (function(){
 
 // ### Source: project/src/templates/templates.js
 window.ESHOP_JS.templates = {
-  "cart": "<h3>Shopping cart</h3><table class=\"table table-striped table-bordered\"><thead><tr><th>Product</th><th>Details</th><th>Price</th><th>Count</th><th>Sub-Total</th><th>&nbsp;</th></tr></thead><tbody><% if( products.length === 0){%><tr><td colspan=\"6\">There are not products yet.</td></tr><% } %><% for (var idx = 0, len = products.length; idx < len; idx ++) { %><tr><td><%= products[idx].title %></td><td><%= products[idx].variations %></td><td>$<%= products[idx].price %></td><td><input type=\"number\" value=\"<%= products[idx].count %>\" min=\"1\" max=\"100\" step=\"1\" data-idx=\"<%=idx%>\"></td><td>$<%= products[idx].count * products[idx].price %></td><td><a href=\"#cart\" class=\"btn btn-danger btn-xs btn-remove\" title=\"Remove\" data-idx=\"<%=idx%>\"><span class=\"glyphicon glyphicon-trash\"></span> Remove</a></td></tr><% } %><tfoot><tr class=\"info\"><th colspan=\"4\">Sub-Total</th><td colspan=\"2\">$<%=ESHOP_JS.modules.cart.totalPrice()%></td></tr></tfoot></tbody></table>",
-  "checkout": "<!-- Wrapper for summary table --><div id=\"summary\"></div><fieldset class=\"payments\">  <legend>Payment method</legend>        <% for(var idx = 0, len = settings.PAYMENT_METHODS.length; idx < len; idx++){%>  <div class=\"radio\">  <label>    <input type=\"radio\" name=\"payment\" value=\"<%=settings.PAYMENT_METHODS[idx].name%>\" data-price=\"<%=settings.PAYMENT_METHODS[idx].price%>\" <%=idx === 0 ? 'checked' : ''%> >    <%=settings.PAYMENT_METHODS[idx].name%>      </label></div><%}%></fieldset>  <fieldset class=\"postages\">  <legend>Postages</legend>        <% for(var idx = 0, len = settings.POSTAGES.length; idx < len; idx++){%>  <div class=\"radio\">  <label>    <input type=\"radio\" name=\"postage\" value=\"<%=settings.POSTAGES[idx].name%>\" data-price=\"<%=settings.POSTAGES[idx].price%>\" <%=idx === 0 ? 'checked' : ''%>>    <%=settings.POSTAGES[idx].name%>      </label></div><%}%></fieldset><fieldset class=\"address\">  <legend>Delivery address</legend>    <div class=\"form-group\">    <label for=\"fullname\">Full Name</label>    <input name=\"fullname\" type=\"text\" class=\"form-control\" placeholder=\"Full Name\" required>  </div>    <div class=\"form-group\">    <label for=\"street\">Address Line</label>    <input name=\"street\" type=\"text\" class=\"form-control\" placeholder=\"Address Line\" required>  </div>    <div class=\"form-group\">    <label for=\"city\">City</label>    <input name=\"city\" type=\"text\" class=\"form-control\" placeholder=\"City\" required>  </div>    <div class=\"form-group\">    <label for=\"zip\">Zip / Postal Code</label>    <input name=\"zip\" type=\"text\" class=\"form-control\" placeholder=\"Zip / Postal Code\" required>  </div>    <div class=\"form-group\">    <label for=\"email\">E-mail</label>    <input name=\"email\" type=\"email\" class=\"form-control\" placeholder=\"E-mail\" required>  </div>    <div class=\"form-group\">    <label for=\"phone\">Phone number</label>    <input name=\"phone\" type=\"tel\" class=\"form-control\" placeholder=\"Phone number\" required>  </div> </fieldset>    ",
-  "summary": "<h3>Summary</h3><table class=\"table table-striped table-bordered\"> <thead><tr><th>Product</th><th>Details</th><th>Price</th><th>Count</th><th>Sub-Total</th></tr></thead><tbody><% if( products.length === 0){%><tr><td colspan=\"5\">There are not products yet.</td></tr><% } %><% for (var idx = 0, len = products.length; idx < len; idx ++) { %><tr><td><%= products[idx].title %></td><td><%= products[idx].variations %></td><td>$<%= products[idx].price %></td><td><%= products[idx].count %></td><td>$<%= products[idx].count * products[idx].price %></td></tr><% } %><tfoot><tr><th colspan=\"4\">Sub-Total</th><td colspan=\"1\">$<%=ESHOP_JS.modules.cart.totalPrice()%></td></tr><tr><th colspan=\"4\">Postage</th><td colspan=\"1\">$<%=ESHOP_JS.modules.cart.totalPrice() ? totalPostagePrice : 0%></td></tr><tr class=\"info\"><th colspan=\"4\">Total</th><td colspan=\"1\"><b>$<%=ESHOP_JS.modules.cart.totalPrice() ? totalPrice : 0%></b></td></tr></tfoot></tbody> </table>"
+  "cart": "<table class=\"table table-striped table-bordered\"><caption><%=ESHOP_JS.settings.messages.CART_HEADLINE%></caption><thead><tr><th><%=ESHOP_JS.settings.messages.PRODUCT_TITLE_COLUMNT_NAME%></th><th><%=ESHOP_JS.settings.messages.PRODUCT_DETAILS_COLUMNT_NAME%></th><th><%=ESHOP_JS.settings.messages.PRODUCT_PRICE_COLUMNT_NAME%></th><th><%=ESHOP_JS.settings.messages.PRODUCT_COUNT_COLUMNT_NAME%></th><th><%=ESHOP_JS.settings.messages.PRODUCT_SUBTOTAL_COLUMNT_NAME%></th><th>&nbsp;</th></tr></thead><tbody><% if( products.length === 0){%><tr><td colspan=\"6\"><%=ESHOP_JS.settings.messages.PRODUCT_EMPTY_MESSAGE%></td></tr><% } %><% for (var idx = 0, len = products.length; idx < len; idx ++) { %><tr><td><%= products[idx].title %></td><td><%= products[idx].variations %></td><td><%=ESHOP_JS.settings.messages.CURRENCY_BEFORE%><%= products[idx].price %><%=ESHOP_JS.settings.messages.CURRENCY_AFTER%></td><td><input type=\"number\" value=\"<%= products[idx].count %>\" min=\"1\" max=\"100\" step=\"1\" data-idx=\"<%=idx%>\"></td><td><%=ESHOP_JS.settings.messages.CURRENCY_BEFORE%><%= products[idx].count * products[idx].price %><%=ESHOP_JS.settings.messages.CURRENCY_AFTER%></td><td><a href=\"#cart\" class=\"btn btn-danger btn-xs btn-remove\" title=\"<%=ESHOP_JS.settings.messages.CART_REMOVE_BUTTON%>\" data-idx=\"<%=idx%>\"><span class=\"glyphicon glyphicon-trash\"></span> <%=ESHOP_JS.settings.messages.CART_REMOVE_BUTTON%></a></td></tr><% } %><tfoot><tr class=\"info\"><th colspan=\"4\"><%=ESHOP_JS.settings.messages.PRODUCT_SUBTOTAL_COLUMNT_NAME%></th><td colspan=\"2\"><%=ESHOP_JS.settings.messages.CURRENCY_BEFORE%><%=ESHOP_JS.modules.cart.totalPrice()%><%=ESHOP_JS.settings.messages.CURRENCY_AFTER%></td></tr></tfoot></tbody></table>",
+  "checkout": "<!-- Wrapper for summary table --><div id=\"summary\"></div><fieldset class=\"payments\">  <legend><%=ESHOP_JS.settings.messages.PAYMENT_HEADLINE%></legend>        <% for(var idx = 0, len = settings.messages.PAYMENT_METHODS.length; idx < len; idx++){%>  <div class=\"radio\">  <label>    <input type=\"radio\" name=\"payment\" value=\"<%=settings.messages.PAYMENT_METHODS[idx].name%>\" data-price=\"<%=settings.messages.PAYMENT_METHODS[idx].price%>\" <%=idx === 0 ? 'checked' : ''%> >    <%=settings.messages.PAYMENT_METHODS[idx].name%>      </label></div><%}%></fieldset>  <fieldset class=\"postages\">  <legend><%=ESHOP_JS.settings.messages.POSTAGES_HEADLINE%></legend>        <% for(var idx = 0, len = settings.messages.POSTAGES.length; idx < len; idx++){%>  <div class=\"radio\">  <label>    <input type=\"radio\" name=\"postage\" value=\"<%=settings.messages.POSTAGES[idx].name%>\" data-price=\"<%=settings.messages.POSTAGES[idx].price%>\" <%=idx === 0 ? 'checked' : ''%>>    <%=settings.messages.POSTAGES[idx].name%>      </label></div><%}%></fieldset><fieldset class=\"address\">  <legend><%=ESHOP_JS.settings.messages.DELIVERY_ADDRESS_HEADLINE%></legend>    <div class=\"form-group\">    <label for=\"fullname\"><%=ESHOP_JS.settings.messages.DELIVERY_ADDRESS_FULL_NAME%></label>    <input name=\"fullname\" type=\"text\" class=\"form-control\" placeholder=\"<%=ESHOP_JS.settings.messages.DELIVERY_ADDRESS_FULL_NAME%>\" required>  </div>    <div class=\"form-group\">    <label for=\"street\"><%=ESHOP_JS.settings.messages.DELIVERY_ADDRESS_ADDRESS_LINE%></label>    <input name=\"street\" type=\"text\" class=\"form-control\" placeholder=\"<%=ESHOP_JS.settings.messages.DELIVERY_ADDRESS_ADDRESS_LINE%>\" required>  </div>    <div class=\"form-group\">    <label for=\"city\"><%=ESHOP_JS.settings.messages.DELIVERY_ADDRESS_CITY%></label>    <input name=\"city\" type=\"text\" class=\"form-control\" placeholder=\"<%=ESHOP_JS.settings.messages.DELIVERY_ADDRESS_CITY%>\" required>  </div>    <div class=\"form-group\">    <label for=\"zip\"><%=ESHOP_JS.settings.messages.DELIVERY_ADDRESS_ZIP%></label>    <input name=\"zip\" type=\"text\" class=\"form-control\" placeholder=\"<%=ESHOP_JS.settings.messages.DELIVERY_ADDRESS_ZIP%>\" required>  </div>    <div class=\"form-group\">    <label for=\"email\"><%=ESHOP_JS.settings.messages.DELIVERY_ADDRESS_EMAIL%></label>    <input name=\"email\" type=\"email\" class=\"form-control\" placeholder=\"<%=ESHOP_JS.settings.messages.DELIVERY_ADDRESS_EMAIL%>\" required>  </div>    <div class=\"form-group\">    <label for=\"phone\"><%=ESHOP_JS.settings.messages.DELIVERY_ADDRESS_PHONE%></label>    <input name=\"phone\" type=\"tel\" class=\"form-control\" placeholder=\"<%=ESHOP_JS.settings.messages.DELIVERY_ADDRESS_PHONE%>\" required>  </div> </fieldset>    ",
+  "summary": "<table class=\"table table-striped table-bordered\"><caption><%=ESHOP_JS.settings.messages.SUMMARY_HEADLINE%></caption> <thead>  <tr><th><%=ESHOP_JS.settings.messages.PRODUCT_TITLE_COLUMNT_NAME%></th><th><%=ESHOP_JS.settings.messages.PRODUCT_DETAILS_COLUMNT_NAME%></th><th><%=ESHOP_JS.settings.messages.PRODUCT_PRICE_COLUMNT_NAME%></th><th><%=ESHOP_JS.settings.messages.PRODUCT_COUNT_COLUMNT_NAME%></th><th><%=ESHOP_JS.settings.messages.PRODUCT_SUBTOTAL_COLUMNT_NAME%></th></tr></thead><tbody><% if( products.length === 0){%><tr><td colspan=\"5\"><%=ESHOP_JS.settings.messages.PRODUCT_EMPTY_MESSAGE%></td></tr><% } %><% for (var idx = 0, len = products.length; idx < len; idx ++) { %><tr><td><%= products[idx].title %></td><td><%= products[idx].variations %></td><td><%=ESHOP_JS.settings.messages.CURRENCY_BEFORE%><%= products[idx].price %><%=ESHOP_JS.settings.messages.CURRENCY_AFTER%></td><td><%= products[idx].count %></td><td><%=ESHOP_JS.settings.messages.CURRENCY_BEFORE%><%= products[idx].count * products[idx].price %><%=ESHOP_JS.settings.messages.CURRENCY_AFTER%></td></tr><% } %><tfoot><tr><th colspan=\"4\"><%=ESHOP_JS.settings.messages.PRODUCT_SUBTOTAL_COLUMNT_NAME%></th><td colspan=\"1\"><%=ESHOP_JS.settings.messages.CURRENCY_BEFORE%><%=ESHOP_JS.modules.cart.totalPrice()%><%=ESHOP_JS.settings.messages.CURRENCY_AFTER%></td></tr><tr><th colspan=\"4\"><%=ESHOP_JS.settings.messages.POSTAGE%></th><td colspan=\"1\"><%=ESHOP_JS.settings.messages.CURRENCY_BEFORE%><%=ESHOP_JS.modules.cart.totalPrice() ? totalPostagePrice : 0%><%=ESHOP_JS.settings.messages.CURRENCY_AFTER%></td></tr><tr class=\"info\"><th colspan=\"4\"><%=ESHOP_JS.settings.messages.TOTAL_PRICE%></th><td colspan=\"1\"><b><%=ESHOP_JS.settings.messages.CURRENCY_BEFORE%><%=ESHOP_JS.modules.cart.totalPrice() ? totalPrice : 0%><%=ESHOP_JS.settings.messages.CURRENCY_AFTER%></b></td></tr></tfoot></tbody> </table>"
 }
 
 // ### Source: project/src/modules/storage.js
@@ -783,15 +1119,15 @@ ESHOP_JS.modules.checkout = (function( window, document ){
 		
 			var cartObj = storage.get( settings.CART_STORAGE_KEY );
 			cartObj.settings = ESHOP_JS.settings;
-			wrapper.innerHTML = checkoutTemplate( cartObj );			
+			wrapper.innerHTML = checkoutTemplate( cartObj );
+			setChangeHandlers( document.getElementById( settings.CHECKOUT_DOM_ID ) );			
 		},		
 		
 		/**
 	 	* Module initialization
 	 	*/	
 		init:function(){		
-			this.show();
-			setChangeHandlers( document.getElementById( settings.CHECKOUT_DOM_ID ) );								
+			this.show();										
 		}			
 	};	
 })( window, document );
@@ -867,8 +1203,10 @@ ESHOP_JS.modules.summary = (function( window, document ){
 // ### Source: project/src/init.js
 /**
  * Eshop initialization
+ * @param {String=} lang
  */
-ESHOP_JS.init = function(){	
+ESHOP_JS.init = function( lang ){			
+	ESHOP_JS.settings.messages = ESHOP_JS.messages[ lang || "en" ];	
 	ESHOP_JS.modules.product.init();
 	ESHOP_JS.modules.cart.init();
 	ESHOP_JS.modules.checkout.init();

@@ -1,12 +1,12 @@
-<h3>Shopping cart</h3>
 <table class="table table-striped table-bordered">
+	<caption><%=ESHOP_JS.settings.messages.CART_HEADLINE%></caption>
 	<thead>
 		<tr>
-			<th>Product</th>
-			<th>Details</th>
-			<th>Price</th>
-			<th>Count</th>
-			<th>Sub-Total</th>
+			<th><%=ESHOP_JS.settings.messages.PRODUCT_TITLE_COLUMNT_NAME%></th>
+			<th><%=ESHOP_JS.settings.messages.PRODUCT_DETAILS_COLUMNT_NAME%></th>
+			<th><%=ESHOP_JS.settings.messages.PRODUCT_PRICE_COLUMNT_NAME%></th>
+			<th><%=ESHOP_JS.settings.messages.PRODUCT_COUNT_COLUMNT_NAME%></th>
+			<th><%=ESHOP_JS.settings.messages.PRODUCT_SUBTOTAL_COLUMNT_NAME%></th>
 			<th>&nbsp;</th>
 		</tr>
 	</thead>
@@ -14,7 +14,7 @@
 		
 		<% if( products.length === 0){%>
 			<tr>
-				<td colspan="6">There are not products yet.</td>
+				<td colspan="6"><%=ESHOP_JS.settings.messages.PRODUCT_EMPTY_MESSAGE%></td>
 			</tr>
 		<% } %>
 				
@@ -22,19 +22,19 @@
 			<tr>		
 				<td><%= products[idx].title %></td>
 				<td><%= products[idx].variations %></td>
-				<td>$<%= products[idx].price %></td>
+				<td><%=ESHOP_JS.settings.messages.CURRENCY_BEFORE%><%= products[idx].price %><%=ESHOP_JS.settings.messages.CURRENCY_AFTER%></td>
 				<td>				
 					<input type="number" value="<%= products[idx].count %>" min="1" max="100" step="1" data-idx="<%=idx%>">					
 				</td>
-				<td>$<%= products[idx].count * products[idx].price %></td>
-				<td><a href="#cart" class="btn btn-danger btn-xs btn-remove" title="Remove" data-idx="<%=idx%>"><span class="glyphicon glyphicon-trash"></span> Remove</a></td>				
+				<td><%=ESHOP_JS.settings.messages.CURRENCY_BEFORE%><%= products[idx].count * products[idx].price %><%=ESHOP_JS.settings.messages.CURRENCY_AFTER%></td>
+				<td><a href="#cart" class="btn btn-danger btn-xs btn-remove" title="<%=ESHOP_JS.settings.messages.CART_REMOVE_BUTTON%>" data-idx="<%=idx%>"><span class="glyphicon glyphicon-trash"></span> <%=ESHOP_JS.settings.messages.CART_REMOVE_BUTTON%></a></td>				
 			</tr>			
 		<% } %>
 		
 		<tfoot>			
 			<tr class="info">
-				<th colspan="4">Sub-Total</th>						
-				<td colspan="2">$<%=ESHOP_JS.modules.cart.totalPrice()%></td>				
+				<th colspan="4"><%=ESHOP_JS.settings.messages.PRODUCT_SUBTOTAL_COLUMNT_NAME%></th>						
+				<td colspan="2"><%=ESHOP_JS.settings.messages.CURRENCY_BEFORE%><%=ESHOP_JS.modules.cart.totalPrice()%><%=ESHOP_JS.settings.messages.CURRENCY_AFTER%></td>				
 			</tr>			
 		</tfoot>				
 	</tbody>	

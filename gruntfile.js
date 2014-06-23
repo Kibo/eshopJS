@@ -4,7 +4,9 @@ module.exports = function( grunt ) {
 		pkg: grunt.file.readJSON( 'package.json' ),
 		
 		srcFiles: ['project/src/namespace.js',
-				   'project/src/utils.js',  
+				   'project/src/utils.js',
+				   'project/src/messages/en.js', 
+				   'project/src/messages/cs.js',  
 				   'project/src/settings.js', 
 				   'project/src/modules/pubsub.js',
 				   'project/src/templates/templates.js',				   
