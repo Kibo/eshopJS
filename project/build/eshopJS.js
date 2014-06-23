@@ -1,4 +1,4 @@
-/* E-shop v0.2.0 - 2014-06-16 */
+/* E-shop v0.2.0 - 2014-06-23 */
 // ### Source: project/src/namespace.js
 var ESHOP_JS = ESHOP_JS || {};
 
@@ -244,8 +244,8 @@ ESHOP_JS.modules.pubsub = (function(){
 // ### Source: project/src/templates/templates.js
 window.ESHOP_JS.templates = {
   "cart": "<h3>Shopping cart</h3><table class=\"table table-striped table-bordered\"><thead><tr><th>Product</th><th>Details</th><th>Price</th><th>Count</th><th>Sub-Total</th><th>&nbsp;</th></tr></thead><tbody><% if( products.length === 0){%><tr><td colspan=\"6\">There are not products yet.</td></tr><% } %><% for (var idx = 0, len = products.length; idx < len; idx ++) { %><tr><td><%= products[idx].title %></td><td><%= products[idx].variations %></td><td>$<%= products[idx].price %></td><td><input type=\"number\" value=\"<%= products[idx].count %>\" min=\"1\" max=\"100\" step=\"1\" data-idx=\"<%=idx%>\"></td><td>$<%= products[idx].count * products[idx].price %></td><td><a href=\"#cart\" class=\"btn btn-danger btn-xs btn-remove\" title=\"Remove\" data-idx=\"<%=idx%>\"><span class=\"glyphicon glyphicon-trash\"></span> Remove</a></td></tr><% } %><tfoot><tr class=\"info\"><th colspan=\"4\">Sub-Total</th><td colspan=\"2\">$<%=ESHOP_JS.modules.cart.totalPrice()%></td></tr></tfoot></tbody></table>",
-  "checkout": "<!-- Wrapper for summary table --><div id=\"summary\"></div><fieldset>  <legend>Payment method</legend>        <% for(var idx = 0, len = settings.PAYMENT_METHODS.length; idx < len; idx++){%>  <div class=\"radio\">  <label>    <input type=\"radio\" name=\"payment\" value=\"<%=settings.PAYMENT_METHODS[idx].name%>\" data-price=\"<%=settings.PAYMENT_METHODS[idx].price%>\" <%=idx === 0 ? 'checked' : ''%> >    <%=settings.PAYMENT_METHODS[idx].name%>      </label></div><%}%></fieldset>    <fieldset>  <legend>Postages</legend>        <% for(var idx = 0, len = settings.POSTAGES.length; idx < len; idx++){%>  <div class=\"radio\">  <label>    <input type=\"radio\" name=\"postage\" value=\"<%=settings.POSTAGES[idx].name%>\" data-price=\"<%=settings.POSTAGES[idx].price%>\" <%=idx === 0 ? 'checked' : ''%>>    <%=settings.POSTAGES[idx].name%>      </label></div><%}%></fieldset><fieldset class=\"address\">  <legend>Delivery address</legend>    <div class=\"form-group\">    <label for=\"fullname\">Full Name</label>    <input name=\"fullname\" type=\"text\" class=\"form-control\" placeholder=\"Full Name\" required>  </div>    <div class=\"form-group\">    <label for=\"street\">Address Line</label>    <input name=\"street\" type=\"text\" class=\"form-control\" placeholder=\"Address Line\" required>  </div>    <div class=\"form-group\">    <label for=\"city\">City</label>    <input name=\"city\" type=\"text\" class=\"form-control\" placeholder=\"City\" required>  </div>    <div class=\"form-group\">    <label for=\"zip\">Zip / Postal Code</label>    <input name=\"zip\" type=\"text\" class=\"form-control\" placeholder=\"Zip / Postal Code\" required>  </div>    <div class=\"form-group\">    <label for=\"email\">E-mail</label>    <input name=\"email\" type=\"email\" class=\"form-control\" placeholder=\"E-mail\" required>  </div>    <div class=\"form-group\">    <label for=\"phone\">Phone number</label>    <input name=\"phone\" type=\"tel\" class=\"form-control\" placeholder=\"Phone number\" required>  </div> </fieldset>    ",
-  "summary": "<h3>Summary</h3><table class=\"table table-striped table-bordered\"> <thead><tr><th>Product</th><th>Details</th><th>Price</th><th>Count</th><th>Sub-Total</th></tr></thead><tbody><% if( products.length === 0){%><tr><td colspan=\"5\">There are not products yet.</td></tr><% } %><% for (var idx = 0, len = products.length; idx < len; idx ++) { %><tr><td><%= products[idx].title %></td><td><%= products[idx].variations %></td><td>$<%= products[idx].price %></td><td><%= products[idx].count %></td><td>$<%= products[idx].count * products[idx].price %></td></tr><% } %><tfoot><tr class=\"info\"><th colspan=\"4\">Sub-Total</th><td colspan=\"1\">$<%=ESHOP_JS.modules.cart.totalPrice()%></td></tr></tfoot></tbody> </table>"
+  "checkout": "<!-- Wrapper for summary table --><div id=\"summary\"></div><fieldset class=\"payments\">  <legend>Payment method</legend>        <% for(var idx = 0, len = settings.PAYMENT_METHODS.length; idx < len; idx++){%>  <div class=\"radio\">  <label>    <input type=\"radio\" name=\"payment\" value=\"<%=settings.PAYMENT_METHODS[idx].name%>\" data-price=\"<%=settings.PAYMENT_METHODS[idx].price%>\" <%=idx === 0 ? 'checked' : ''%> >    <%=settings.PAYMENT_METHODS[idx].name%>      </label></div><%}%></fieldset>  <fieldset class=\"postages\">  <legend>Postages</legend>        <% for(var idx = 0, len = settings.POSTAGES.length; idx < len; idx++){%>  <div class=\"radio\">  <label>    <input type=\"radio\" name=\"postage\" value=\"<%=settings.POSTAGES[idx].name%>\" data-price=\"<%=settings.POSTAGES[idx].price%>\" <%=idx === 0 ? 'checked' : ''%>>    <%=settings.POSTAGES[idx].name%>      </label></div><%}%></fieldset><fieldset class=\"address\">  <legend>Delivery address</legend>    <div class=\"form-group\">    <label for=\"fullname\">Full Name</label>    <input name=\"fullname\" type=\"text\" class=\"form-control\" placeholder=\"Full Name\" required>  </div>    <div class=\"form-group\">    <label for=\"street\">Address Line</label>    <input name=\"street\" type=\"text\" class=\"form-control\" placeholder=\"Address Line\" required>  </div>    <div class=\"form-group\">    <label for=\"city\">City</label>    <input name=\"city\" type=\"text\" class=\"form-control\" placeholder=\"City\" required>  </div>    <div class=\"form-group\">    <label for=\"zip\">Zip / Postal Code</label>    <input name=\"zip\" type=\"text\" class=\"form-control\" placeholder=\"Zip / Postal Code\" required>  </div>    <div class=\"form-group\">    <label for=\"email\">E-mail</label>    <input name=\"email\" type=\"email\" class=\"form-control\" placeholder=\"E-mail\" required>  </div>    <div class=\"form-group\">    <label for=\"phone\">Phone number</label>    <input name=\"phone\" type=\"tel\" class=\"form-control\" placeholder=\"Phone number\" required>  </div> </fieldset>    ",
+  "summary": "<h3>Summary</h3><table class=\"table table-striped table-bordered\"> <thead><tr><th>Product</th><th>Details</th><th>Price</th><th>Count</th><th>Sub-Total</th></tr></thead><tbody><% if( products.length === 0){%><tr><td colspan=\"5\">There are not products yet.</td></tr><% } %><% for (var idx = 0, len = products.length; idx < len; idx ++) { %><tr><td><%= products[idx].title %></td><td><%= products[idx].variations %></td><td>$<%= products[idx].price %></td><td><%= products[idx].count %></td><td>$<%= products[idx].count * products[idx].price %></td></tr><% } %><tfoot><tr><th colspan=\"4\">Sub-Total</th><td colspan=\"1\">$<%=ESHOP_JS.modules.cart.totalPrice()%></td></tr><tr><th colspan=\"4\">Postage</th><td colspan=\"1\">$<%=totalPostagePrice%></td></tr><tr class=\"info\"><th colspan=\"4\">Total</th><td colspan=\"1\"><b>$<%=totalPrice%></b></td></tr></tfoot></tbody> </table>"
 }
 
 // ### Source: project/src/modules/storage.js
@@ -764,8 +764,7 @@ ESHOP_JS.modules.checkout = (function( window, document ){
 		var radios = wrapper.querySelectorAll('input[type="radio"]');		
 		for(var idx = 0, len = radios.length; idx < len; idx++ ){
 			radios[idx].addEventListener("change", function(e){
-				pubsub.publish( settings.CHECKOUT_CHANGE_EVENT_NAME );
-				console.log("change");				
+				pubsub.publish( settings.CHECKOUT_CHANGE_EVENT_NAME );						
 			}, false);	
 		}		
 	};
@@ -807,13 +806,32 @@ ESHOP_JS.modules.summary = (function( window, document ){
 	var pubsub = ESHOP_JS.modules.pubsub;	
 	var settings = ESHOP_JS.settings;	
 	var storage = ESHOP_JS.modules.storage;
+	var cart = ESHOP_JS.modules.cart;
 	var summaryTemplate = ESHOP_JS.modules.templateEngine.compile( ESHOP_JS.templates.summary );
-		
-	return{
+
+	/**
+	 * Get the postage price
+	 * @arg {Object} wrapper - DOM node
+	 * @return {number}
+	 */
+	function getPostagePrice( wrapper ){		
+		return parseInt(wrapper.querySelector('.postages input[type="radio"]:checked').dataset.price, 10);					
+	};
+	
+	/**
+	 * Get the payment price
+	 * @arg {Object} wrapper - DOM node
+	 * @return {number}
+	 */
+	function getPaymentPrice( wrapper ){		
+		return parseInt(wrapper.querySelector('.payments input[type="radio"]:checked').dataset.price, 10);					
+	};
+	
+	return{					
 		/**
 		 * Redraw the summary
 		 */
-		refresh:function(){
+		refresh:function(){			
 			var wrapper = document.getElementById( settings.SUMMARY_DOM_ID ); 
 			
 			if(!wrapper){
@@ -822,7 +840,9 @@ ESHOP_JS.modules.summary = (function( window, document ){
 		
 			var cartObj = storage.get( settings.CART_STORAGE_KEY );
 			cartObj.settings = ESHOP_JS.settings;
-			wrapper.innerHTML = summaryTemplate( cartObj );
+			cartObj.totalPostagePrice = getPostagePrice( document.getElementById( settings.CHECKOUT_DOM_ID) ) + getPaymentPrice( document.getElementById( settings.CHECKOUT_DOM_ID) ); 
+			cartObj.totalPrice = cartObj.totalPostagePrice + cart.totalPrice();
+			wrapper.innerHTML = summaryTemplate( cartObj );								
 		},
 		
 		/**

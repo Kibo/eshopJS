@@ -17,8 +17,7 @@ ESHOP_JS.modules.checkout = (function( window, document ){
 		var radios = wrapper.querySelectorAll('input[type="radio"]');		
 		for(var idx = 0, len = radios.length; idx < len; idx++ ){
 			radios[idx].addEventListener("change", function(e){
-				pubsub.publish( settings.CHECKOUT_CHANGE_EVENT_NAME );
-				console.log("change");				
+				pubsub.publish( settings.CHECKOUT_CHANGE_EVENT_NAME );						
 			}, false);	
 		}		
 	};

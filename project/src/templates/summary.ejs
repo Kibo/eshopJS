@@ -29,10 +29,18 @@
 		<% } %>
 		
 		<tfoot>			
-			<tr class="info">
+			<tr>
 				<th colspan="4">Sub-Total</th>						
 				<td colspan="1">$<%=ESHOP_JS.modules.cart.totalPrice()%></td>				
 			</tr>			
+			<tr>
+				<th colspan="4">Postage</th>						
+				<td colspan="1">$<%=totalPostagePrice%></td>				
+			</tr>			
+			<tr class="info">
+				<th colspan="4">Total</th>						
+				<td colspan="1"><b>$<%=totalPrice%></b></td>				
+			</tr>					
 		</tfoot>				
 	</tbody>	 	
 </table>

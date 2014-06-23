@@ -1,7 +1,7 @@
 <!-- Wrapper for summary table -->
 <div id="summary"></div>
 
-<fieldset>
+<fieldset class="payments">
   <legend>Payment method</legend>    
     <% for(var idx = 0, len = settings.PAYMENT_METHODS.length; idx < len; idx++){%>
   	<div class="radio">
@@ -13,7 +13,7 @@
 	<%}%>
 </fieldset>
   
-  <fieldset>
+<fieldset class="postages">
   <legend>Postages</legend>    
     <% for(var idx = 0, len = settings.POSTAGES.length; idx < len; idx++){%>
   	<div class="radio">
