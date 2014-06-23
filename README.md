@@ -1,7 +1,7 @@
 # EshopJS
 A free and open-source Javascript e-shop that easily integrates with your current websites.
 
-Status: **in progress**
+Status: 0.9.0
 
 - Pure Javascript **without dependencies**.
 - Product price may depend on product details. (For example: The larger size can cost more money. )
@@ -22,7 +22,7 @@ Status: **in progress**
 ```
 
 ##Example
-- [Rastashop](http://kibo.github.io/eshopJS/) (in progress)
+- [Rastashop](http://kibo.github.io/eshopJS/)
 
 ##How to use
 All IDs, Classes and atributes you can change in [settings](https://github.com/Kibo/eshopJS/blob/master/project/src/settings.js).
