@@ -1,7 +1,7 @@
 # EshopJS
 A free and open-source Javascript e-shop that easily integrates with your current websites.
 
-Status: 0.9.0
+**Version**: 0.9.0
 
 - Pure Javascript **without dependencies**.
 - Product price may depend on product details. (For example: The larger size can cost more money. )
