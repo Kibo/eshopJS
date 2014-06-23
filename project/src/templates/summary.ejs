@@ -35,11 +35,11 @@
 			</tr>			
 			<tr>
 				<th colspan="4">Postage</th>						
-				<td colspan="1">$<%=totalPostagePrice%></td>				
+				<td colspan="1">$<%=ESHOP_JS.modules.cart.totalPrice() ? totalPostagePrice : 0%></td>				
 			</tr>			
 			<tr class="info">
 				<th colspan="4">Total</th>						
-				<td colspan="1"><b>$<%=totalPrice%></b></td>				
+				<td colspan="1"><b>$<%=ESHOP_JS.modules.cart.totalPrice() ? totalPrice : 0%></b></td>				
 			</tr>					
 		</tfoot>				
 	</tbody>	 	
