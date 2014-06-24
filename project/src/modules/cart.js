@@ -26,7 +26,7 @@ ESHOP_JS.modules.cart = (function( window, document ){
 			obj: product,
 			errors:errors			
 		};
-	};
+	}
 	
 	/**
 	 * Contains an array of products a product?
@@ -97,7 +97,7 @@ ESHOP_JS.modules.cart = (function( window, document ){
 		for(var idx = 0, len = counters.length; idx < len; idx++ ){		
 			counters[idx].innerHTML = count;
 		}	
-	};
+	}
 	
 	/**
 	 * Get count of products in cart
@@ -111,7 +111,7 @@ ESHOP_JS.modules.cart = (function( window, document ){
 		}
 		 
 		return count;
-	};
+	}
 	
 	/**
 	 * Get total price
@@ -125,7 +125,7 @@ ESHOP_JS.modules.cart = (function( window, document ){
 		}
 		 
 		return total;		
-	};
+	}
 			
 	// init storage
 	if(!storage.get( settings.CART_STORAGE_KEY ).products){

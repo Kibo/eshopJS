@@ -20,7 +20,7 @@ ESHOP_JS.modules.checkout = (function( window, document ){
 				pubsub.publish( settings.CHECKOUT_CHANGE_EVENT_NAME );						
 			}, false);	
 		}		
-	};
+	}
 			
 	return {	
 		

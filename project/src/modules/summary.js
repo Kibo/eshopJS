@@ -16,7 +16,7 @@ ESHOP_JS.modules.summary = (function( window, document ){
 	 */
 	function getPostagePrice( wrapper ){		
 		return parseInt(wrapper.querySelector('.postages input[type="radio"]:checked').dataset.price, 10);					
-	};
+	}
 	
 	/**
 	 * Get the payment price
@@ -25,7 +25,7 @@ ESHOP_JS.modules.summary = (function( window, document ){
 	 */
 	function getPaymentPrice( wrapper ){		
 		return parseInt(wrapper.querySelector('.payments input[type="radio"]:checked').dataset.price, 10);					
-	};
+	}
 	
 	return{					
 		/**

@@ -12,7 +12,7 @@ ESHOP_JS.modules.storage = (function(){
   		} catch (e) {
     		return false;
   		}
-	};
+	}
 	
 	if(!isSessionStorage()){
 		throw {

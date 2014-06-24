@@ -41,7 +41,7 @@ module.exports = function( grunt ) {
 		},
 			
 		jshint: {			
-			files: [ 'project/src/<%= pkg.name %>.js' ],
+			files: [ 'project/src/**/*.js' ],
 			options: {
 				"-W099": true, // disable: Mixed spaces and tabs.
 				"-W014": true, // disable: Bag line breaking
@@ -84,9 +84,8 @@ module.exports = function( grunt ) {
 	grunt.loadNpmTasks('grunt-contrib-clean');	
 	grunt.loadNpmTasks( 'grunt-gh-pages' );
 
-	grunt.registerTask( 'default', ['jshint', 'concat', 'nodeunit']);	
-	grunt.registerTask( 'test', [ 'jsttojs', 'concat', 'qunit', 'clean']);
+	grunt.registerTask( 'default', ['build']);	
+	grunt.registerTask( 'test', ['jsttojs', 'concat', 'jshint', 'qunit', 'clean']);
 	grunt.registerTask( 'doc', ['gh-pages']);
-	grunt.registerTask( 'build', ['jsttojs']);	
-	grunt.registerTask( 'cleaner', ['clean']);		
+	grunt.registerTask( 'build', ['jsttojs', 'concat', 'uglify', 'clean']);		
 };

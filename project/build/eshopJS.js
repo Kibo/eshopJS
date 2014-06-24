@@ -1,4 +1,4 @@
-/* E-shop v0.2.0 - 2014-06-23 */
+/* E-shop v0.2.0 - 2014-06-24 */
 // ### Source: project/src/namespace.js
 var ESHOP_JS = ESHOP_JS || {};
 
@@ -599,7 +599,7 @@ ESHOP_JS.modules.storage = (function(){
   		} catch (e) {
     		return false;
   		}
-	};
+	}
 	
 	if(!isSessionStorage()){
 		throw {
@@ -700,7 +700,7 @@ ESHOP_JS.modules.cart = (function( window, document ){
 			obj: product,
 			errors:errors			
 		};
-	};
+	}
 	
 	/**
 	 * Contains an array of products a product?
@@ -771,7 +771,7 @@ ESHOP_JS.modules.cart = (function( window, document ){
 		for(var idx = 0, len = counters.length; idx < len; idx++ ){		
 			counters[idx].innerHTML = count;
 		}	
-	};
+	}
 	
 	/**
 	 * Get count of products in cart
@@ -785,7 +785,7 @@ ESHOP_JS.modules.cart = (function( window, document ){
 		}
 		 
 		return count;
-	};
+	}
 	
 	/**
 	 * Get total price
@@ -799,7 +799,7 @@ ESHOP_JS.modules.cart = (function( window, document ){
 		}
 		 
 		return total;		
-	};
+	}
 			
 	// init storage
 	if(!storage.get( settings.CART_STORAGE_KEY ).products){
@@ -936,7 +936,7 @@ ESHOP_JS.modules.product = (function( window, document ){
 	function getPrice( productDOMWrapper ){		
 		var basePrice = parseInt( productDOMWrapper.querySelector('[' + settings.PRODUCT_BASE_PRICE_DOM_ATTRIBUTE + ']').getAttribute(settings.PRODUCT_BASE_PRICE_DOM_ATTRIBUTE));			
 		return basePrice + getVariationsPrice( productDOMWrapper );
-	};
+	}
 	
 	/**
 	 * Get selected variations from product
@@ -967,7 +967,7 @@ ESHOP_JS.modules.product = (function( window, document ){
 		}
 				
 		return {texts:texts, prices:prices};		
-	};
+	}
 	
 	/**
 	 * Get text from selected variations
@@ -976,7 +976,7 @@ ESHOP_JS.modules.product = (function( window, document ){
 	 */
 	function getVariationsText( productDOMWrapper ){
 		return getVariations( productDOMWrapper ).texts.join(", ");
-	};
+	}
 	
 	/**
 	 * Calculate price from selected variations
@@ -993,7 +993,7 @@ ESHOP_JS.modules.product = (function( window, document ){
 		return prices.reduce( function(a, b) {
     		return a + b;
 		});
-	};
+	}
 	
 	/**
 	 * Set add to cart handler
@@ -1007,7 +1007,7 @@ ESHOP_JS.modules.product = (function( window, document ){
 				e.preventDefault();	
 			}, false );	
 		}	
-	};
+	}
 	
 	/**
 	 * Set change variations handler
@@ -1023,7 +1023,7 @@ ESHOP_JS.modules.product = (function( window, document ){
 				}, false);
 			}			
 		}		
-	};
+	}
 			
 	return{
 		/**
@@ -1103,7 +1103,7 @@ ESHOP_JS.modules.checkout = (function( window, document ){
 				pubsub.publish( settings.CHECKOUT_CHANGE_EVENT_NAME );						
 			}, false);	
 		}		
-	};
+	}
 			
 	return {	
 		
@@ -1152,7 +1152,7 @@ ESHOP_JS.modules.summary = (function( window, document ){
 	 */
 	function getPostagePrice( wrapper ){		
 		return parseInt(wrapper.querySelector('.postages input[type="radio"]:checked').dataset.price, 10);					
-	};
+	}
 	
 	/**
 	 * Get the payment price
@@ -1161,7 +1161,7 @@ ESHOP_JS.modules.summary = (function( window, document ){
 	 */
 	function getPaymentPrice( wrapper ){		
 		return parseInt(wrapper.querySelector('.payments input[type="radio"]:checked').dataset.price, 10);					
-	};
+	}
 	
 	return{					
 		/**
