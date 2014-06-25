@@ -82,8 +82,8 @@ ESHOP_JS.modules.product = (function( window, document ){
 	function addToCartHandler( productDOMWrapper ){
 		var links = productDOMWrapper.querySelectorAll("." + settings.PRODUCT_LINK_DOM_CLASS);
 		for(var idx = 0, len = links.length; idx < len; idx++ ){
-			links[idx].addEventListener( utils.isTouchDevice( ) ? "touchstart" : "mousedown", function(e){
-				var productDOMWrapper = e.target.parentNode;				
+			links[idx].addEventListener( utils.isTouchDevice( ) ? "touchstart" : "mousedown", function(e){				
+				var productDOMWrapper = ESHOP_JS.utils.findParentByClass( e.target, ESHOP_JS.settings.PRODUCT_DOM_CLASS );							
 				ESHOP_JS.modules.cart.add( ESHOP_JS.modules.product.getData( productDOMWrapper ));
 				e.preventDefault();	
 			}, false );	
@@ -99,8 +99,9 @@ ESHOP_JS.modules.product = (function( window, document ){
 		for(var idx = 0, len = variations.length; idx < len; idx++ ){
 			
 			if( variations[idx].tagName === "SELECT" ){
-				variations[idx].addEventListener("change", function(e){					
-					ESHOP_JS.modules.product.refreshPrice( e.target.parentNode );																									 
+				variations[idx].addEventListener("change", function(e){									
+					var productDOMWrapper = ESHOP_JS.utils.findParentByClass( e.target, ESHOP_JS.settings.PRODUCT_DOM_CLASS );
+					ESHOP_JS.modules.product.refreshPrice( productDOMWrapper );																														
 				}, false);
 			}			
 		}		

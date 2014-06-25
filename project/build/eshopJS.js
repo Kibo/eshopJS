@@ -1,4 +1,4 @@
-/* E-shop v0.2.0 - 2014-06-24 */
+/* E-shop v0.2.0 - 2014-06-25 */
 // ### Source: project/src/namespace.js
 var ESHOP_JS = ESHOP_JS || {};
 
@@ -43,7 +43,23 @@ ESHOP_JS.utils = (function( window, document){
 	 	*/		
 		isTouchDevice:function(){
 			return ( 'ontouchstart' in document.documentElement );	
-		}		
+		},
+		
+		/**
+		 * Get ther closest parent node with defined class name
+		 * @param {Object} child - DOM node
+ 		 * @param {String} className
+ 		 * @return {Object} - DOM parent node
+		 */
+		findParentByClass:function( child, className ){
+			var el = child;
+						
+			while( !el.classList.contains( className ) ){
+				el = el.parentElement;
+			}
+						
+    		return el;			
+		}				
 	};	
 })(  window, document );
 
@@ -1001,8 +1017,8 @@ ESHOP_JS.modules.product = (function( window, document ){
 	function addToCartHandler( productDOMWrapper ){
 		var links = productDOMWrapper.querySelectorAll("." + settings.PRODUCT_LINK_DOM_CLASS);
 		for(var idx = 0, len = links.length; idx < len; idx++ ){
-			links[idx].addEventListener( utils.isTouchDevice( ) ? "touchstart" : "mousedown", function(e){
-				var productDOMWrapper = e.target.parentNode;				
+			links[idx].addEventListener( utils.isTouchDevice( ) ? "touchstart" : "mousedown", function(e){				
+				var productDOMWrapper = ESHOP_JS.utils.findParentByClass( e.target, ESHOP_JS.settings.PRODUCT_DOM_CLASS );							
 				ESHOP_JS.modules.cart.add( ESHOP_JS.modules.product.getData( productDOMWrapper ));
 				e.preventDefault();	
 			}, false );	
@@ -1018,8 +1034,9 @@ ESHOP_JS.modules.product = (function( window, document ){
 		for(var idx = 0, len = variations.length; idx < len; idx++ ){
 			
 			if( variations[idx].tagName === "SELECT" ){
-				variations[idx].addEventListener("change", function(e){					
-					ESHOP_JS.modules.product.refreshPrice( e.target.parentNode );																									 
+				variations[idx].addEventListener("change", function(e){									
+					var productDOMWrapper = ESHOP_JS.utils.findParentByClass( e.target, ESHOP_JS.settings.PRODUCT_DOM_CLASS );
+					ESHOP_JS.modules.product.refreshPrice( productDOMWrapper );																														
 				}, false);
 			}			
 		}		
