@@ -3,18 +3,15 @@ ESHOP_JS.messages.cs = {
 	/**
 	 * Type of postages
 	 */
-	POSTAGES:[		
-		{name: "Osobní převzetí", price: 0},
+	POSTAGES:[				
 		{name: "Česká pošta", price: 80}
 	],
 	
 	/**
 	 * Payment methods
 	 */
-	PAYMENT_METHODS:[
-		{name:"Platba hotově", price:0},		
-		{name:"Dobírka", price:40},
-		{name:"Platba převodem", price:0}			
+	PAYMENT_METHODS:[			
+		{name:"Dobírka", price:40},				
 	],
 	
 	/**
