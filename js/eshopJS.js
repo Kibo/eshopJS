@@ -259,7 +259,7 @@ ESHOP_JS.messages.cs = {
 	 */
 	PAYMENT_METHODS:[			
 		{name:"Dobírka", price:40},
-		{name:"Platba hotovostí", price:0},					
+		{name:"Hotovost", price:0},					
 	],
 	
 	/**
