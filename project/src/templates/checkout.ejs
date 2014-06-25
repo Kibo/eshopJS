@@ -1,18 +1,6 @@
 <!-- Wrapper for summary table -->
 <div id="summary"></div>
 
-<fieldset class="payments">
-  <legend><%=ESHOP_JS.settings.messages.PAYMENT_HEADLINE%></legend>    
-    <% for(var idx = 0, len = settings.messages.PAYMENT_METHODS.length; idx < len; idx++){%>
-  	<div class="radio">
-  		<label>
-    		<input type="radio" name="payment" value="<%=settings.messages.PAYMENT_METHODS[idx].name%>" data-price="<%=settings.messages.PAYMENT_METHODS[idx].price%>" <%=idx === 0 ? 'checked' : ''%> >
-    		<%=settings.messages.PAYMENT_METHODS[idx].name%>    	
-  		</label>
-	</div>
-	<%}%>
-</fieldset>
-  
 <fieldset class="postages">
   <legend><%=ESHOP_JS.settings.messages.POSTAGES_HEADLINE%></legend>    
     <% for(var idx = 0, len = settings.messages.POSTAGES.length; idx < len; idx++){%>
@@ -25,6 +13,18 @@
 	<%}%>
 </fieldset>
 
+<fieldset class="payments">
+  <legend><%=ESHOP_JS.settings.messages.PAYMENT_HEADLINE%></legend>    
+    <% for(var idx = 0, len = settings.messages.PAYMENT_METHODS.length; idx < len; idx++){%>
+  	<div class="radio">
+  		<label>
+    		<input type="radio" name="payment" value="<%=settings.messages.PAYMENT_METHODS[idx].name%>" data-price="<%=settings.messages.PAYMENT_METHODS[idx].price%>" <%=idx === 0 ? 'checked' : ''%> >
+    		<%=settings.messages.PAYMENT_METHODS[idx].name%>    	
+  		</label>
+	</div>
+	<%}%>
+</fieldset>
+  
 <fieldset class="address">
   	<legend><%=ESHOP_JS.settings.messages.DELIVERY_ADDRESS_HEADLINE%></legend>	
 	  

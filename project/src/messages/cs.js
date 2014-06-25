@@ -112,14 +112,14 @@ ESHOP_JS.messages.cs = {
 	 * @constant
 	 * @type {string}
 	 */
-	PAYMENT_HEADLINE:"Platební metoda",
+	PAYMENT_HEADLINE:"Způsob platby",
 	
 	/**
 	 * Postages headline
 	 * @constant
 	 * @type {string}
 	 */
-	POSTAGES_HEADLINE:"Poštovné",
+	POSTAGES_HEADLINE:"Způsob doručení",
 	
 	/**
 	 * Delivery address
