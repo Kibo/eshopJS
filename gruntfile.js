@@ -30,8 +30,7 @@ module.exports = function( grunt ) {
       		
       		dist: {
       			files: {
-        			'project/build/<%= pkg.name %>.js': "<%= srcFiles %>",        			
-        			'project/example/js/<%= pkg.name %>.js': "<%= srcFiles %>"
+        			'project/build/<%= pkg.name %>.js': "<%= srcFiles %>"
       			},
     		},      									
 		},
@@ -51,7 +50,8 @@ module.exports = function( grunt ) {
 		uglify : {				
 			dist : {
 				files : {
-					'project/build/<%= pkg.name %>.min.js' : ['project/build/<%= pkg.name %>.js']
+					'project/build/<%= pkg.name %>.min.js' : ['project/build/<%= pkg.name %>.js'],
+					'project/example/js/<%= pkg.name %>.min.js' : ['project/build/<%= pkg.name %>.js']
 				}
 			}
 		},
