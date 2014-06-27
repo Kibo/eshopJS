@@ -45,4 +45,4 @@
 	</tbody>	 	
 </table>
 
-<input type="hidden" name="cart" value="<%=ESHOP_JS.modules.cart.toString()%>" >
+<input type="hidden" name="cart" value="<%=encodeURI(ESHOP_JS.modules.cart.toString())%>">

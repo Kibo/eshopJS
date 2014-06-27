@@ -187,8 +187,7 @@ ESHOP_JS.modules.cart = (function( window, document ){
 		 * @fires CART_CHANGE_EVENT_NAME
 		 */
 		reset:function(){
-			storage.save(settings.CART_STORAGE_KEY, EMPTY_STORAGE );
-			
+			storage.save(settings.CART_STORAGE_KEY, EMPTY_STORAGE );			
 			pubsub.publish( settings.CART_CHANGE_EVENT_NAME );
 		},
 		
