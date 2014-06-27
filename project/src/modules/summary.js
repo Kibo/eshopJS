@@ -15,7 +15,7 @@ ESHOP_JS.modules.summary = (function( window, document ){
 	 * @return {number}
 	 */
 	function getPostagePrice( wrapper ){		
-		return parseInt(wrapper.querySelector('.postages input[type="radio"]:checked').dataset.price, 10);					
+		return parseInt(wrapper.querySelector('.' + settings.POSTAGES_WRAPPER_DOM_CLASS + ' input[type="radio"]:checked').dataset.price, 10);					
 	}
 	
 	/**
@@ -24,7 +24,7 @@ ESHOP_JS.modules.summary = (function( window, document ){
 	 * @return {number}
 	 */
 	function getPaymentPrice( wrapper ){		
-		return parseInt(wrapper.querySelector('.payments input[type="radio"]:checked').dataset.price, 10);					
+		return parseInt(wrapper.querySelector('.' + settings.PAYMENTS_WRAPPER_DOM_CLASS + ' input[type="radio"]:checked').dataset.price, 10);					
 	}
 	
 	return{					
@@ -40,8 +40,12 @@ ESHOP_JS.modules.summary = (function( window, document ){
 		
 			var cartObj = storage.get( settings.CART_STORAGE_KEY );
 			cartObj.settings = ESHOP_JS.settings;
-			cartObj.totalPostagePrice = getPostagePrice( document.getElementById( settings.CHECKOUT_DOM_ID) ) + getPaymentPrice( document.getElementById( settings.CHECKOUT_DOM_ID) ); 
-			cartObj.totalPrice = cartObj.totalPostagePrice + cart.totalPrice();
+			
+			cartObj.summary = {};								
+			cartObj.summary.subTotal = cart.totalPrice();
+			cartObj.summary.totalPostagePrice = cart.totalPrice() ? getPostagePrice( document.getElementById( settings.CHECKOUT_DOM_ID) ) + getPaymentPrice( document.getElementById( settings.CHECKOUT_DOM_ID)) : 0;
+			cartObj.summary.totalPrice = cart.totalPrice() ? cart.totalPrice() + cartObj.summary.totalPostagePrice : 0;
+								
 			wrapper.innerHTML = summaryTemplate( cartObj );								
 		},
 		

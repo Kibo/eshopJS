@@ -30,7 +30,8 @@ module.exports = function( grunt ) {
       		
       		dist: {
       			files: {
-        			'project/build/<%= pkg.name %>.js': "<%= srcFiles %>"
+        			'project/build/<%= pkg.name %>.js': "<%= srcFiles %>",
+        			'project/example/js/<%= pkg.name %>.js': "<%= srcFiles %>"
       			},
     		},      									
 		},
@@ -50,8 +51,7 @@ module.exports = function( grunt ) {
 		uglify : {				
 			dist : {
 				files : {
-					'project/build/<%= pkg.name %>.min.js' : ['project/build/<%= pkg.name %>.js'],
-					'project/example/js/<%= pkg.name %>.min.js' : ['project/build/<%= pkg.name %>.js']
+					'project/build/<%= pkg.name %>.min.js' : ['project/build/<%= pkg.name %>.js']
 				}
 			}
 		},
@@ -84,8 +84,8 @@ module.exports = function( grunt ) {
 	grunt.loadNpmTasks('grunt-contrib-clean');	
 	grunt.loadNpmTasks( 'grunt-gh-pages' );
 
-	grunt.registerTask( 'default', ['build']);	
-	grunt.registerTask( 'test', ['jsttojs', 'concat', 'jshint', 'qunit', 'clean']);
+	grunt.registerTask( 'default', ['build', 'test']);	
+	grunt.registerTask( 'test', ['jsttojs', 'concat','qunit', 'clean', 'jshint']);
 	grunt.registerTask( 'doc', ['gh-pages']);
 	grunt.registerTask( 'build', ['jsttojs', 'concat', 'uglify', 'clean']);		
 };

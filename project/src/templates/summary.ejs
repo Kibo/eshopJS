@@ -31,15 +31,15 @@
 		<tfoot>			
 			<tr>
 				<th colspan="4"><%=ESHOP_JS.settings.messages.PRODUCT_SUBTOTAL_COLUMNT_NAME%></th>						
-				<td colspan="1"><%=ESHOP_JS.settings.messages.CURRENCY_BEFORE%><%=ESHOP_JS.modules.cart.totalPrice()%><%=ESHOP_JS.settings.messages.CURRENCY_AFTER%></td>				
+				<td colspan="1"><%=ESHOP_JS.settings.messages.CURRENCY_BEFORE%><%=summary.subTotal%><%=ESHOP_JS.settings.messages.CURRENCY_AFTER%></td>				
 			</tr>			
 			<tr>
 				<th colspan="4"><%=ESHOP_JS.settings.messages.POSTAGE%></th>						
-				<td colspan="1"><%=ESHOP_JS.settings.messages.CURRENCY_BEFORE%><%=ESHOP_JS.modules.cart.totalPrice() ? totalPostagePrice : 0%><%=ESHOP_JS.settings.messages.CURRENCY_AFTER%></td>				
+				<td colspan="1"><%=ESHOP_JS.settings.messages.CURRENCY_BEFORE%><%=summary.totalPostagePrice%><%=ESHOP_JS.settings.messages.CURRENCY_AFTER%></td>				
 			</tr>			
 			<tr class="info">
 				<th colspan="4"><%=ESHOP_JS.settings.messages.TOTAL_PRICE%></th>						
-				<td colspan="1"><b><%=ESHOP_JS.settings.messages.CURRENCY_BEFORE%><%=ESHOP_JS.modules.cart.totalPrice() ? totalPrice : 0%><%=ESHOP_JS.settings.messages.CURRENCY_AFTER%></b></td>				
+				<td colspan="1"><b><%=ESHOP_JS.settings.messages.CURRENCY_BEFORE%><%=summary.totalPrice%><%=ESHOP_JS.settings.messages.CURRENCY_AFTER%></b></td>				
 			</tr>					
 		</tfoot>				
 	</tbody>	 	

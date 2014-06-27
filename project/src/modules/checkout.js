@@ -16,7 +16,7 @@ ESHOP_JS.modules.checkout = (function( window, document ){
 	function setChangeHandlers( wrapper ){
 		var radios = wrapper.querySelectorAll('input[type="radio"]');		
 		for(var idx = 0, len = radios.length; idx < len; idx++ ){
-			radios[idx].addEventListener("change", function(e){
+			radios[idx].addEventListener("change", function(e){										
 				pubsub.publish( settings.CHECKOUT_CHANGE_EVENT_NAME );						
 			}, false);	
 		}		
@@ -35,8 +35,9 @@ ESHOP_JS.modules.checkout = (function( window, document ){
 			}			
 		
 			var cartObj = storage.get( settings.CART_STORAGE_KEY );
-			cartObj.settings = ESHOP_JS.settings;
+			cartObj.settings = ESHOP_JS.settings;							
 			wrapper.innerHTML = checkoutTemplate( cartObj );
+			
 			setChangeHandlers( document.getElementById( settings.CHECKOUT_DOM_ID ) );			
 		},		
 		

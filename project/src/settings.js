@@ -96,5 +96,19 @@ ESHOP_JS.settings = {
 	 * @constant
 	 * @type {string}
 	 */
-	CHECKOUT_CHANGE_EVENT_NAME: "checkoutchange"	
+	CHECKOUT_CHANGE_EVENT_NAME: "checkoutchange",
+		
+	/**
+	 * DOM wrapper for postage methods
+	 * @constant
+	 * @type {string}
+	 */
+	POSTAGES_WRAPPER_DOM_CLASS: "postages",	
+	
+	/**
+	 * DOM wrapper for payment method
+	 * @constant
+	 * @type {string}
+	 */
+	PAYMENTS_WRAPPER_DOM_CLASS: "payments",	
 }; 

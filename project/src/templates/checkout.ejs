@@ -5,7 +5,7 @@
   <legend><%=ESHOP_JS.settings.messages.POSTAGES_HEADLINE%></legend>    
     <% for(var idx = 0, len = settings.messages.POSTAGES.length; idx < len; idx++){%>
   	<div class="radio">
-  		<label>
+  		<label>  			
     		<input type="radio" name="postage" value="<%=settings.messages.POSTAGES[idx].name%>" data-price="<%=settings.messages.POSTAGES[idx].price%>" <%=idx === 0 ? 'checked' : ''%>>
     		<%=settings.messages.POSTAGES[idx].name%>    	
   		</label>
@@ -18,7 +18,7 @@
     <% for(var idx = 0, len = settings.messages.PAYMENT_METHODS.length; idx < len; idx++){%>
   	<div class="radio">
   		<label>
-    		<input type="radio" name="payment" value="<%=settings.messages.PAYMENT_METHODS[idx].name%>" data-price="<%=settings.messages.PAYMENT_METHODS[idx].price%>" <%=idx === 0 ? 'checked' : ''%> >
+    		<input type="radio" name="payment" value="<%=settings.messages.PAYMENT_METHODS[idx].name%>" data-price="<%=settings.messages.PAYMENT_METHODS[idx].price%>" <%=idx === 0 ? 'checked' : ''%>>
     		<%=settings.messages.PAYMENT_METHODS[idx].name%>    	
   		</label>
 	</div>
