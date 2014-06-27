@@ -39,8 +39,8 @@ ESHOP_JS.modules.checkout = (function( window, document ){
 			wrapper.innerHTML = checkoutTemplate( cartObj );
 			
 			setChangeHandlers( document.getElementById( settings.CHECKOUT_DOM_ID ) );			
-		},		
-		
+		},
+								
 		/**
 	 	* Module initialization
 	 	*/	

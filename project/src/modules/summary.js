@@ -14,7 +14,10 @@ ESHOP_JS.modules.summary = (function( window, document ){
 	 * @arg {Object} wrapper - DOM node
 	 * @return {number}
 	 */
-	function getPostagePrice( wrapper ){		
+	function getPostagePrice( wrapper ){
+		if(!cart.totalPrice()){
+			return 0;
+		}		
 		return parseInt(wrapper.querySelector('.' + settings.POSTAGES_WRAPPER_DOM_CLASS + ' input[type="radio"]:checked').dataset.price, 10);					
 	}
 	
@@ -23,8 +26,25 @@ ESHOP_JS.modules.summary = (function( window, document ){
 	 * @arg {Object} wrapper - DOM node
 	 * @return {number}
 	 */
-	function getPaymentPrice( wrapper ){		
+	function getPaymentPrice( wrapper ){
+		if(!cart.totalPrice()){
+			return 0;
+		}				
 		return parseInt(wrapper.querySelector('.' + settings.PAYMENTS_WRAPPER_DOM_CLASS + ' input[type="radio"]:checked').dataset.price, 10);					
+	}
+	
+	/**
+	 * Get summary of order
+	 * @return {Object}
+	 */
+	function getSummary(){
+		var summary = {};
+
+		summary.subTotal = cart.totalPrice();
+		summary.totalPostagePrice = getPostagePrice( document.getElementById( settings.CHECKOUT_DOM_ID) ) + getPaymentPrice( document.getElementById( settings.CHECKOUT_DOM_ID));
+		summary.totalPrice = cart.totalPrice() + summary.totalPostagePrice;
+		
+		return summary;
 	}
 	
 	return{					
@@ -39,14 +59,20 @@ ESHOP_JS.modules.summary = (function( window, document ){
 			}			
 		
 			var cartObj = storage.get( settings.CART_STORAGE_KEY );
-			cartObj.settings = ESHOP_JS.settings;
-			
-			cartObj.summary = {};								
-			cartObj.summary.subTotal = cart.totalPrice();
-			cartObj.summary.totalPostagePrice = cart.totalPrice() ? getPostagePrice( document.getElementById( settings.CHECKOUT_DOM_ID) ) + getPaymentPrice( document.getElementById( settings.CHECKOUT_DOM_ID)) : 0;
-			cartObj.summary.totalPrice = cart.totalPrice() ? cart.totalPrice() + cartObj.summary.totalPostagePrice : 0;
-								
+			cartObj.settings = ESHOP_JS.settings;			
+			cartObj.summary = getSummary();								
+											
 			wrapper.innerHTML = summaryTemplate( cartObj );								
+		},
+		
+		/**
+		 * Convert the summary to the string representation
+		 * @return {string}
+		 */
+		toString:function(){
+			var cartObj = storage.get( settings.CART_STORAGE_KEY );
+			cartObj.summary = getSummary();			
+			return JSON.stringify( cartObj ).replace(/\"/g,"'");		
 		},
 		
 		/**
