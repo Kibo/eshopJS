@@ -1,14 +1,14 @@
 # EshopJS
 A free and open-source Javascript e-shop that easily integrates with your current websites.
 
-**Version**: 1.0.0
+**Version**: 1.0.2
 
 - Pure Javascript **without dependencies**.
 - Product price may depend on product details. (For example: The larger size can cost more money. )
 - Easily integrates: ([settings](https://github.com/Kibo/eshopJS/blob/master/project/src/settings.js), [templates](https://github.com/Kibo/eshopJS/tree/master/project/src/templates)).
 - You can embed shopping cart on separate web page.
 - Easily extensible code divided into [modules](https://github.com/Kibo/eshopJS/tree/master/project/src/modules).
-- Tested code.
+- [Tested code](https://github.com/Kibo/eshopJS/tree/master/project/test).
 
 ##Example
 - [Rastashop](http://kibo.github.io/eshopJS/)
