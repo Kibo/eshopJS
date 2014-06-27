@@ -69,6 +69,24 @@
 					equal( storage.get( settings.CART_STORAGE_KEY ).products.length, 1);
 					equal( cart.count(), 3);																																								
 				});
+				
+				test( "toString", function( ) {
+					var result = '{"products":[' +
+						'{"title":"abc","variations":"cde","count":2,"price":10},' +
+						'{"title":"efg","variations":"hij","count":3,"price":20}' +
+					']}';
+																		
+					equal( storage.get( settings.CART_STORAGE_KEY ).products.length, 0);
+					equal( cart.count(), 0);
+					
+					var p1 = {title:"abc", variations:"cde", count:2, price:10};
+					var p2 = {title:"efg", variations:"hij", count:3, price:20};
+					
+					cart.add(p1);
+					cart.add(p2);
+										
+					equal( cart.toString(), result);																																								
+				});
 																														
 			};// onload
 		</script>

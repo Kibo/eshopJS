@@ -229,6 +229,13 @@ ESHOP_JS.modules.cart = (function( window, document ){
 		},
 		
 		/**
+		 * Convert the cart to string representation
+		 */
+		toString:function(){
+			return JSON.stringify(storage.get( settings.CART_STORAGE_KEY ));		
+		},
+		
+		/**
 	 	* Module initialization
 	 	*/	
 		init:function(){
